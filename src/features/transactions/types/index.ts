@@ -21,3 +21,5 @@ export type TransactionFilter = {
 };
 
 export type DayGroup = { key: string; label: string; items: TransactionItem[] };
+
+export type AccountOption = { id: number; name: string; balance: number };

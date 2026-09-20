@@ -4,3 +4,5 @@ export { createTransaction, deleteTransaction, setReceipt } from './hooks/use-tr
 export { useMonthTotals, useTransaction, useTransactions } from './hooks/use-transactions';
 export { transactionSchema, type TransactionFormValues } from './schemas/transaction-schema';
 export type { DayGroup, TransactionItem, TransactionType } from './types';
+export { TransactionForm } from './components/transaction-form';
+export type { AccountOption } from './types';
