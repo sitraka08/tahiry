@@ -1,0 +1,28 @@
+import { Pressable, Text } from 'react-native';
+
+type Props = {
+  label: string;
+  selected?: boolean;
+  onPress?: () => void;
+  dashed?: boolean;
+};
+
+export function Chip({ label, selected = false, onPress, dashed = false }: Props) {
+  const base = 'h-9 justify-center rounded-full px-3 active:opacity-80';
+  const tone = selected
+    ? 'bg-dark'
+    : dashed
+      ? 'border-[1.5px] border-dashed border-seg3'
+      : 'bg-card';
+  const textTone = selected ? 'font-gs-bold text-accent' : 'font-gs-medium text-ink';
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      onPress={onPress}
+      className={`${base} ${tone}`}
+    >
+      <Text className={`text-[13px] ${textTone}`}>{label}</Text>
+    </Pressable>
+  );
+}
