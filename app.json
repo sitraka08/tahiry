@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Tahiry",
+    "slug": "tahiry",
+    "scheme": "tahiry",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.tahiry.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#D4F542",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": { "typedRoutes": true }
+  }
+}
