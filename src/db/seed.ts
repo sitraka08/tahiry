@@ -1,0 +1,32 @@
+export const OUT_CATEGORIES: [string, string][] = [
+  ['food', 'Alimentation'],
+  ['transport', 'Transport'],
+  ['fuel', 'Carburant'],
+  ['rent', 'Loyer'],
+  ['bills', 'Factures'],
+  ['phone', 'Téléphone & internet'],
+  ['health', 'Santé'],
+  ['school', 'École'],
+  ['family', 'Famille'],
+  ['gifts', 'Dons & offrandes'],
+  ['fun', 'Loisirs'],
+  ['clothes', 'Vêtements'],
+  ['home', 'Maison'],
+  ['events', 'Événements'],
+  ['fees', 'Frais bancaires'],
+  ['debt', 'Remboursement dette'],
+  ['save', 'Épargne'],
+  ['other', 'Autre'],
+];
+
+export const IN_CATEGORIES: [string, string][] = [
+  ['salary', 'Salaire'],
+  ['sale', 'Business / vente'],
+  ['freelance', 'Freelance'],
+  ['bonus', 'Prime'],
+  ['refund', 'Remboursement reçu'],
+  ['gift', 'Don reçu'],
+  ['rentin', 'Loyer perçu'],
+  ['interest', 'Intérêts'],
+  ['other', 'Autre'],
+];
