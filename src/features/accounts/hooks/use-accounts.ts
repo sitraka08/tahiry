@@ -16,6 +16,7 @@ const GROUPS: { type: AccountType; label: string }[] = [
   { type: 'bank', label: 'Banques' },
   { type: 'mobile', label: 'Mobile Money' },
   { type: 'cash', label: 'Espèces' },
+  { type: 'group', label: 'Épargne de groupe' },
 ];
 
 export function useAccounts() {

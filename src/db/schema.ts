@@ -2,7 +2,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const accounts = sqliteTable('accounts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  type: text('type', { enum: ['bank', 'mobile', 'cash'] }).notNull(),
+  type: text('type', { enum: ['bank', 'mobile', 'cash', 'group'] }).notNull(),
   name: text('name').notNull(),
   detail: text('detail'),
   initialBalance: integer('initial_balance').notNull().default(0),

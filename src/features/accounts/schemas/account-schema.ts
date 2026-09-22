@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const accountSchema = z.object({
-  type: z.enum(['bank', 'mobile', 'cash']),
+  type: z.enum(['bank', 'mobile', 'cash', 'group']),
   name: z.string().trim().min(1, 'Donne un nom au compte'),
   detail: z.string().trim().optional(),
   balance: z.string().regex(/^[\d\s]*$/, 'Montant invalide'),

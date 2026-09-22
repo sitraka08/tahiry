@@ -21,7 +21,8 @@ export default function Home() {
   const [now] = useState(Date.now);
   const { income, expense } = useMonthTotals(now - 30 * DAY, now + DAY);
   const net = income - expense;
-  const segColors = [t.accent, t.onDark, t.seg3];
+  const segColors = [t.accent, t.onDark, t.seg3, t.darkMuted];
+  const visibleGroups = groups.filter((g) => g.accounts.length > 0);
 
   return (
     <SafeAreaView className="flex-1" edges={['top']}>
@@ -74,7 +75,7 @@ export default function Home() {
             {fmt(total)}
           </AppText>
           <View className="h-2.5 flex-row gap-[3px]">
-            {groups.map((g, i) => (
+            {visibleGroups.map((g, i) => (
               <View
                 key={g.type}
                 style={{ flex: Math.max(g.total, 0) || 0.0001, backgroundColor: segColors[i] }}
@@ -83,7 +84,7 @@ export default function Home() {
             ))}
           </View>
           <View className="flex-row flex-wrap gap-x-3.5 gap-y-1">
-            {groups.map((g, i) => (
+            {visibleGroups.map((g, i) => (
               <View key={g.type} className="flex-row items-center gap-1.5">
                 <View style={{ backgroundColor: segColors[i] }} className="size-2 rounded-[2px]" />
                 <AppText className="text-xs text-dark-muted">
