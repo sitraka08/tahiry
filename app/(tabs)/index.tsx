@@ -4,7 +4,7 @@ import { Bell, ChevronRight, Repeat, Settings, User } from 'lucide-react-native'
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, IconButton } from '@/components';
+import { AppText, Headline, IconButton } from '@/components';
 import { AccountChip, useAccounts } from '@/features/accounts';
 import { TransactionRow, useMonthTotals, useTransactions } from '@/features/transactions';
 import { useAmountMask } from '@/lib/use-amount-mask';
@@ -50,13 +50,9 @@ export default function Home() {
           </View>
         </View>
 
-        <AppText weight="bold" className="mx-5 mt-[18px] text-[27px] leading-[33px]">
-          Ton argent suivi,{' '}
-          <AppText weight="bold" className="bg-accent text-[27px] text-on-accent">
-            {' où qu’il soit '}
-          </AppText>
-          .
-        </AppText>
+        <View className="mx-5 mt-[18px]">
+          <Headline lead="Ton argent suivi, " highlight="où qu’il soit" tail="." />
+        </View>
 
         <View className="mx-5 mt-[18px] gap-3.5 rounded-3xl bg-dark p-5">
           <View className="flex-row items-center justify-between gap-2">

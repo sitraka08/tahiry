@@ -1,12 +1,18 @@
 import type { ReactNode } from 'react';
-import { Pressable, Text, type PressableProps } from 'react-native';
+import { Text } from 'react-native';
+
+import { PressableScale } from './pressable-scale';
 
 type Variant = 'primary' | 'accent' | 'soft' | 'ghost' | 'danger';
+type Size = 'lg' | 'md' | 'sm';
 
-type Props = Omit<PressableProps, 'children'> & {
+type Props = {
   label: string;
+  onPress?: () => void;
   variant?: Variant;
+  size?: Size;
   icon?: ReactNode;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -26,16 +32,30 @@ const text: Record<Variant, string> = {
   danger: 'text-danger',
 };
 
-export function Button({ label, variant = 'primary', icon, className = '', ...rest }: Props) {
+const heights: Record<Size, string> = { lg: 'h-14', md: 'h-[52px]', sm: 'h-12' };
+
+export function Button({
+  label,
+  onPress,
+  variant = 'primary',
+  size = 'lg',
+  icon,
+  disabled,
+  className = '',
+}: Props) {
+  const weight = variant === 'soft' || variant === 'ghost' ? 'font-gs-medium' : 'font-gs-bold';
+  const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px]' : 'text-sm';
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityLabel={label}
-      className={`h-14 flex-row items-center justify-center gap-2 rounded-[18px] active:opacity-80 ${container[variant]} ${className}`}
-      {...rest}
+      accessibilityState={{ disabled: !!disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      className={`flex-row items-center justify-center gap-2 rounded-[18px] ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
-      <Text className={`font-gs-bold text-base ${text[variant]}`}>{label}</Text>
-    </Pressable>
+      <Text className={`${weight} ${textSize} ${text[variant]}`}>{label}</Text>
+    </PressableScale>
   );
 }
