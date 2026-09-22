@@ -24,6 +24,7 @@ module.exports = {
       fontFamily: {
         gs: ['GoogleSans-Regular'],
         'gs-medium': ['GoogleSans-Medium'],
+        'gs-semibold': ['GoogleSans-SemiBold'],
         'gs-bold': ['GoogleSans-Bold'],
       },
     },

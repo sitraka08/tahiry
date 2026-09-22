@@ -1,13 +1,17 @@
 import '../global.css';
 
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
-import { THEME_NAMES, ThemeProvider, useThemeStore, type ThemeName } from '@/theme';
+import { FONTS, THEME_NAMES, ThemeProvider, useThemeStore, type ThemeName } from '@/theme';
+
+SplashScreen.preventAutoHideAsync();
 
 function boot() {
   migrate();
@@ -20,7 +24,14 @@ function boot() {
 
 export default function RootLayout() {
   const [ready] = useState(boot);
-  if (!ready) return null;
+  const [fontsLoaded, fontError] = useFonts(FONTS);
+  const loaded = ready && (fontsLoaded || !!fontError);
+
+  useEffect(() => {
+    if (loaded) SplashScreen.hideAsync();
+  }, [loaded]);
+
+  if (!loaded) return null;
 
   return (
     <GestureHandlerRootView className="flex-1">
