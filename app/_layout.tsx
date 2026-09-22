@@ -3,14 +3,20 @@ import '../global.css';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
-import { FONTS, THEME_NAMES, ThemeProvider, useThemeStore, type ThemeName } from '@/theme';
+import {
+  FONTS,
+  THEME_NAMES,
+  ThemeProvider,
+  ThemedStatusBar,
+  useThemeStore,
+  type ThemeName,
+} from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,7 +45,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <KeyboardProvider>
           <ThemeProvider>
-            <StatusBar style="auto" />
+            <ThemedStatusBar />
             <Stack
               screenOptions={{
                 headerShown: false,

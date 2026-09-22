@@ -2,6 +2,7 @@ export const THEME_NAMES = ['Citron', 'Nuit', 'Ciel', 'Pêche'] as const;
 export type ThemeName = (typeof THEME_NAMES)[number];
 
 export type ThemeTokens = {
+  mode: 'light' | 'dark';
   bg: string;
   card: string;
   tile: string;
@@ -19,6 +20,7 @@ export type ThemeTokens = {
 
 export const THEMES: Record<ThemeName, ThemeTokens> = {
   Citron: {
+    mode: 'light',
     bg: '#FCFDF0',
     card: '#EFF1DD',
     tile: '#FFFFFF',
@@ -34,6 +36,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     danger: '#B3261E',
   },
   Nuit: {
+    mode: 'dark',
     bg: '#121212',
     card: '#1F201B',
     tile: '#2E3029',
@@ -49,6 +52,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     danger: '#F2B8B5',
   },
   Ciel: {
+    mode: 'light',
     bg: '#F3F8FC',
     card: '#E3EDF5',
     tile: '#FFFFFF',
@@ -64,6 +68,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     danger: '#B3261E',
   },
   Pêche: {
+    mode: 'light',
     bg: '#FFF6EF',
     card: '#F8E6D8',
     tile: '#FFFFFF',
