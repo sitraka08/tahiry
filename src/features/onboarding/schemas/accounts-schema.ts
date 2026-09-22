@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const draftSchema = z.object({
-  type: z.enum(['bank', 'mobile', 'cash']),
-  name: z.string().trim().min(1, 'Donne un nom'),
+  type: z.enum(['bank', 'mobile', 'cash', 'group']),
+  name: z.string().trim().min(1, 'Donne un nom à chaque compte'),
   balance: z.string(),
 });
 

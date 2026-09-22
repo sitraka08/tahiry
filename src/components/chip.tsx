@@ -5,10 +5,11 @@ type Props = {
   selected?: boolean;
   onPress?: () => void;
   dashed?: boolean;
+  large?: boolean;
 };
 
-export function Chip({ label, selected = false, onPress, dashed = false }: Props) {
-  const base = 'h-9 justify-center rounded-full px-3 active:opacity-80';
+export function Chip({ label, selected = false, onPress, dashed = false, large = false }: Props) {
+  const base = `${large ? 'h-10 px-3.5' : 'h-9 px-3'} justify-center rounded-full active:opacity-80`;
   const tone = selected
     ? 'bg-dark'
     : dashed

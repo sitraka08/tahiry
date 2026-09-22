@@ -1,112 +1,182 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {
+  ArrowRight,
+  Banknote,
+  Landmark,
+  Smartphone,
+  Users,
+  type LucideIcon,
+} from 'lucide-react-native';
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { TextInput, View } from 'react-native';
+import Animated, { FadeInDown, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 
-import { AppText, Chip } from '@/components';
+import { AppText, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
+import { useThemeTokens } from '@/theme';
 
 import { accountsStepSchema, type AccountsStepValues } from '../schemas/accounts-schema';
-import type { AccountDraft } from '../types';
+import type { AccountDraft, AccountKind } from '../types';
 import { OnboardingShell } from './onboarding-shell';
+import { OptionCard } from './option-card';
 
-const KINDS: { type: AccountDraft['type']; label: string; placeholder: string }[] = [
-  { type: 'bank', label: 'Banque', placeholder: 'Ma banque' },
-  { type: 'mobile', label: 'Mobile Money', placeholder: 'Mon mobile money' },
-  { type: 'cash', label: 'Espèces', placeholder: 'Espèces' },
+const KINDS: { type: AccountKind; label: string; base: string; icon: LucideIcon }[] = [
+  { type: 'bank', label: 'Banque', base: 'Banque', icon: Landmark },
+  { type: 'mobile', label: 'Mobile Money', base: 'Mobile Money', icon: Smartphone },
+  { type: 'cash', label: 'Espèces', base: 'Portefeuille', icon: Banknote },
+  { type: 'group', label: 'Épargne de groupe', base: 'Épargne de groupe', icon: Users },
 ];
 
 type Props = {
   initial: AccountDraft[];
   onSubmit: (accounts: AccountDraft[]) => void;
   onSkip: () => void;
+  onBack: () => void;
 };
 
-export function AccountsStep({ initial, onSubmit, onSkip }: Props) {
+function RowIcon({ type }: { type: AccountKind }) {
+  const t = useThemeTokens();
+  const Icon = KINDS.find((k) => k.type === type)?.icon ?? Banknote;
+  const tone = {
+    bank: { bg: t.accent, fg: t.onAccent },
+    mobile: { bg: t.dark, fg: t.onDark },
+    cash: { bg: t.tile, fg: t.ink },
+    group: { bg: t.tile, fg: t.ink },
+  }[type];
+  return (
+    <View
+      style={{ backgroundColor: tone.bg }}
+      className="size-9 items-center justify-center rounded-[11px]"
+    >
+      <Icon size={18} color={tone.fg} strokeWidth={1.8} />
+    </View>
+  );
+}
+
+export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
+  const t = useThemeTokens();
   const { control, handleSubmit, formState } = useForm<AccountsStepValues>({
     resolver: zodResolver(accountsStepSchema),
-    defaultValues: {
-      accounts: initial.length ? initial : [{ type: 'cash', name: 'Espèces', balance: '' }],
-    },
+    defaultValues: { accounts: initial },
   });
   const { fields, append, remove } = useFieldArray({ control, name: 'accounts' });
+  const values = useWatch({ control, name: 'accounts' });
+
+  const countOf = (type: AccountKind) => values.filter((a) => a.type === type).length;
+
+  const nameFor = (type: AccountKind) => {
+    const kind = KINDS.find((k) => k.type === type);
+    const n = countOf(type);
+    return n === 0 ? (kind?.base ?? '') : `${kind?.base} ${n + 1}`;
+  };
+
+  const add = (type: AccountKind) => append({ type, name: nameFor(type), balance: '' });
+
+  const toggle = (type: AccountKind) => {
+    if (countOf(type) === 0) return add(type);
+    const indexes = values.flatMap((a, i) => (a.type === type ? [i] : []));
+    remove(indexes);
+  };
+
+  const rows = KINDS.reduce<(typeof KINDS)[]>((acc, k, i) => {
+    if (i % 2 === 0) acc.push([k]);
+    else acc[acc.length - 1].push(k);
+    return acc;
+  }, []);
+
+  const error =
+    formState.errors.accounts?.root?.message ??
+    formState.errors.accounts?.find?.((e) => e?.name)?.name?.message;
 
   return (
     <OnboardingShell
-      step={0}
-      title="Où gardes-tu ton argent ?"
-      subtitle="Ajoute tes comptes et leur solde actuel. Tu pourras en ajouter d’autres plus tard."
-      actionLabel="Continuer"
-      onAction={handleSubmit((v) => onSubmit(v.accounts))}
-      onSkip={onSkip}
+      step={1}
+      onBack={onBack}
+      headerRight={{ kind: 'skip', onPress: onSkip }}
+      title={<Headline lead="Où gardes-tu " highlight="ton argent" tail=" ?" />}
+      subtitle="Choisis tout ce que tu utilises."
+      footer={
+        <Button
+          label="Continuer"
+          icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
+          onPress={handleSubmit((v) => onSubmit(v.accounts))}
+        />
+      }
     >
-      <View className="flex-row flex-wrap gap-1.5">
-        {KINDS.map((k) => (
-          <Chip
-            key={k.type}
-            label={`+ ${k.label}`}
-            dashed
-            onPress={() => append({ type: k.type, name: '', balance: '' })}
-          />
+      <View className="mt-4 gap-2">
+        {rows.map((pair) => (
+          <View key={pair[0].type} className="flex-row gap-2">
+            {pair.map((k) => (
+              <OptionCard
+                key={k.type}
+                variant="type"
+                label={k.label}
+                selected={countOf(k.type) > 0}
+                onPress={() => toggle(k.type)}
+              />
+            ))}
+          </View>
         ))}
       </View>
 
-      {fields.map((field, index) => {
-        const kind = KINDS.find((k) => k.type === field.type) ?? KINDS[0];
-        const nameError = formState.errors.accounts?.[index]?.name?.message;
-        return (
-          <View key={field.id} className="gap-2 rounded-[18px] bg-card p-3">
-            <View className="flex-row items-center justify-between">
-              <AppText weight="medium" className="text-xs text-muted">
-                {kind.label}
-              </AppText>
-              {fields.length > 1 ? (
-                <AppText weight="medium" className="text-xs" onPress={() => remove(index)}>
-                  Retirer
-                </AppText>
-              ) : null}
-            </View>
+      <AppText weight="bold" className="mt-[22px] text-[17px]">
+        Tes comptes et leur solde actuel
+      </AppText>
+      <AppText className="mt-1 text-[13px] text-muted">
+        Renomme-les comme tu veux. Tu peux en ajouter plusieurs.
+      </AppText>
+
+      <View className="mt-2.5 gap-1.5">
+        {fields.map((field, index) => (
+          <Animated.View
+            key={field.id}
+            entering={FadeInDown.duration(280)}
+            exiting={FadeOutLeft.duration(180)}
+            layout={LinearTransition.duration(220)}
+            className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2"
+          >
+            <RowIcon type={field.type} />
             <Controller
               control={control}
               name={`accounts.${index}.name`}
               render={({ field: f }) => (
                 <TextInput
                   accessibilityLabel="Nom du compte"
-                  placeholder={kind.placeholder}
-                  placeholderTextColor="#8A8D78"
                   value={f.value}
                   onChangeText={f.onChange}
-                  className="h-11 rounded-xl bg-tile px-3 font-gs text-[15px] text-ink"
+                  numberOfLines={1}
+                  className="h-10 flex-1 p-0 font-gs-medium text-sm text-ink"
                 />
               )}
             />
-            {nameError ? <AppText className="text-xs text-danger">{nameError}</AppText> : null}
             <Controller
               control={control}
               name={`accounts.${index}.balance`}
               render={({ field: f }) => (
-                <View className="h-11 flex-row items-center rounded-xl bg-tile px-3">
-                  <TextInput
-                    accessibilityLabel="Solde"
-                    placeholder="Solde actuel"
-                    placeholderTextColor="#8A8D78"
-                    keyboardType="number-pad"
-                    value={f.value}
-                    onChangeText={(text) => {
-                      const n = parseAmount(text);
-                      f.onChange(n ? formatNumber(n) : '');
-                    }}
-                    className="flex-1 font-gs text-[15px] text-ink"
-                  />
-                  <AppText className="text-sm text-muted">Ar</AppText>
-                </View>
+                <TextInput
+                  accessibilityLabel={`Solde de ${values[index]?.name ?? 'ce compte'}`}
+                  placeholder="0 Ar"
+                  placeholderTextColor={t.muted}
+                  keyboardType="number-pad"
+                  value={f.value}
+                  onChangeText={(text) => {
+                    const n = parseAmount(text);
+                    f.onChange(n ? formatNumber(n) : '');
+                  }}
+                  className="h-10 w-28 rounded-xl bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
+                />
               )}
             />
-          </View>
-        );
-      })}
-      {formState.errors.accounts?.root?.message ? (
-        <AppText className="text-xs text-danger">{formState.errors.accounts.root.message}</AppText>
-      ) : null}
+          </Animated.View>
+        ))}
+      </View>
+
+      {error ? <AppText className="mt-2 text-xs text-danger">{error}</AppText> : null}
+
+      <View className="mt-2 flex-row flex-wrap gap-2">
+        <Chip large dashed label="+ Une banque" onPress={() => add('bank')} />
+        <Chip large dashed label="+ Un mobile money" onPress={() => add('mobile')} />
+      </View>
     </OnboardingShell>
   );
 }

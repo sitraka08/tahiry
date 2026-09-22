@@ -10,8 +10,12 @@ type State = {
 };
 
 export const useOnboardingStore = create<State>((set) => ({
-  accounts: [],
-  prefs: { goals: [], frequency: 'weekly', monthlyBudget: '' },
+  accounts: [
+    { type: 'bank', name: 'Banque', balance: '' },
+    { type: 'mobile', name: 'Mobile Money', balance: '' },
+    { type: 'cash', name: 'Portefeuille', balance: '' },
+  ],
+  prefs: { goals: ['where', 'bills'], frequency: 'week', monthlyBudget: '' },
   setAccounts: (accounts) => set({ accounts }),
   setPrefs: (prefs) => set({ prefs }),
 }));

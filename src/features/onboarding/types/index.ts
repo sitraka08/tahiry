@@ -1,7 +1,9 @@
-export type AccountDraft = { type: 'bank' | 'mobile' | 'cash'; name: string; balance: string };
+export type AccountKind = 'bank' | 'mobile' | 'cash' | 'group';
 
-export type Goal = 'track' | 'save' | 'budget' | 'debts';
-export type Frequency = 'weekly' | 'monthly' | 'never';
+export type AccountDraft = { type: AccountKind; name: string; balance: string };
+
+export type Goal = 'where' | 'bills' | 'save' | 'debts' | 'budget';
+export type Frequency = 'day' | 'week' | 'never';
 
 export type OnboardingPrefs = {
   goals: Goal[];

@@ -1,63 +1,79 @@
+import { ChevronLeft } from 'lucide-react-native';
 import type { ReactNode } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Button } from '@/components';
+import { AppText, IconButton } from '@/components';
+
+import { ProgressSegments } from './progress-segments';
 
 type Props = {
-  title: string;
-  subtitle?: string;
   step: number;
-  total?: number;
-  actionLabel: string;
-  onAction: () => void;
-  onSkip?: () => void;
-  children: ReactNode;
+  title: ReactNode;
+  subtitle?: string;
+  headerRight?: { kind: 'skip'; onPress: () => void } | { kind: 'badge'; label: string };
+  onBack: () => void;
+  footer: ReactNode;
+  children?: ReactNode;
 };
 
 export function OnboardingShell({
+  step,
   title,
   subtitle,
-  step,
-  total = 3,
-  actionLabel,
-  onAction,
-  onSkip,
+  headerRight,
+  onBack,
+  footer,
   children,
 }: Props) {
   return (
     <SafeAreaView className="flex-1">
-      <View className="flex-row items-center justify-between px-6 pt-5">
-        <View className="flex-row gap-1.5">
-          {Array.from({ length: total }, (_, i) => (
-            <View
-              key={i}
-              className={`h-2 rounded-full ${i === step ? 'w-6 bg-dark' : 'w-2 bg-line'}`}
-            />
-          ))}
-        </View>
-        {onSkip ? (
-          <AppText weight="medium" className="py-2 text-sm" onPress={onSkip}>
-            Passer
-          </AppText>
+      <View className="flex-row items-center gap-3.5 px-5 pt-5">
+        <IconButton icon={ChevronLeft} label="Retour" onPress={onBack} />
+        <ProgressSegments step={step} />
+        {headerRight?.kind === 'skip' ? (
+          <Pressable
+            accessibilityRole="button"
+            onPress={headerRight.onPress}
+            className="min-h-11 justify-center"
+          >
+            <AppText weight="medium" className="text-sm">
+              Passer
+            </AppText>
+          </Pressable>
+        ) : null}
+        {headerRight?.kind === 'badge' ? (
+          <View className="rounded-full bg-accent px-2.5 py-[5px]">
+            <AppText weight="bold" className="text-xs text-on-accent">
+              {headerRight.label}
+            </AppText>
+          </View>
         ) : null}
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerClassName="px-6 pb-6 pt-5 gap-4"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="gap-2">
-          <AppText weight="bold" className="text-[28px] leading-[34px]">
+
+      <KeyboardAvoidingView behavior="padding" className="flex-1">
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerClassName="px-5 pb-6"
+        >
+          <Animated.View entering={FadeInDown.duration(450)} className="mt-[18px]">
             {title}
-          </AppText>
-          {subtitle ? <AppText className="text-base text-muted">{subtitle}</AppText> : null}
-        </View>
-        {children}
-      </ScrollView>
-      <View className="px-6 pb-7">
-        <Button label={actionLabel} onPress={onAction} />
-      </View>
+            {subtitle ? (
+              <AppText className="mt-2 text-[15px] leading-[22px] text-muted">{subtitle}</AppText>
+            ) : null}
+          </Animated.View>
+          <Animated.View entering={FadeInDown.delay(120).duration(450)}>{children}</Animated.View>
+        </ScrollView>
+        <Animated.View
+          entering={FadeInDown.delay(240).duration(450)}
+          className="gap-2 px-5 pb-7 pt-2"
+        >
+          {footer}
+        </Animated.View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

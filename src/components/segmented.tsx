@@ -22,7 +22,7 @@ export function Segmented<T extends string>({ options, value, onChange }: Props<
             className={`h-10 flex-1 items-center justify-center rounded-xl ${active ? 'bg-dark' : ''}`}
           >
             <Text
-              className={`text-sm ${active ? 'font-gs-bold text-accent' : 'font-gs-medium text-ink'}`}
+              className={`text-[13px] ${active ? 'font-gs-bold text-accent' : 'font-gs-medium text-ink'}`}
             >
               {o.label}
             </Text>
