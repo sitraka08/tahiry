@@ -26,3 +26,9 @@ export function monthKey(ts: number) {
 export function startOfDayKey(ts: number) {
   return format(ts, 'yyyy-MM-dd');
 }
+
+export function formatDateChip(ts: number) {
+  return isToday(ts)
+    ? `Auj. ${formatTime(ts)}`
+    : `${format(ts, 'd MMM', { locale: fr })} · ${formatTime(ts)}`;
+}

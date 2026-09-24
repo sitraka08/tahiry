@@ -12,7 +12,7 @@ import { useCategories, createCategory } from '../hooks/use-categories';
 import { transactionSchema, type TransactionFormValues } from '../schemas/transaction-schema';
 import type { AccountOption, TransactionType } from '../types';
 import { AmountInput } from './amount-input';
-import { formatTime } from '@/lib/dates';
+import { formatDateChip } from '@/lib/dates';
 
 const TYPES: { value: TransactionType; label: string }[] = [
   { value: 'out', label: 'Dépense' },
@@ -20,9 +20,19 @@ const TYPES: { value: TransactionType; label: string }[] = [
   { value: 'transfer', label: 'Transfert' },
 ];
 
-type Props = { accounts: AccountOption[]; onSubmit: (values: TransactionFormValues) => void };
+type Props = {
+  accounts: AccountOption[];
+  onSubmit: (values: TransactionFormValues) => void;
+  initialValues?: Partial<TransactionFormValues>;
+  submitLabel?: string;
+};
 
-export function TransactionForm({ accounts, onSubmit }: Props) {
+export function TransactionForm({
+  accounts,
+  onSubmit,
+  initialValues,
+  submitLabel = 'Enregistrer',
+}: Props) {
   const t = useThemeTokens();
   const sheetRef = useRef<SheetMethods>(null);
   const [newCategory, setNewCategory] = useState('');
@@ -41,6 +51,7 @@ export function TransactionForm({ accounts, onSubmit }: Props) {
       note: '',
       date: now,
       recurring: false,
+      ...initialValues,
     },
   });
   const type = useWatch({ control, name: 'type' });
@@ -197,7 +208,7 @@ export function TransactionForm({ accounts, onSubmit }: Props) {
           />
           <View className="h-11 flex-row items-center gap-1.5 rounded-[14px] bg-card px-3">
             <Calendar size={16} color={t.ink} strokeWidth={1.8} />
-            <AppText className="text-[13px]">Auj. {formatTime(now)}</AppText>
+            <AppText className="text-[13px]">{formatDateChip(initialValues?.date ?? now)}</AppText>
           </View>
         </View>
 
@@ -220,7 +231,7 @@ export function TransactionForm({ accounts, onSubmit }: Props) {
 
       <View className="absolute inset-x-5 bottom-6">
         <Button
-          label="Enregistrer"
+          label={submitLabel}
           variant="accent"
           icon={<Check size={20} color={t.onAccent} strokeWidth={2} />}
           onPress={handleSubmit(onSubmit)}
