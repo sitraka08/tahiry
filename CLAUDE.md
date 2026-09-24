@@ -110,5 +110,6 @@ src/constants/
 - Conventional Commits in English, imperative mood: `feat(scope): add ...`, `fix(scope): ...`, `chore:`, `refactor:`, `docs:`, `test:`.
 - Scope is the feature or area (`accounts`, `db`, `ui`, `theme`).
 - One commit per feature or fix. Each commit passes typecheck, lint and tests.
+- Split a feature into several commits, in this order: data layer (schema, queries, actions, pure logic with tests), UI components, screen and wiring. Never one big commit per feature.
 - Name files correctly from the start. Do not rename in a follow-up commit.
 - Develop on the assigned branch. No PR unless asked. Never force-push unless asked.
