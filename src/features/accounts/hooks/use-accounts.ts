@@ -27,6 +27,10 @@ export function useAccounts() {
         type: accounts.type,
         name: accounts.name,
         detail: accounts.detail,
+        initialBalance: accounts.initialBalance,
+        lastActivity: sql<
+          number | null
+        >`(SELECT MAX(t.date) FROM transactions t WHERE t.account_id = ${accounts.id} OR t.to_account_id = ${accounts.id})`,
         position: accounts.position,
         countedAt: accounts.countedAt,
         archived: accounts.archived,

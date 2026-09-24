@@ -1,4 +1,4 @@
-import { format, isToday, isYesterday } from 'date-fns';
+import { differenceInCalendarDays, format, isToday, isYesterday } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 export function formatTime(ts: number) {
@@ -31,4 +31,15 @@ export function formatDateChip(ts: number) {
   return isToday(ts)
     ? `Auj. ${formatTime(ts)}`
     : `${format(ts, 'd MMM', { locale: fr })} · ${formatTime(ts)}`;
+}
+
+export function formatUpdated(ts: number | null, counted = false) {
+  if (ts == null) return counted ? 'Jamais compté' : 'Aucune opération';
+  if (isToday(ts))
+    return `${counted ? 'Compté ' : ''}aujourd’hui ${formatTime(ts)}`.replace(/^./, (c) =>
+      c.toUpperCase(),
+    );
+  if (isYesterday(ts)) return counted ? 'Compté hier' : `Hier ${formatTime(ts)}`;
+  const days = differenceInCalendarDays(Date.now(), ts);
+  return counted ? `Compté il y a ${days} j` : `Il y a ${days} j`;
 }

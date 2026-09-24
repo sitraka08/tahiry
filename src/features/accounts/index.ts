@@ -1,5 +1,8 @@
 export { AccountChip } from './components/account-chip';
+export { AccountRow } from './components/account-row';
+export { AccountSheet } from './components/account-sheet';
 export { AccountTypeIcon } from './components/account-type-icon';
+export { AccountsDonut } from './components/accounts-donut';
 export {
   archiveAccount,
   createAccount,
