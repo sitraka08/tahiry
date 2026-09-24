@@ -11,11 +11,13 @@ export type TransactionItem = {
   toAccountId: number | null;
   categoryId: number | null;
   accountName: string;
+  toAccountName: string | null;
   categoryLabel: string | null;
 };
 
 export type TransactionFilter = {
   type?: TransactionType;
+  accountId?: number;
   search?: string;
   limit?: number;
 };

@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 
 type Props = {
   lead: string;
-  highlight: string;
+  highlight?: string;
   tail?: string;
   size?: 'md' | 'lg';
 };
@@ -17,9 +17,11 @@ export function Headline({ lead, highlight, tail = '', size = 'md' }: Props) {
   return (
     <Text accessibilityRole="header" style={style} className="font-gs-bold text-ink">
       {lead}
-      <Text style={style} className="bg-accent font-gs-bold text-on-accent">
-        {` ${highlight} `}
-      </Text>
+      {highlight ? (
+        <Text style={style} className="bg-accent font-gs-bold text-on-accent">
+          {`\u00A0${highlight}\u00A0`}
+        </Text>
+      ) : null}
       {tail}
     </Text>
   );

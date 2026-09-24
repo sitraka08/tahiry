@@ -1,4 +1,5 @@
 import { and, desc, eq, like, or, sql } from 'drizzle-orm';
+import { alias } from 'drizzle-orm/sqlite-core';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo } from 'react';
 
@@ -7,22 +8,10 @@ import { formatDayLabel, startOfDayKey } from '@/lib/dates';
 
 import type { DayGroup, TransactionFilter, TransactionItem } from '../types';
 
-export function useTransactions(filter: TransactionFilter = {}) {
-  const { type, search, limit } = filter;
-  const term = search?.trim();
+const toAccount = alias(accounts, 'to_account');
 
-  const conditions = [
-    type ? eq(transactions.type, type) : undefined,
-    term
-      ? or(
-          like(transactions.note, `%${term}%`),
-          like(categories.label, `%${term}%`),
-          like(accounts.name, `%${term}%`),
-        )
-      : undefined,
-  ].filter(Boolean);
-
-  let query = db
+function selectTransactions() {
+  return db
     .select({
       id: transactions.id,
       type: transactions.type,
@@ -34,17 +23,40 @@ export function useTransactions(filter: TransactionFilter = {}) {
       toAccountId: transactions.toAccountId,
       categoryId: transactions.categoryId,
       accountName: accounts.name,
+      toAccountName: toAccount.name,
       categoryLabel: categories.label,
     })
     .from(transactions)
     .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+    .leftJoin(toAccount, eq(transactions.toAccountId, toAccount.id))
     .leftJoin(categories, eq(transactions.categoryId, categories.id))
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(desc(transactions.date), desc(transactions.id))
     .$dynamic();
+}
+
+export function useTransactions(filter: TransactionFilter = {}) {
+  const { type, accountId, search, limit } = filter;
+  const term = search?.trim();
+
+  const conditions = [
+    type ? eq(transactions.type, type) : undefined,
+    accountId != null
+      ? or(eq(transactions.accountId, accountId), eq(transactions.toAccountId, accountId))
+      : undefined,
+    term
+      ? or(
+          like(transactions.note, `%${term}%`),
+          like(categories.label, `%${term}%`),
+          like(accounts.name, `%${term}%`),
+        )
+      : undefined,
+  ].filter(Boolean);
+
+  let query = selectTransactions()
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(desc(transactions.date), desc(transactions.id));
   if (limit) query = query.limit(limit);
 
-  const { data } = useLiveQuery(query, [type, term, limit]);
+  const { data } = useLiveQuery(query, [type, accountId, term, limit]);
 
   const groups = useMemo(() => {
     const map = new Map<string, DayGroup>();
@@ -61,27 +73,7 @@ export function useTransactions(filter: TransactionFilter = {}) {
 }
 
 export function useTransaction(id: number) {
-  const { data } = useLiveQuery(
-    db
-      .select({
-        id: transactions.id,
-        type: transactions.type,
-        amount: transactions.amount,
-        note: transactions.note,
-        date: transactions.date,
-        receiptUri: transactions.receiptUri,
-        accountId: transactions.accountId,
-        toAccountId: transactions.toAccountId,
-        categoryId: transactions.categoryId,
-        accountName: accounts.name,
-        categoryLabel: categories.label,
-      })
-      .from(transactions)
-      .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-      .leftJoin(categories, eq(transactions.categoryId, categories.id))
-      .where(eq(transactions.id, id)),
-    [id],
-  );
+  const { data } = useLiveQuery(selectTransactions().where(eq(transactions.id, id)), [id]);
   return (data[0] as TransactionItem | undefined) ?? null;
 }
 

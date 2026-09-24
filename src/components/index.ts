@@ -7,5 +7,6 @@ export { Headline } from './headline';
 export { IconButton } from './icon-button';
 export { PressableScale } from './pressable-scale';
 export { ProgressBar } from './progress-bar';
+export { SearchInput } from './search-input';
 export { ScreenHeader } from './screen-header';
 export { Segmented } from './segmented';

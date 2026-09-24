@@ -23,7 +23,7 @@ export function Chip({ label, selected = false, onPress, dashed = false, large =
       onPress={onPress}
       className={`${base} ${tone}`}
     >
-      <Text className={`text-[13px] ${textTone}`}>{label}</Text>
+      <Text className={`${large ? 'text-sm' : 'text-[13px]'} ${textTone}`}>{label}</Text>
     </Pressable>
   );
 }

@@ -8,7 +8,7 @@ export function formatTime(ts: number) {
 export function formatDayLabel(ts: number) {
   if (isToday(ts)) return 'Aujourd’hui';
   if (isYesterday(ts)) return 'Hier';
-  return format(ts, 'EEEE d MMMM', { locale: fr });
+  return format(ts, 'EEE d MMM', { locale: fr });
 }
 
 export function formatShortDate(ts: number) {

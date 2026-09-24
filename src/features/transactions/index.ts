@@ -1,3 +1,5 @@
+export { PeriodSummary } from './components/period-summary';
+export { TransactionList } from './components/transaction-list';
 export { TransactionRow } from './components/transaction-row';
 export { createCategory, useCategories } from './hooks/use-categories';
 export { createTransaction, deleteTransaction, setReceipt } from './hooks/use-transaction-actions';
