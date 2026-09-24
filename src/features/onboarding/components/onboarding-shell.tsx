@@ -2,7 +2,7 @@ import { ChevronLeft } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, IconButton } from '@/components';
@@ -29,7 +29,7 @@ export function OnboardingShell({
   children,
 }: Props) {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView style={{ flex: 1 }}>
       <View className="flex-row items-center gap-3.5 px-5 pt-5">
         <IconButton icon={ChevronLeft} label="Retour" onPress={onBack} />
         <ProgressSegments step={step} />
@@ -53,26 +53,24 @@ export function OnboardingShell({
         ) : null}
       </View>
 
-      <KeyboardAvoidingView behavior="padding" className="flex-1">
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView
+          style={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerClassName="px-5 pb-6"
         >
-          <Animated.View entering={FadeInDown.duration(450)} className="mt-[18px]">
-            {title}
-            {subtitle ? (
-              <AppText className="mt-2 text-[15px] leading-[22px] text-muted">{subtitle}</AppText>
-            ) : null}
+          <Animated.View entering={FadeIn.duration(250)}>
+            <View className="mt-[18px]">
+              {title}
+              {subtitle ? (
+                <AppText className="mt-2 text-[15px] leading-[22px] text-muted">{subtitle}</AppText>
+              ) : null}
+            </View>
+            {children}
           </Animated.View>
-          <Animated.View entering={FadeInDown.delay(120).duration(450)}>{children}</Animated.View>
         </ScrollView>
-        <Animated.View
-          entering={FadeInDown.delay(240).duration(450)}
-          className="gap-2 px-5 pb-7 pt-2"
-        >
-          {footer}
-        </Animated.View>
+        <View className="gap-2 px-5 pb-7 pt-2">{footer}</View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

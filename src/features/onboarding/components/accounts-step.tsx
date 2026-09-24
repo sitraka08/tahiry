@@ -9,7 +9,7 @@ import {
 } from 'lucide-react-native';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { TextInput, View } from 'react-native';
-import Animated, { FadeInDown, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { AppText, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
@@ -130,9 +130,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
         {fields.map((field, index) => (
           <Animated.View
             key={field.id}
-            entering={FadeInDown.duration(280)}
-            exiting={FadeOutLeft.duration(180)}
-            layout={LinearTransition.duration(220)}
+            entering={FadeIn.duration(200)}
             className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2"
           >
             <RowIcon type={field.type} />

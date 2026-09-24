@@ -2,7 +2,6 @@ import { Check } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
-  ZoomIn,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
@@ -24,7 +23,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
   const progress = useSharedValue(selected ? 1 : 0);
 
   useEffect(() => {
-    progress.set(withTiming(selected ? 1 : 0, { duration: 220 }));
+    progress.set(withTiming(selected ? 1 : 0, { duration: 150 }));
   }, [progress, selected]);
 
   const box = useAnimatedStyle(() => ({
@@ -51,11 +50,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
         <View
           className={`size-[22px] items-center justify-center rounded-[7px] ${selected ? 'bg-accent' : 'border-[1.5px] border-seg3'}`}
         >
-          {selected ? (
-            <Animated.View entering={ZoomIn.duration(180)}>
-              <Check size={14} color={t.onAccent} strokeWidth={3} />
-            </Animated.View>
-          ) : null}
+          {selected ? <Check size={14} color={t.onAccent} strokeWidth={3} /> : null}
         </View>
         <Animated.Text
           style={text}
