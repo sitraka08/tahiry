@@ -12,7 +12,7 @@ export function formatDayLabel(ts: number) {
 }
 
 export function formatShortDate(ts: number) {
-  return format(ts, 'd MMM', { locale: fr });
+  return format(ts, 'do MMM', { locale: fr });
 }
 
 export function formatLongDate(ts: number) {
