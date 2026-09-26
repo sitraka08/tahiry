@@ -2,8 +2,8 @@ import { ChevronLeft } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import Animated, { FadeIn } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText, IconButton } from '@/components';
 
@@ -28,8 +28,10 @@ export function OnboardingShell({
   footer,
   children,
 }: Props) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingTop: insets.top }}>
       <View className="flex-row items-center gap-3.5 px-5 pt-5">
         <IconButton icon={ChevronLeft} label="Retour" onPress={onBack} />
         <ProgressSegments step={step} />
@@ -60,18 +62,23 @@ export function OnboardingShell({
           showsVerticalScrollIndicator={false}
           contentContainerClassName="px-5 pb-6"
         >
-          <Animated.View entering={FadeIn.duration(250)}>
+          <Animated.View entering={FadeInDown.duration(320)}>
             <View className="mt-[18px]">
               {title}
               {subtitle ? (
                 <AppText className="mt-2 text-[15px] leading-[22px] text-muted">{subtitle}</AppText>
               ) : null}
             </View>
-            {children}
           </Animated.View>
+          <Animated.View entering={FadeInDown.delay(80).duration(320)}>{children}</Animated.View>
         </ScrollView>
-        <View className="gap-2 px-5 pb-7 pt-2">{footer}</View>
+        <Animated.View
+          entering={FadeInDown.delay(140).duration(320)}
+          style={{ paddingBottom: Math.max(insets.bottom + 12, 28), paddingTop: 8 }}
+        >
+          <View className="gap-2 px-5">{footer}</View>
+        </Animated.View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 }

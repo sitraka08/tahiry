@@ -9,7 +9,7 @@ import {
 } from 'lucide-react-native';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { TextInput, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 
 import { AppText, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
@@ -131,40 +131,43 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
           <Animated.View
             key={field.id}
             entering={FadeIn.duration(200)}
-            className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2"
+            exiting={FadeOut.duration(140)}
+            layout={LinearTransition.duration(200)}
           >
-            <RowIcon type={field.type} />
-            <Controller
-              control={control}
-              name={`accounts.${index}.name`}
-              render={({ field: f }) => (
-                <TextInput
-                  accessibilityLabel="Nom du compte"
-                  value={f.value}
-                  onChangeText={f.onChange}
-                  numberOfLines={1}
-                  className="h-10 flex-1 p-0 font-gs-medium text-sm text-ink"
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name={`accounts.${index}.balance`}
-              render={({ field: f }) => (
-                <TextInput
-                  accessibilityLabel={`Solde de ${values[index]?.name ?? 'ce compte'}`}
-                  placeholder="0 Ar"
-                  placeholderTextColor={t.muted}
-                  keyboardType="number-pad"
-                  value={f.value}
-                  onChangeText={(text) => {
-                    const n = parseAmount(text);
-                    f.onChange(n ? formatNumber(n) : '');
-                  }}
-                  className="h-10 w-28 rounded-xl bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
-                />
-              )}
-            />
+            <View className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2">
+              <RowIcon type={field.type} />
+              <Controller
+                control={control}
+                name={`accounts.${index}.name`}
+                render={({ field: f }) => (
+                  <TextInput
+                    accessibilityLabel="Nom du compte"
+                    value={f.value}
+                    onChangeText={f.onChange}
+                    numberOfLines={1}
+                    className="h-10 flex-1 p-0 font-gs-medium text-sm text-ink"
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name={`accounts.${index}.balance`}
+                render={({ field: f }) => (
+                  <TextInput
+                    accessibilityLabel={`Solde de ${values[index]?.name ?? 'ce compte'}`}
+                    placeholder="0 Ar"
+                    placeholderTextColor={t.muted}
+                    keyboardType="number-pad"
+                    value={f.value}
+                    onChangeText={(text) => {
+                      const n = parseAmount(text);
+                      f.onChange(n ? formatNumber(n) : '');
+                    }}
+                    className="h-10 w-28 rounded-xl bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
+                  />
+                )}
+              />
+            </View>
           </Animated.View>
         ))}
       </View>
