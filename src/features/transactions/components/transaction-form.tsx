@@ -6,6 +6,7 @@ import { ScrollView, Switch, TextInput, View } from 'react-native';
 
 import { AppSheet, AppText, Button, Chip, Segmented, type SheetMethods } from '@/components';
 import { formatNumber } from '@/lib/money';
+import { useBottomInset } from '@/lib/use-bottom-inset';
 import { useThemeTokens } from '@/theme';
 
 import { useCategories, createCategory } from '../hooks/use-categories';
@@ -34,6 +35,7 @@ export function TransactionForm({
   submitLabel = 'Enregistrer',
 }: Props) {
   const t = useThemeTokens();
+  const bottomInset = useBottomInset(16);
   const sheetRef = useRef<SheetMethods>(null);
   const [newCategory, setNewCategory] = useState('');
   const [now] = useState(Date.now);
@@ -229,7 +231,7 @@ export function TransactionForm({
         />
       </ScrollView>
 
-      <View className="absolute inset-x-5 bottom-6">
+      <View style={{ bottom: bottomInset + 8 }} className="absolute inset-x-5">
         <Button
           label={submitLabel}
           variant="accent"

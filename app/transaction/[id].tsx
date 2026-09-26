@@ -4,6 +4,7 @@ import { Alert, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, Button, IconButton, ScreenHeader } from '@/components';
+import { useBottomInset } from '@/lib/use-bottom-inset';
 import {
   TransactionDetail,
   deleteTransaction,
@@ -16,6 +17,7 @@ import {
 
 export default function TransactionScreen() {
   const router = useRouter();
+  const bottomInset = useBottomInset(16);
   const { id } = useLocalSearchParams<{ id: string }>();
   const txId = Number(id);
   const item = useTransaction(txId);
@@ -68,7 +70,7 @@ export default function TransactionScreen() {
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <TransactionDetail item={item} balanceAfter={balanceAfter} onPickReceipt={changeReceipt} />
       </ScrollView>
-      <View className="flex-row gap-2 px-5 pb-6 pt-2">
+      <View style={{ paddingBottom: bottomInset + 8 }} className="flex-row gap-2 px-5 pt-2">
         <View className="flex-1">
           <Button label="Dupliquer" variant="soft" size="md" onPress={duplicate} />
         </View>

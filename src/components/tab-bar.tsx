@@ -2,6 +2,7 @@ import { Link } from 'expo-router';
 import { TabList, TabTrigger, type TabTriggerSlotProps } from 'expo-router/ui';
 import { Bell, ChartColumn, Clock, House, Plus, type LucideIcon } from 'lucide-react-native';
 import { Pressable, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemeTokens } from '@/theme';
 
@@ -30,8 +31,12 @@ function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps) {
 
 export function TabBar() {
   const t = useThemeTokens();
+  const insets = useSafeAreaInsets();
   return (
-    <TabList className="h-[84px] flex-row items-center justify-around rounded-t-[26px] bg-dark px-3 pb-[18px] pt-2">
+    <TabList
+      style={{ minHeight: 84, paddingBottom: Math.max(insets.bottom, 18) }}
+      className="flex-row items-center justify-around rounded-t-[26px] bg-dark px-3 pt-2"
+    >
       <TabTrigger name="index" href="/" asChild>
         <TabButton icon={House} label="Accueil" />
       </TabTrigger>
