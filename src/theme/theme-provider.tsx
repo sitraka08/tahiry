@@ -27,12 +27,16 @@ export function useThemeTokens() {
   return THEMES[name];
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeScope({ children, className }: { children: ReactNode; className?: string }) {
   const tokens = useThemeTokens();
   const style = useMemo(() => toCssVars(tokens), [tokens]);
   return (
-    <View style={style} className="flex-1 bg-bg">
+    <View style={style} className={className}>
       {children}
     </View>
   );
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  return <ThemeScope className="flex-1 bg-bg">{children}</ThemeScope>;
 }
