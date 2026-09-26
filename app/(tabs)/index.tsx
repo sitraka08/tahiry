@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, Headline, IconButton } from '@/components';
 import { AccountChip, useAccounts } from '@/features/accounts';
+import { useDebts } from '@/features/debts';
 import { TransactionRow, useMonthTotals, useTransactions } from '@/features/transactions';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
@@ -18,6 +19,7 @@ export default function Home() {
   const fmt = useAmountMask();
   const { accounts, groups, total } = useAccounts();
   const { items } = useTransactions({ limit: 5 });
+  const { summary: debts } = useDebts();
   const [now] = useState(Date.now);
   const { income, expense } = useMonthTotals(now - 30 * DAY, now + DAY);
   const net = income - expense;
@@ -123,7 +125,9 @@ export default function Home() {
             <AppText weight="bold" className="text-[15px]">
               Dettes & prêts
             </AppText>
-            <AppText className="text-xs text-muted">Qui te doit, à qui tu dois</AppText>
+            <AppText className="text-xs text-muted">
+              On me doit {fmt(debts.owedToMe, false)} · Je dois {fmt(debts.iOwe, false)}
+            </AppText>
           </View>
           <ChevronRight size={18} color={t.ink} strokeWidth={2} />
         </Pressable>
