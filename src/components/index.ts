@@ -5,7 +5,7 @@ export { Card } from './card';
 export { Chip } from './chip';
 export { Headline } from './headline';
 export { IconButton } from './icon-button';
-export { PressableScale } from './pressable-scale';
+export { PressableFeedback } from './pressable-feedback';
 export { ProgressBar } from './progress-bar';
 export { SearchInput } from './search-input';
 export { ScreenHeader } from './screen-header';

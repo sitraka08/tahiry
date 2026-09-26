@@ -1,7 +1,7 @@
 import { ArrowDownLeft, ArrowLeftRight, ArrowUpRight, Camera } from 'lucide-react-native';
 import { Image, View } from 'react-native';
 
-import { AppText, PressableScale } from '@/components';
+import { AppText, PressableFeedback } from '@/components';
 import { formatLongDate } from '@/lib/dates';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
@@ -93,7 +93,7 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
         {item.note ? <Row label="Note" value={item.note} last /> : null}
       </View>
 
-      <PressableScale
+      <PressableFeedback
         accessibilityRole="button"
         accessibilityLabel={
           item.receiptUri ? 'Changer la photo du reçu' : 'Ajouter une photo du reçu'
@@ -111,7 +111,7 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
             </AppText>
           </>
         )}
-      </PressableScale>
+      </PressableFeedback>
     </View>
   );
 }

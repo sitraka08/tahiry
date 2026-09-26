@@ -1,6 +1,6 @@
 import { Linking, View } from 'react-native';
 
-import { AppText, PressableScale, ProgressBar } from '@/components';
+import { AppText, PressableFeedback, ProgressBar } from '@/components';
 import { formatShortDate } from '@/lib/dates';
 import { formatNumber } from '@/lib/money';
 import { useAmountMask } from '@/lib/use-amount-mask';
@@ -26,7 +26,7 @@ function Action({
   const box = { dark: 'bg-dark', light: 'bg-tile', accent: 'bg-accent' }[tone];
   const text = { dark: 'text-on-dark', light: 'text-ink', accent: 'text-on-accent' }[tone];
   return (
-    <PressableScale
+    <PressableFeedback
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={onPress}
@@ -35,7 +35,7 @@ function Action({
       <AppText weight={tone === 'accent' ? 'bold' : 'medium'} className={`text-[13px] ${text}`}>
         {label}
       </AppText>
-    </PressableScale>
+    </PressableFeedback>
   );
 }
 
@@ -60,11 +60,11 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
         : '';
 
   return (
-    <PressableScale
+    <PressableFeedback
       accessibilityRole="button"
       accessibilityHint="Appui long pour supprimer"
       onLongPress={() => onLongPress(debt)}
-      scaleTo={0.99}
+
       className={`gap-2.5 rounded-[20px] p-3.5 ${borrowed ? 'bg-dark' : 'bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
     >
       <View className="flex-row items-center gap-3">
@@ -111,6 +111,6 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
           />
         </View>
       )}
-    </PressableScale>
+    </PressableFeedback>
   );
 }

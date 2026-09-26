@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Text } from 'react-native';
 
-import { PressableScale } from './pressable-scale';
+import { PressableFeedback } from './pressable-feedback';
 
 type Variant = 'primary' | 'accent' | 'soft' | 'ghost' | 'danger';
 type Size = 'lg' | 'md' | 'sm';
@@ -46,7 +46,7 @@ export function Button({
   const weight = variant === 'soft' || variant === 'ghost' ? 'font-gs-medium' : 'font-gs-bold';
   const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px]' : 'text-sm';
   return (
-    <PressableScale
+    <PressableFeedback
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled: !!disabled }}
@@ -56,6 +56,6 @@ export function Button({
     >
       {icon}
       <Text className={`${weight} ${textSize} ${text[variant]}`}>{label}</Text>
-    </PressableScale>
+    </PressableFeedback>
   );
 }
