@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppText, Headline, IconButton } from '@/components';
 import { AccountChip, useAccounts } from '@/features/accounts';
 import { useDebts } from '@/features/debts';
+import { useReminders } from '@/features/reminders';
 import { TransactionRow, useMonthTotals, useTransactions } from '@/features/transactions';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
@@ -20,6 +21,7 @@ export default function Home() {
   const { accounts, groups, total } = useAccounts();
   const { items } = useTransactions({ limit: 5 });
   const { summary: debts } = useDebts();
+  const { pending } = useReminders();
   const [now] = useState(Date.now);
   const { income, expense } = useMonthTotals(now - 30 * DAY, now + DAY);
   const net = income - expense;
@@ -48,7 +50,12 @@ export default function Home() {
           </Pressable>
           <View className="flex-row gap-2">
             <IconButton icon={Settings} label="Réglages" onPress={() => router.push('/settings')} />
-            <IconButton icon={Bell} label="Rappels" onPress={() => router.push('/reminders')} />
+            <IconButton
+              icon={Bell}
+              label="Rappels"
+              badge={pending}
+              onPress={() => router.push('/reminders')}
+            />
           </View>
         </View>
 
