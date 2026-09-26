@@ -9,6 +9,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
+import { setupNotifications } from '@/lib/notifications';
 import {
   FONTS,
   THEME_NAMES,
@@ -22,6 +23,7 @@ SplashScreen.preventAutoHideAsync();
 
 function boot() {
   migrate();
+  setupNotifications();
   const saved = getSetting('theme');
   if (saved && THEME_NAMES.includes(saved as ThemeName)) {
     useThemeStore.getState().setTheme(saved as ThemeName);
