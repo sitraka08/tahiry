@@ -14,6 +14,7 @@ export type ThemeTokens = {
   onDark: string;
   darkMuted: string;
   line: string;
+  outline: string;
   seg3: string;
   danger: string;
 };
@@ -32,6 +33,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     onDark: '#FCFDF0',
     darkMuted: '#C9CBB8',
     line: '#E3E5D2',
+    outline: '#CDD0B4',
     seg3: '#7A7D6A',
     danger: '#B3261E',
   },
@@ -48,6 +50,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     onDark: '#F4F5E6',
     darkMuted: '#A9AC98',
     line: '#2A2B24',
+    outline: '#3F4037',
     seg3: '#6E7160',
     danger: '#F2B8B5',
   },
@@ -64,6 +67,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     onDark: '#F3F8FC',
     darkMuted: '#B8C6D2',
     line: '#D8E3EC',
+    outline: '#C2D2DF',
     seg3: '#5C6D7C',
     danger: '#B3261E',
   },
@@ -80,6 +84,7 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     onDark: '#FFF6EF',
     darkMuted: '#D9C2B4',
     line: '#EFDCCD',
+    outline: '#E5CBB6',
     seg3: '#8A6E60',
     danger: '#B3261E',
   },

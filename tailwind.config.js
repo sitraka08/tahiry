@@ -18,6 +18,7 @@ module.exports = {
         'on-dark': token('on-dark'),
         'dark-muted': token('dark-muted'),
         line: token('line'),
+        outline: token('outline'),
         seg3: token('seg3'),
         danger: token('danger'),
       },

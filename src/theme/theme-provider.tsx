@@ -18,6 +18,7 @@ const toCssVars = (t: ThemeTokens) =>
     '--on-dark': t.onDark,
     '--dark-muted': t.darkMuted,
     '--line': t.line,
+    '--outline': t.outline,
     '--seg3': t.seg3,
     '--danger': t.danger,
   });
