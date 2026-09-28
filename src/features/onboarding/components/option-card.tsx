@@ -31,7 +31,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       accessibilityLabel={label}
       onPress={onPress}
       className={`flex-row items-center overflow-hidden rounded-2xl bg-card ${
-        isType ? 'h-[60px] flex-1 gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
+        isType ? 'h-[60px] gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
       }`}
     >
       <Animated.View

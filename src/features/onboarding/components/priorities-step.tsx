@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react-native';
 import { useState } from 'react';
 import { TextInput, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { AppText, Button, Headline, Segmented } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
@@ -57,14 +58,15 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
       }
     >
       <View className="mt-4 gap-1.5">
-        {GOALS.map((g) => (
-          <OptionCard
-            key={g.value}
-            variant="goal"
-            label={g.label}
-            selected={prefs.goals.includes(g.value)}
-            onPress={() => toggle(g.value)}
-          />
+        {GOALS.map((g, i) => (
+          <Animated.View key={g.value} entering={FadeInDown.delay(120 + i * 50).duration(300)}>
+            <OptionCard
+              variant="goal"
+              label={g.label}
+              selected={prefs.goals.includes(g.value)}
+              onPress={() => toggle(g.value)}
+            />
+          </Animated.View>
         ))}
       </View>
 

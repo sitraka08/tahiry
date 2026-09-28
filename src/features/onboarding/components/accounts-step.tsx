@@ -9,7 +9,7 @@ import {
 } from 'lucide-react-native';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { TextInput, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown, FadeOut, LinearTransition } from 'react-native-reanimated';
 
 import { AppText, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
@@ -104,16 +104,21 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
       }
     >
       <View className="mt-4 gap-2">
-        {rows.map((pair) => (
+        {rows.map((pair, index) => (
           <View key={pair[0].type} className="flex-row gap-2">
-            {pair.map((k) => (
-              <OptionCard
+            {pair.map((k, i) => (
+              <Animated.View
                 key={k.type}
-                variant="type"
-                label={k.label}
-                selected={countOf(k.type) > 0}
-                onPress={() => toggle(k.type)}
-              />
+                entering={FadeInDown.delay(100 + (index * 2 + i) * 60).duration(300)}
+                style={{ flex: 1 }}
+              >
+                <OptionCard
+                  variant="type"
+                  label={k.label}
+                  selected={countOf(k.type) > 0}
+                  onPress={() => toggle(k.type)}
+                />
+              </Animated.View>
             ))}
           </View>
         ))}
