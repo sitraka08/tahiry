@@ -1,14 +1,13 @@
 import { Link } from 'expo-router';
-import { TabList, TabTrigger, type TabTriggerSlotProps } from 'expo-router/ui';
-import { Bell, ChartColumn, Clock, House, Plus, type LucideIcon } from 'lucide-react-native';
+import { type TabTriggerSlotProps } from 'expo-router/ui';
+import { Plus, type LucideIcon } from 'lucide-react-native';
 import { Pressable, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemeTokens } from '@/theme';
 
 type ButtonProps = TabTriggerSlotProps & { icon: LucideIcon; label: string };
 
-function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps) {
+export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps) {
   const t = useThemeTokens();
   const color = isFocused ? t.accent : t.darkMuted;
   return (
@@ -29,38 +28,20 @@ function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps) {
   );
 }
 
-export function TabBar() {
+export function TabFab() {
   const t = useThemeTokens();
-  const insets = useSafeAreaInsets();
   return (
-    <TabList
-      style={{ minHeight: 84, paddingBottom: Math.max(insets.bottom, 18) }}
-      className="flex-row items-center justify-around rounded-t-[26px] bg-dark px-3 pt-2"
-    >
-      <TabTrigger name="index" href="/" asChild>
-        <TabButton icon={House} label="Accueil" />
-      </TabTrigger>
-      <TabTrigger name="history" href="/history" asChild>
-        <TabButton icon={Clock} label="Historique" />
-      </TabTrigger>
-      <View className="w-[58px]">
-        <Link href="/add-transaction" asChild>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Ajouter une opération"
-            style={{ borderColor: t.bg }}
-            className="size-[58px] -translate-y-4 items-center justify-center rounded-[19px] border-[3px] bg-accent active:opacity-80"
-          >
-            <Plus size={26} color={t.onAccent} strokeWidth={2.2} />
-          </Pressable>
-        </Link>
-      </View>
-      <TabTrigger name="stats" href="/stats" asChild>
-        <TabButton icon={ChartColumn} label="Stats" />
-      </TabTrigger>
-      <TabTrigger name="reminders" href="/reminders" asChild>
-        <TabButton icon={Bell} label="Rappels" />
-      </TabTrigger>
-    </TabList>
+    <View className="w-[58px]">
+      <Link href="/add-transaction" asChild>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Ajouter une opération"
+          style={{ borderColor: t.bg, transform: [{ translateY: -16 }] }}
+          className="size-[58px] items-center justify-center rounded-[19px] border-[3px] bg-accent active:opacity-80"
+        >
+          <Plus size={26} color={t.onAccent} strokeWidth={2.2} />
+        </Pressable>
+      </Link>
+    </View>
   );
 }
