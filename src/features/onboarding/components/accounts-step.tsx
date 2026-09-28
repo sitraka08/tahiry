@@ -150,7 +150,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
                     value={f.value}
                     onChangeText={f.onChange}
                     numberOfLines={1}
-                    className="h-10 flex-1 p-0 font-gs-medium text-sm text-ink"
+                    className="h-10 flex-1 border-b border-dashed border-outline p-0 font-gs-medium text-sm text-ink"
                   />
                 )}
               />
@@ -168,7 +168,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
                       const n = parseAmount(text);
                       f.onChange(n ? formatNumber(n) : '');
                     }}
-                    className="h-10 w-28 rounded-xl bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
+                    className="h-10 w-28 rounded-xl border border-outline bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
                   />
                 )}
               />

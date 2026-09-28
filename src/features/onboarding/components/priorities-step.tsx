@@ -1,10 +1,9 @@
 import { ArrowRight } from 'lucide-react-native';
 import { useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { AppText, Button, Headline, Segmented } from '@/components';
-import { formatNumber, parseAmount } from '@/lib/money';
+import { AppText, Button, Headline, MoneyField, Segmented } from '@/components';
 import { useThemeTokens } from '@/theme';
 
 import type { Frequency, Goal, OnboardingPrefs } from '../types';
@@ -84,17 +83,12 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
       <AppText weight="bold" className="mt-5 text-[15px]">
         Budget mensuel <AppText className="text-muted">(facultatif)</AppText>
       </AppText>
-      <TextInput
+      <MoneyField
+        className="mt-2"
         accessibilityLabel="Budget mensuel"
-        placeholder="Ex. 600 000 Ar"
-        placeholderTextColor={t.muted}
-        keyboardType="number-pad"
+        placeholder="Ex. 600 000"
         value={prefs.monthlyBudget}
-        onChangeText={(text) => {
-          const n = parseAmount(text);
-          setPrefs((p) => ({ ...p, monthlyBudget: n ? formatNumber(n) : '' }));
-        }}
-        className="mt-2 h-12 rounded-[14px] bg-card px-3.5 py-0 font-gs text-[15px] text-ink"
+        onChangeValue={(monthlyBudget) => setPrefs((p) => ({ ...p, monthlyBudget }))}
       />
     </OnboardingShell>
   );
