@@ -10,3 +10,4 @@ export { ProgressBar } from './progress-bar';
 export { SearchInput } from './search-input';
 export { ScreenHeader } from './screen-header';
 export { Segmented } from './segmented';
+export { MoneyField, TextField } from './text-field';
