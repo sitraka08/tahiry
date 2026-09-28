@@ -15,7 +15,7 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
       {...rest}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
-      className="h-[52px] w-16 items-center justify-center gap-1"
+      style={{ height: 52, width: 64, alignItems: 'center', justifyContent: 'center', gap: 4 }}
     >
       <Icon size={22} color={color} strokeWidth={1.8} />
       <Text
@@ -31,13 +31,22 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
 export function TabFab() {
   const t = useThemeTokens();
   return (
-    <View className="w-[58px]">
+    <View style={{ width: 58 }}>
       <Link href="/add-transaction" asChild>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Ajouter une opération"
-          style={{ borderColor: t.bg, transform: [{ translateY: -16 }] }}
-          className="size-[58px] items-center justify-center rounded-[19px] border-[3px] bg-accent active:opacity-80"
+          style={{
+            width: 58,
+            height: 58,
+            borderRadius: 19,
+            borderWidth: 3,
+            borderColor: t.bg,
+            backgroundColor: t.accent,
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: [{ translateY: -16 }],
+          }}
         >
           <Plus size={26} color={t.onAccent} strokeWidth={2.2} />
         </Pressable>
