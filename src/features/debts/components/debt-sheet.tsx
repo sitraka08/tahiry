@@ -1,10 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppSheet, AppText, Button, Chip, Segmented, type SheetMethods } from '@/components';
-import { formatNumber, parseAmount } from '@/lib/money';
-import { useThemeTokens } from '@/theme';
+import {
+  AppSheet,
+  AppText,
+  Button,
+  Chip,
+  MoneyField,
+  Segmented,
+  TextField,
+  type SheetMethods,
+} from '@/components';
 
 import { debtSchema, type DebtFormValues } from '../schemas/debt-schema';
 import type { AccountOption } from '../types';
@@ -23,7 +30,6 @@ type Props = {
 };
 
 function DebtForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
-  const t = useThemeTokens();
   const { control, handleSubmit, formState } = useForm<DebtFormValues>({
     resolver: zodResolver(debtSchema),
     defaultValues: {
@@ -61,44 +67,28 @@ function DebtForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         control={control}
         name="person"
         render={({ field }) => (
-          <TextInput
-            accessibilityLabel="Nom"
-            placeholder="Nom de la personne"
-            placeholderTextColor={t.muted}
+          <TextField
+            label="Nom de la personne"
+            placeholder="Ex. Rivo"
             value={field.value}
             onChangeText={field.onChange}
-            className="h-12 rounded-[14px] bg-card px-3.5 py-0 font-gs text-[15px] text-ink"
+            error={formState.errors.person?.message}
           />
         )}
       />
-      {formState.errors.person ? (
-        <AppText className="-mt-1.5 text-xs text-danger">{formState.errors.person.message}</AppText>
-      ) : null}
 
       <Controller
         control={control}
         name="amount"
         render={({ field }) => (
-          <View className="h-12 flex-row items-center rounded-[14px] bg-card px-3.5">
-            <TextInput
-              accessibilityLabel="Montant"
-              placeholder="Montant"
-              placeholderTextColor={t.muted}
-              keyboardType="number-pad"
-              value={field.value}
-              onChangeText={(text) => {
-                const n = parseAmount(text);
-                field.onChange(n ? formatNumber(n) : '');
-              }}
-              className="flex-1 py-0 font-gs-bold text-[15px] text-ink"
-            />
-            <AppText className="text-sm text-muted">Ar</AppText>
-          </View>
+          <MoneyField
+            label="Montant"
+            value={field.value}
+            onChangeValue={field.onChange}
+            error={formState.errors.amount?.message}
+          />
         )}
       />
-      {formState.errors.amount ? (
-        <AppText className="-mt-1.5 text-xs text-danger">{formState.errors.amount.message}</AppText>
-      ) : null}
 
       <AppText weight="medium" className="text-[13px] text-muted">
         {direction === 'lent' ? 'Prêté depuis' : 'Reçu sur'}

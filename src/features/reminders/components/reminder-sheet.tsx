@@ -1,10 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppSheet, AppText, Button, Chip, type SheetMethods } from '@/components';
-import { formatNumber, parseAmount } from '@/lib/money';
-import { useThemeTokens } from '@/theme';
+import {
+  AppSheet,
+  AppText,
+  Button,
+  Chip,
+  MoneyField,
+  TextField,
+  type SheetMethods,
+} from '@/components';
 
 import { reminderSchema, type ReminderFormValues } from '../schemas/reminder-schema';
 import type { AccountOption, Repeat } from '../types';
@@ -29,7 +35,6 @@ type Props = {
 };
 
 function ReminderForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
-  const t = useThemeTokens();
   const { control, handleSubmit, formState } = useForm<ReminderFormValues>({
     resolver: zodResolver(reminderSchema),
     defaultValues: { title: '', amount: '', accountId: null, dueInDays: 7, repeat: 'none' },
@@ -45,39 +50,25 @@ function ReminderForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         control={control}
         name="title"
         render={({ field }) => (
-          <TextInput
-            accessibilityLabel="Titre"
+          <TextField
+            label="Titre"
             placeholder="Ex. Loyer, facture d’eau…"
-            placeholderTextColor={t.muted}
             value={field.value}
             onChangeText={field.onChange}
-            className="h-12 rounded-[14px] bg-card px-3.5 py-0 font-gs text-[15px] text-ink"
+            error={formState.errors.title?.message}
           />
         )}
       />
-      {formState.errors.title ? (
-        <AppText className="-mt-1.5 text-xs text-danger">{formState.errors.title.message}</AppText>
-      ) : null}
 
       <Controller
         control={control}
         name="amount"
         render={({ field }) => (
-          <View className="h-12 flex-row items-center rounded-[14px] bg-card px-3.5">
-            <TextInput
-              accessibilityLabel="Montant"
-              placeholder="Montant (facultatif)"
-              placeholderTextColor={t.muted}
-              keyboardType="number-pad"
-              value={field.value}
-              onChangeText={(text) => {
-                const n = parseAmount(text);
-                field.onChange(n ? formatNumber(n) : '');
-              }}
-              className="flex-1 py-0 font-gs-bold text-[15px] text-ink"
-            />
-            <AppText className="text-sm text-muted">Ar</AppText>
-          </View>
+          <MoneyField
+            label="Montant (facultatif)"
+            value={field.value}
+            onChangeValue={field.onChange}
+          />
         )}
       />
 

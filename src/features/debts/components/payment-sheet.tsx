@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppSheet, AppText, Button, Chip, type SheetMethods } from '@/components';
-import { formatNumber, parseAmount } from '@/lib/money';
-import { useThemeTokens } from '@/theme';
+import { AppSheet, AppText, Button, Chip, MoneyField, type SheetMethods } from '@/components';
+import { formatNumber } from '@/lib/money';
 
 import { remainingOf } from '../hooks/debt-math';
 import { paymentSchema, type PaymentFormValues } from '../schemas/debt-schema';
@@ -19,13 +18,9 @@ type Props = {
   onSubmit: (debt: DebtItem, values: PaymentFormValues) => void;
 };
 
-function PaymentForm({
-  debt,
-  full,
-  accounts,
-  onSubmit,
-}: Omit<Props, 'sheetRef' | 'debt'> & { debt: DebtItem }) {
-  const t = useThemeTokens();
+type FormProps = Omit<Props, 'sheetRef' | 'debt'> & { debt: DebtItem };
+
+function PaymentForm({ debt, full, accounts, onSubmit }: FormProps) {
   const remaining = remainingOf(debt);
   const schema = useMemo(() => paymentSchema(remaining), [remaining]);
   const { control, handleSubmit, formState } = useForm<PaymentFormValues>({
@@ -50,26 +45,14 @@ function PaymentForm({
         control={control}
         name="amount"
         render={({ field }) => (
-          <View className="h-12 flex-row items-center rounded-[14px] bg-card px-3.5">
-            <TextInput
-              accessibilityLabel="Montant"
-              placeholder="Montant"
-              placeholderTextColor={t.muted}
-              keyboardType="number-pad"
-              value={field.value}
-              onChangeText={(text) => {
-                const n = parseAmount(text);
-                field.onChange(n ? formatNumber(n) : '');
-              }}
-              className="flex-1 py-0 font-gs-bold text-[15px] text-ink"
-            />
-            <AppText className="text-sm text-muted">Ar</AppText>
-          </View>
+          <MoneyField
+            label="Montant"
+            value={field.value}
+            onChangeValue={field.onChange}
+            error={formState.errors.amount?.message}
+          />
         )}
       />
-      {formState.errors.amount ? (
-        <AppText className="-mt-1.5 text-xs text-danger">{formState.errors.amount.message}</AppText>
-      ) : null}
 
       <AppText weight="medium" className="text-[13px] text-muted">
         {borrowed ? 'Payé avec' : 'Reçu sur'}
