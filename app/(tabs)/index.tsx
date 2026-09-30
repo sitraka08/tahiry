@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Bell, ChevronRight, Repeat, Settings, User } from 'lucide-react-native';
+import { Bell, ChevronRight, Eye, EyeOff, Plus, Repeat, Settings, User } from 'lucide-react-native';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,7 +8,9 @@ import { AppText, Headline, IconButton } from '@/components';
 import { AccountChip, useAccounts } from '@/features/accounts';
 import { useDebts } from '@/features/debts';
 import { useReminders } from '@/features/reminders';
+import { useUserName } from '@/features/settings';
 import { TransactionRow, useMonthTotals, useTransactions } from '@/features/transactions';
+import { useUiStore } from '@/lib/ui-store';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
 
@@ -22,6 +24,9 @@ export default function Home() {
   const { items } = useTransactions({ limit: 5 });
   const { summary: debts } = useDebts();
   const { pending } = useReminders();
+  const name = useUserName();
+  const hideAmounts = useUiStore((s) => s.hideAmounts);
+  const setHideAmounts = useUiStore((s) => s.setHideAmounts);
   const [now] = useState(Date.now);
   const { income, expense } = useMonthTotals(now - 30 * DAY, now + DAY);
   const net = income - expense;
@@ -44,7 +49,7 @@ export default function Home() {
             <View>
               <AppText className="text-[13px] text-muted">Bonjour,</AppText>
               <AppText weight="bold" className="text-base">
-                Tahiry
+                {name || 'Bienvenue'}
               </AppText>
             </View>
           </Pressable>
@@ -65,9 +70,22 @@ export default function Home() {
 
         <View className="mx-5 mt-[18px] gap-3.5 rounded-3xl bg-dark p-5">
           <View className="flex-row items-center justify-between gap-2">
-            <AppText className="text-sm text-dark-muted">
-              Solde total · {accounts.length} comptes
-            </AppText>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={hideAmounts ? 'Afficher les montants' : 'Masquer les montants'}
+              onPress={() => setHideAmounts(!hideAmounts)}
+              hitSlop={10}
+              className="flex-row items-center gap-2"
+            >
+              <AppText className="text-sm text-dark-muted">
+                Solde total · {accounts.length} compte{accounts.length > 1 ? 's' : ''}
+              </AppText>
+              {hideAmounts ? (
+                <EyeOff size={16} color={t.darkMuted} strokeWidth={1.8} />
+              ) : (
+                <Eye size={16} color={t.darkMuted} strokeWidth={1.8} />
+              )}
+            </Pressable>
             <AppText
               weight="medium"
               className="overflow-hidden rounded-full bg-accent px-2.5 py-1 text-xs text-on-accent"
@@ -151,9 +169,21 @@ export default function Home() {
             </Pressable>
           </View>
           {items.length === 0 ? (
-            <AppText className="py-6 text-center text-sm text-muted">
-              Aucune opération pour le moment.
-            </AppText>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => router.push('/add-transaction')}
+              className="mt-3 items-center gap-2 rounded-[20px] border border-dashed border-seg3 px-5 py-6 active:opacity-70"
+            >
+              <View className="size-11 items-center justify-center rounded-full bg-accent">
+                <Plus size={22} color={t.onAccent} strokeWidth={2.2} />
+              </View>
+              <AppText weight="bold" className="text-[15px]">
+                Ajoute ta première opération
+              </AppText>
+              <AppText className="text-center text-[13px] text-muted">
+                Dépense, revenu ou transfert : tout apparaîtra ici.
+              </AppText>
+            </Pressable>
           ) : (
             items.map((item) => (
               <TransactionRow
