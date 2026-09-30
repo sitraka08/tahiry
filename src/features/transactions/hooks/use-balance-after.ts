@@ -1,11 +1,10 @@
 import { eq, sql } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 
-import { accounts, db } from '@/db';
+import { accounts, db, transactions, useLiveRows } from '@/db';
 
 export function useBalanceAfter(accountId: number, date: number, id: number) {
   const upTo = sql`(t.date < ${date} OR (t.date = ${date} AND t.id <= ${id}))`;
-  const { data } = useLiveQuery(
+  const data = useLiveRows(
     db
       .select({
         value: sql<number>`${accounts.initialBalance}
@@ -19,6 +18,7 @@ export function useBalanceAfter(accountId: number, date: number, id: number) {
       })
       .from(accounts)
       .where(eq(accounts.id, accountId)),
+    [accounts, transactions],
     [accountId, date, id],
   );
   return data[0]?.value ?? 0;

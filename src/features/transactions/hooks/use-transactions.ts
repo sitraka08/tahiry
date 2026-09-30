@@ -3,7 +3,7 @@ import { alias } from 'drizzle-orm/sqlite-core';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo } from 'react';
 
-import { accounts, categories, db, transactions } from '@/db';
+import { accounts, categories, db, transactions, useLiveRows } from '@/db';
 import { formatDayLabel, startOfDayKey } from '@/lib/dates';
 
 import type { DayGroup, TransactionFilter, TransactionItem } from '../types';
@@ -56,7 +56,11 @@ export function useTransactions(filter: TransactionFilter = {}) {
     .orderBy(desc(transactions.date), desc(transactions.id));
   if (limit) query = query.limit(limit);
 
-  const { data } = useLiveQuery(query, [type, accountId, term, limit]);
+  const data = useLiveRows(
+    query,
+    [transactions, accounts, categories],
+    [type, accountId, term, limit],
+  );
 
   const groups = useMemo(() => {
     const map = new Map<string, DayGroup>();
@@ -73,7 +77,11 @@ export function useTransactions(filter: TransactionFilter = {}) {
 }
 
 export function useTransaction(id: number) {
-  const { data } = useLiveQuery(selectTransactions().where(eq(transactions.id, id)), [id]);
+  const data = useLiveRows(
+    selectTransactions().where(eq(transactions.id, id)),
+    [transactions, accounts, categories],
+    [id],
+  );
   return (data[0] as TransactionItem | undefined) ?? null;
 }
 
