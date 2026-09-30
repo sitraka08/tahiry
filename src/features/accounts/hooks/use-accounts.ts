@@ -1,8 +1,7 @@
 import { asc, eq, sql } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo } from 'react';
 
-import { accounts, db } from '@/db';
+import { accounts, db, transactions, useLiveRows } from '@/db';
 
 import type { AccountGroup, AccountType, AccountWithBalance } from '../types';
 
@@ -20,7 +19,7 @@ const GROUPS: { type: AccountType; label: string }[] = [
 ];
 
 export function useAccounts() {
-  const { data } = useLiveQuery(
+  const data = useLiveRows(
     db
       .select({
         id: accounts.id,
@@ -39,6 +38,8 @@ export function useAccounts() {
       .from(accounts)
       .where(eq(accounts.archived, false))
       .orderBy(asc(accounts.position), asc(accounts.id)),
+    [accounts, transactions],
+    [],
   );
 
   return useMemo(() => {
