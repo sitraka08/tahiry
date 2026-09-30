@@ -19,7 +19,7 @@ export function SearchInput({ value, onChangeText, placeholder }: Props) {
         placeholder={placeholder}
         placeholderTextColor={t.muted}
         returnKeyType="search"
-        className="h-12 rounded-[14px] bg-card py-0 pl-11 pr-3.5 font-gs text-[15px] text-ink"
+        className="h-12 rounded-[14px] border border-outline bg-tile py-0 pl-11 pr-3.5 font-gs text-[15px] text-ink"
       />
     </View>
   );

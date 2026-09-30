@@ -2,9 +2,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Calendar, Check } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import { ScrollView, Switch, TextInput, View } from 'react-native';
+import { ScrollView, Switch, View } from 'react-native';
 
-import { AppSheet, AppText, Button, Chip, Segmented, type SheetMethods } from '@/components';
+import {
+  AppSheet,
+  AppText,
+  Button,
+  Chip,
+  Segmented,
+  TextField,
+  type SheetMethods,
+} from '@/components';
 import { formatNumber } from '@/lib/money';
 import { useBottomInset } from '@/lib/use-bottom-inset';
 import { useThemeTokens } from '@/theme';
@@ -198,17 +206,15 @@ export function TransactionForm({
             control={control}
             name="note"
             render={({ field }) => (
-              <TextInput
-                accessibilityLabel="Note"
+              <TextField
+                className="flex-1"
                 placeholder="Note (facultatif)"
-                placeholderTextColor="#8A8D78"
-                value={field.value}
+                value={field.value ?? ''}
                 onChangeText={field.onChange}
-                className="h-11 flex-1 rounded-[14px] bg-card px-3.5 font-gs text-sm text-ink"
               />
             )}
           />
-          <View className="h-11 flex-row items-center gap-1.5 rounded-[14px] bg-card px-3">
+          <View className="h-12 flex-row items-center gap-1.5 self-start rounded-[14px] border border-outline bg-tile px-3">
             <Calendar size={16} color={t.ink} strokeWidth={1.8} />
             <AppText className="text-[13px]">{formatDateChip(initialValues?.date ?? now)}</AppText>
           </View>
@@ -245,13 +251,11 @@ export function TransactionForm({
           <AppText weight="bold" className="text-base">
             Nouveau motif
           </AppText>
-          <TextInput
-            accessibilityLabel="Nom du motif"
+          <TextField
+            label="Nom du motif"
             placeholder="Ex. Abonnement"
-            placeholderTextColor="#8A8D78"
             value={newCategory}
             onChangeText={setNewCategory}
-            className="h-12 rounded-[14px] bg-card px-3.5 font-gs text-base text-ink"
           />
           <Button label="Ajouter" onPress={addCategory} />
         </View>
