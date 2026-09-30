@@ -65,7 +65,7 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
       accessibilityHint="Appui long pour supprimer"
       onLongPress={() => onLongPress(debt)}
 
-      className={`gap-2.5 rounded-[20px] p-3.5 ${borrowed ? 'bg-dark' : 'bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
+      className={`gap-2.5 rounded-[20px] p-3.5 ${borrowed ? 'bg-dark' : 'border border-line bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
     >
       <View className="flex-row items-center gap-3">
         <View

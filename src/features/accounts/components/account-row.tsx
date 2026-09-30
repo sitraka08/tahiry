@@ -28,7 +28,7 @@ export function AccountRow({ account, onPress }: Props) {
       accessibilityRole="button"
       accessibilityLabel={`Modifier ${account.name}`}
       onPress={onPress}
-      className="flex-row items-center gap-3 rounded-[18px] bg-card p-3 active:opacity-80"
+      className="flex-row items-center gap-3 rounded-[18px] border border-line bg-card p-3 active:opacity-80"
     >
       <AccountTypeIcon type={account.type} size={42} />
       <View className="min-w-0 flex-1 gap-0.5">

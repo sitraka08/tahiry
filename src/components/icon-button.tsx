@@ -24,7 +24,7 @@ export function IconButton({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={badge > 0 ? `${label}, ${badge} en attente` : label}
-      className={`size-11 items-center justify-center rounded-[14px] ${tone === 'accent' ? 'bg-accent' : 'bg-card'} active:opacity-80 ${className}`}
+      className={`size-11 items-center justify-center rounded-[14px] ${tone === 'accent' ? 'bg-accent' : 'border border-line bg-card'} active:opacity-80 ${className}`}
       {...rest}
     >
       <Icon size={20} color={tone === 'accent' ? onAccent : ink} strokeWidth={1.8} />

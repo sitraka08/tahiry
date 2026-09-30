@@ -30,7 +30,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       accessibilityState={{ checked: selected }}
       accessibilityLabel={label}
       onPress={onPress}
-      className={`flex-row items-center overflow-hidden rounded-2xl bg-card ${
+      className={`flex-row items-center overflow-hidden rounded-2xl border border-line bg-card ${
         isType ? 'h-[60px] gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
       }`}
     >

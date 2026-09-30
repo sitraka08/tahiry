@@ -123,7 +123,7 @@ export default function Home() {
         <Pressable
           accessibilityRole="button"
           onPress={() => router.push('/debts')}
-          className="mx-5 mt-3.5 flex-row items-center gap-3 rounded-[18px] bg-card px-3.5 py-3 active:opacity-80"
+          className="mx-5 mt-3.5 flex-row items-center gap-3 rounded-[18px] border border-line bg-card px-3.5 py-3 active:opacity-80"
         >
           <View className="size-10 items-center justify-center rounded-[13px] bg-tile">
             <Repeat size={20} color={t.ink} strokeWidth={1.8} />

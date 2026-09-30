@@ -30,7 +30,7 @@ export function AccountsDonut({ groups, total }: Props) {
   });
 
   return (
-    <View className="flex-row items-center gap-[18px] rounded-[22px] bg-card p-4">
+    <View className="flex-row items-center gap-[18px] rounded-[22px] border border-line bg-card p-4">
       <View style={{ width: SIZE, height: SIZE }} className="items-center justify-center">
         <Svg width={SIZE} height={SIZE} viewBox="0 0 150 150">
           <Circle cx={75} cy={75} r={R} fill="none" stroke={t.tile} strokeWidth={STROKE} />

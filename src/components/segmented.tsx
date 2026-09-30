@@ -10,7 +10,7 @@ type Props<T extends string> = {
 
 export function Segmented<T extends string>({ options, value, onChange }: Props<T>) {
   return (
-    <View className="flex-row gap-1 rounded-2xl bg-card p-1">
+    <View className="flex-row gap-1 rounded-2xl border border-line bg-card p-1">
       {options.map((o) => {
         const active = o.value === value;
         return (

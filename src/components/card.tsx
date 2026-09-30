@@ -3,7 +3,7 @@ import { View, type ViewProps } from 'react-native';
 
 type Props = ViewProps & { tone?: 'card' | 'dark' | 'tile'; children: ReactNode };
 
-const tones = { card: 'bg-card', dark: 'bg-dark', tile: 'bg-tile' };
+const tones = { card: 'border border-line bg-card', dark: 'bg-dark', tile: 'bg-tile' };
 
 export function Card({
   tone = 'card',

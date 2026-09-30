@@ -95,7 +95,7 @@ export function BackupStep({ onFinish, onBack }: Props) {
         </>
       }
     >
-      <View className="mt-4 gap-3 rounded-[20px] bg-card px-4 py-3.5">
+      <View className="mt-4 gap-3 rounded-[20px] border border-line bg-card px-4 py-3.5">
         {PERKS.map((perk, i) => (
           <Animated.View key={perk} entering={FadeInRight.delay(250 + i * 90).duration(320)}>
             <View className="flex-row items-center gap-2.5">

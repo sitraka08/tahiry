@@ -81,7 +81,7 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
         </View>
       </View>
 
-      <View className="mx-5 mt-[22px] rounded-[20px] bg-card px-4 py-1">
+      <View className="mx-5 mt-[22px] rounded-[20px] border border-line bg-card px-4 py-1">
         {rows.map((r) => (
           <Row
             key={r.label}

@@ -139,7 +139,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
             exiting={FadeOut.duration(140)}
             layout={LinearTransition.duration(200)}
           >
-            <View className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2">
+            <View className="flex-row items-center gap-3 rounded-2xl border border-line bg-card py-2 pl-2.5 pr-2">
               <RowIcon type={field.type} />
               <Controller
                 control={control}

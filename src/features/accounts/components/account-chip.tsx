@@ -14,7 +14,7 @@ export function AccountChip({ account, onPress }: Props) {
     <Pressable
       accessibilityRole="button"
       onPress={onPress}
-      className="w-[124px] gap-1.5 rounded-[18px] bg-card p-3 active:opacity-80"
+      className="w-[124px] gap-1.5 rounded-[18px] border border-line bg-card p-3 active:opacity-80"
     >
       <AccountTypeIcon type={account.type} />
       <AppText numberOfLines={1} className="mt-0.5 text-xs text-muted">
