@@ -1,0 +1,77 @@
+import { useRouter } from 'expo-router';
+import { Bell, ChevronLeft, Coins, EyeOff, Landmark, Repeat } from 'lucide-react-native';
+import { ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { AppText, IconButton } from '@/components';
+import {
+  ProfileCard,
+  SettingsRow,
+  SettingsSection,
+  ThemePicker,
+  chooseTheme,
+  saveUserName,
+  useUserName,
+} from '@/features/settings';
+import { useUiStore } from '@/lib/ui-store';
+
+export default function Settings() {
+  const router = useRouter();
+  const name = useUserName();
+  const hideAmounts = useUiStore((s) => s.hideAmounts);
+  const setHideAmounts = useUiStore((s) => s.setHideAmounts);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View className="flex-row items-center gap-3 px-5 pt-5">
+        <IconButton icon={ChevronLeft} label="Retour" onPress={() => router.back()} />
+        <AppText accessibilityRole="header" weight="bold" className="text-2xl">
+          Réglages
+        </AppText>
+      </View>
+
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerClassName="pb-8"
+        showsVerticalScrollIndicator={false}
+      >
+        <ProfileCard name={name} onSaveName={saveUserName} />
+
+        <View className="mx-5 mt-5">
+          <AppText
+            weight="medium"
+            className="mb-2.5 text-[13px] uppercase text-muted"
+            style={{ letterSpacing: 0.6 }}
+          >
+            Thème de l’app
+          </AppText>
+          <ThemePicker onChoose={chooseTheme} />
+        </View>
+
+        <SettingsSection title="Général">
+          <SettingsRow
+            icon={Landmark}
+            label="Mes comptes"
+            onPress={() => router.push('/accounts')}
+          />
+          <SettingsRow icon={Coins} label="Devise" value="Ariary (Ar)" />
+          <SettingsRow
+            icon={EyeOff}
+            label="Masquer les montants"
+            toggle={{ value: hideAmounts, onChange: setHideAmounts }}
+          />
+          <SettingsRow icon={Bell} label="Rappels" last onPress={() => router.push('/reminders')} />
+        </SettingsSection>
+
+        <SettingsSection title="Outils">
+          <SettingsRow
+            icon={Repeat}
+            label="Dettes & prêts"
+            last
+            onPress={() => router.push('/debts')}
+          />
+        </SettingsSection>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
