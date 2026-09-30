@@ -10,6 +10,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
 import { setupNotifications } from '@/lib/notifications';
+import { useUiStore } from '@/lib/ui-store';
 import {
   FONTS,
   THEME_NAMES,
@@ -28,6 +29,7 @@ function boot() {
   if (saved && THEME_NAMES.includes(saved as ThemeName)) {
     useThemeStore.getState().setTheme(saved as ThemeName);
   }
+  useUiStore.setState({ hideAmounts: getSetting('hideAmounts') === '1' });
   return true;
 }
 
