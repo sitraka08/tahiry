@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { Text } from 'react-native';
 
+import { press } from '@/lib/haptics';
+
 import { PressableFeedback } from './pressable-feedback';
 
 type Variant = 'primary' | 'accent' | 'soft' | 'ghost' | 'danger';
@@ -51,7 +53,10 @@ export function Button({
       accessibilityLabel={label}
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
-      onPress={onPress}
+      onPress={() => {
+        press();
+        onPress?.();
+      }}
       className={`flex-row items-center justify-center gap-2 rounded-[18px] ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}

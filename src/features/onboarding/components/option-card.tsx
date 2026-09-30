@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { PressableFeedback } from '@/components';
+import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
 type Props = {
@@ -29,7 +30,10 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       accessibilityRole="checkbox"
       accessibilityState={{ checked: selected }}
       accessibilityLabel={label}
-      onPress={onPress}
+      onPress={() => {
+        tap();
+        onPress();
+      }}
       className={`flex-row items-center overflow-hidden rounded-2xl border border-line bg-card ${
         isType ? 'h-[60px] gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
       }`}

@@ -11,6 +11,7 @@ import {
   updateTransaction,
   useTransaction,
 } from '@/features/transactions';
+import { success } from '@/lib/haptics';
 import { formatNumber } from '@/lib/money';
 
 export default function AddTransaction() {
@@ -54,6 +55,7 @@ export default function AddTransaction() {
           onSubmit={(values) => {
             if (editId) updateTransaction(editId, values);
             else createTransaction(values);
+            success();
             router.back();
           }}
         />

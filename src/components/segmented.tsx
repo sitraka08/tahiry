@@ -1,5 +1,7 @@
 import { Pressable, Text, View } from 'react-native';
 
+import { tap } from '@/lib/haptics';
+
 type Option<T extends string> = { value: T; label: string };
 
 type Props<T extends string> = {
@@ -18,7 +20,10 @@ export function Segmented<T extends string>({ options, value, onChange }: Props<
             key={o.value}
             accessibilityRole="button"
             accessibilityState={{ selected: active }}
-            onPress={() => onChange(o.value)}
+            onPress={() => {
+              tap();
+              onChange(o.value);
+            }}
             className={`h-10 flex-1 items-center justify-center rounded-xl ${active ? 'bg-dark' : ''}`}
           >
             <Text
