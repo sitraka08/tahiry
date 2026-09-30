@@ -1,14 +1,13 @@
 import { desc, eq, sql } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo } from 'react';
 
-import { accounts, db, debts } from '@/db';
+import { accounts, db, debtPayments, debts, useLiveRows } from '@/db';
 
 import type { DebtItem } from '../types';
 import { summarizeDebts } from './debt-math';
 
 export function useDebts() {
-  const { data } = useLiveQuery(
+  const data = useLiveRows(
     db
       .select({
         id: debts.id,
@@ -27,6 +26,8 @@ export function useDebts() {
       .from(debts)
       .leftJoin(accounts, eq(debts.accountId, accounts.id))
       .orderBy(debts.settled, desc(debts.date)),
+    [debts, debtPayments, accounts],
+    [],
   );
 
   return useMemo(() => {
