@@ -1,8 +1,7 @@
 import { and, asc, eq, isNotNull, sql } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo, useState } from 'react';
 
-import { accounts, db, debts, reminders } from '@/db';
+import { accounts, db, debtPayments, debts, reminders, useLiveRows } from '@/db';
 
 import type { ReminderItem } from '../types';
 import { pendingCount, summarize } from './reminder-math';
@@ -10,7 +9,7 @@ import { pendingCount, summarize } from './reminder-math';
 export function useReminders() {
   const [now] = useState(Date.now);
 
-  const { data: own } = useLiveQuery(
+  const own = useLiveRows(
     db
       .select({
         id: reminders.id,
@@ -24,9 +23,11 @@ export function useReminders() {
       .from(reminders)
       .leftJoin(accounts, eq(reminders.accountId, accounts.id))
       .where(eq(reminders.done, false)),
+    [reminders, accounts],
+    [],
   );
 
-  const { data: owed } = useLiveQuery(
+  const owed = useLiveRows(
     db
       .select({
         id: debts.id,
@@ -44,6 +45,8 @@ export function useReminders() {
       .leftJoin(accounts, eq(debts.accountId, accounts.id))
       .where(and(eq(debts.settled, false), isNotNull(debts.dueDate)))
       .orderBy(asc(debts.dueDate)),
+    [debts, debtPayments, accounts],
+    [],
   );
 
   return useMemo(() => {
