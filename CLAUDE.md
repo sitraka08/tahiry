@@ -51,6 +51,15 @@ src/constants/
 - Account balances are computed from the initial balance and transactions, never stored.
 - Schema changes go through a new entry in `src/db/migrations.ts`. Never edit a shipped migration.
 - Multi-step writes use a transaction.
+- Live queries: drizzle `useLiveQuery` only watches the main table. Use `useLiveRows(query, tables, deps)` and list every table the query reads (joins and subqueries).
+
+## Balance rules
+
+- Account balance = initial balance + income − expenses − transfers out + transfers in.
+- Total balance = sum of non-archived account balances. A transfer never changes the total.
+- Editing an account balance shifts its initial balance, so history stays intact.
+- Lending money records an expense, a repayment received records an income. Borrowing is the reverse.
+- The 30-day badge on the home card = income − expenses over the last 30 days.
 
 ## UI and styling
 
