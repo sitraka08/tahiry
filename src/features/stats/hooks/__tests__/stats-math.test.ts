@@ -1,5 +1,5 @@
 import type { StatRow } from '../../types';
-import { buildStats, periodRange, topCategories } from '../stats-math';
+import { buildStats, periodRange, toChartPoints, topCategories } from '../stats-math';
 
 const NOW = new Date(2026, 9, 9, 15, 0).getTime();
 const day = (d: number, h = 12) => new Date(2026, 9, d, h, 0).getTime();
@@ -83,5 +83,21 @@ describe('buildStats', () => {
   it('ignores rows outside the period', () => {
     const old = { ...input, rows: [row('out', 5000, new Date(2026, 0, 1).getTime())] };
     expect(buildStats(old, 'week', NOW).expense).toBe(0);
+  });
+});
+
+describe('toChartPoints', () => {
+  it('maps the lowest value to the bottom and the highest to the top', () => {
+    const points = toChartPoints([0, 50, 100], 100, 100, 0, 10);
+    expect(points[0]).toEqual({ x: 0, y: 90 });
+    expect(points[2]).toEqual({ x: 100, y: 10 });
+  });
+
+  it('draws a flat line in the middle when values are equal', () => {
+    expect(toChartPoints([5, 5], 100, 100, 0, 10).map((p) => p.y)).toEqual([50, 50]);
+  });
+
+  it('returns no points for an empty series', () => {
+    expect(toChartPoints([], 100, 100)).toEqual([]);
   });
 });

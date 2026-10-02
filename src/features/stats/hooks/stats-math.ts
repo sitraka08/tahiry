@@ -101,3 +101,21 @@ export function buildStats(input: StatsInput, period: Period, now: number): Stat
     categories: topCategories(rows),
   };
 }
+
+export function toChartPoints(
+  values: number[],
+  width: number,
+  height: number,
+  padX = 10,
+  padY = 14,
+) {
+  if (values.length === 0) return [];
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const span = max - min;
+  const stepX = values.length > 1 ? (width - padX * 2) / (values.length - 1) : 0;
+  return values.map((value, i) => ({
+    x: padX + stepX * i,
+    y: span === 0 ? height / 2 : padY + (1 - (value - min) / span) * (height - padY * 2),
+  }));
+}
