@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, Headline, IconButton, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
+import { GoalSummary, useGoals } from '@/features/goals';
 import {
   CashCountRow,
   ReminderRow,
@@ -25,6 +26,7 @@ export default function Reminders() {
   const { items, summary, now } = useReminders();
   const { accounts } = useAccounts();
   const frequency = useCashCountFrequency();
+  const { items: goals } = useGoals();
   const sheetRef = useRef<SheetMethods>(null);
 
   const openItem = (item: ReminderItem) => {
@@ -67,6 +69,11 @@ export default function Reminders() {
             <CashCountRow frequency={frequency} onChange={setCashCountFrequency} />
           </View>
         </View>
+        {goals[0] ? (
+          <View className="mx-5 mt-3.5">
+            <GoalSummary goal={goals[0]} onPress={() => router.push('/goals')} />
+          </View>
+        ) : null}
       </ScrollView>
 
       <ReminderSheet
