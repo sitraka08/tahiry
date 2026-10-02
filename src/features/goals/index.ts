@@ -1,0 +1,10 @@
+export { dueLabel, monthlyNeeded, percentOf } from './hooks/goal-math';
+export { addDeposit, createGoal, deleteGoal } from './hooks/use-goal-actions';
+export { useGoals } from './hooks/use-goals';
+export {
+  depositSchema,
+  goalSchema,
+  type DepositFormValues,
+  type GoalFormValues,
+} from './schemas/goal-schema';
+export type { AccountOption, GoalItem } from './types';
