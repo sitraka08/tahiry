@@ -44,3 +44,13 @@ export function archiveAccount(id: number) {
 export function markCounted(id: number) {
   db.update(accounts).set({ countedAt: Date.now() }).where(eq(accounts.id, id)).run();
 }
+
+export function setAccountBalance(account: Current & { id: number }, desired: number) {
+  db.update(accounts)
+    .set({
+      initialBalance: initialBalanceFor(desired, account.balance, account.initialBalance),
+      countedAt: Date.now(),
+    })
+    .where(eq(accounts.id, account.id))
+    .run();
+}

@@ -7,6 +7,7 @@ export {
   archiveAccount,
   createAccount,
   markCounted,
+  setAccountBalance,
   updateAccount,
 } from './hooks/use-account-actions';
 export { useAccounts } from './hooks/use-accounts';
