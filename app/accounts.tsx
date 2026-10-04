@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { Plus } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -14,10 +15,15 @@ import {
   useAccounts,
   type AccountWithBalance,
 } from '@/features/accounts';
+import { CashGapAlert, useCashGap } from '@/features/cash-count';
 import { useAmountMask } from '@/lib/use-amount-mask';
 
 export default function Accounts() {
-  const { groups, total } = useAccounts();
+  const router = useRouter();
+  const { accounts, groups, total } = useAccounts();
+  const cashGap = useCashGap();
+  const gapAccount = cashGap ? accounts.find((a) => a.id === cashGap.accountId) : undefined;
+  const missing = cashGap && gapAccount ? gapAccount.balance - cashGap.counted : 0;
   const fmt = useAmountMask();
   const sheetRef = useRef<SheetMethods>(null);
   const [editing, setEditing] = useState<AccountWithBalance | null>(null);
@@ -75,6 +81,15 @@ export default function Accounts() {
               </View>
             </View>
           ))}
+        {cashGap && gapAccount && missing > 0 ? (
+          <CashGapAlert
+            missing={missing}
+            counted={cashGap.counted}
+            expected={gapAccount.balance}
+            onAddExpense={() => router.push('/add-transaction')}
+            onRecount={() => router.push('/cash-count')}
+          />
+        ) : null}
       </ScrollView>
 
       <AccountSheet
