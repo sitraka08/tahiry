@@ -1,5 +1,15 @@
 import { useRouter } from 'expo-router';
-import { Bell, ChevronLeft, Coins, EyeOff, Landmark, Repeat } from 'lucide-react-native';
+import {
+  Banknote,
+  Bell,
+  ChevronLeft,
+  Coins,
+  EyeOff,
+  Landmark,
+  PiggyBank,
+  Repeat,
+  Target,
+} from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -64,11 +74,18 @@ export default function Settings() {
         </SettingsSection>
 
         <SettingsSection title="Outils">
+          <SettingsRow icon={PiggyBank} label="Budgets" onPress={() => router.push('/budgets')} />
           <SettingsRow
-            icon={Repeat}
-            label="Dettes & prêts"
+            icon={Target}
+            label="Objectifs d’épargne"
+            onPress={() => router.push('/goals')}
+          />
+          <SettingsRow icon={Repeat} label="Dettes & prêts" onPress={() => router.push('/debts')} />
+          <SettingsRow
+            icon={Banknote}
+            label="Compter mes espèces"
             last
-            onPress={() => router.push('/debts')}
+            onPress={() => router.push('/cash-count')}
           />
         </SettingsSection>
       </ScrollView>

@@ -1,8 +1,9 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Headline, Segmented } from '@/components';
+import { AppText, Headline, Segmented } from '@/components';
 import {
   BalanceChart,
   SpendingBreakdown,
@@ -18,13 +19,34 @@ const PERIODS: { value: Period; label: string }[] = [
 ];
 
 export default function Stats() {
+  const router = useRouter();
   const [period, setPeriod] = useState<Period>('month');
   const stats = useStats(period);
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <View className="px-5 pt-5">
+      <View className="flex-row items-center justify-between gap-2 px-5 pt-5">
         <Headline lead="Statistiques" />
+        <View className="flex-row gap-1.5">
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push('/budgets')}
+            className="h-10 justify-center rounded-full bg-accent px-3 active:opacity-80"
+          >
+            <AppText weight="bold" className="text-[13px] text-on-accent">
+              Budgets
+            </AppText>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push('/goals')}
+            className="h-10 justify-center rounded-full border border-line bg-card px-3 active:opacity-80"
+          >
+            <AppText weight="medium" className="text-[13px]">
+              Objectifs
+            </AppText>
+          </Pressable>
+        </View>
       </View>
       <ScrollView
         style={{ flex: 1 }}
