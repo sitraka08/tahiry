@@ -9,6 +9,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
+import { useLockStore } from '@/features/security';
 import { setupNotifications } from '@/lib/notifications';
 import { useUiStore } from '@/lib/ui-store';
 import {
@@ -30,6 +31,7 @@ function boot() {
     useThemeStore.getState().setTheme(saved as ThemeName);
   }
   useUiStore.setState({ hideAmounts: getSetting('hideAmounts') === '1' });
+  if (getSetting('pinEnabled') === '1') useLockStore.getState().lock();
   return true;
 }
 
