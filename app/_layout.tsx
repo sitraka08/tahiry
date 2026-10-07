@@ -1,15 +1,17 @@
 import '../global.css';
 
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Alert } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
-import { useLockStore } from '@/features/security';
+import { LockGate, resetAllData, useLockStore } from '@/features/security';
+import { useUserName } from '@/features/settings';
 import { setupNotifications } from '@/lib/notifications';
 import { useUiStore } from '@/lib/ui-store';
 import {
@@ -35,6 +37,35 @@ function boot() {
   return true;
 }
 
+function AppLock({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const name = useUserName();
+
+  const forgot = () =>
+    Alert.alert(
+      'Code oublié ?',
+      'Pour retrouver l’accès, il faut effacer toutes les données de l’app sur ce téléphone.',
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Tout effacer',
+          style: 'destructive',
+          onPress: async () => {
+            await resetAllData();
+            useLockStore.getState().unlock();
+            router.replace('/');
+          },
+        },
+      ],
+    );
+
+  return (
+    <LockGate name={name} onForgot={forgot}>
+      {children}
+    </LockGate>
+  );
+}
+
 export default function RootLayout() {
   const [ready] = useState(boot);
   const [fontsLoaded, fontError] = useFonts(FONTS);
@@ -52,12 +83,14 @@ export default function RootLayout() {
         <KeyboardProvider>
           <ThemeProvider>
             <ThemedStatusBar />
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: 'transparent' },
-              }}
-            />
+            <AppLock>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                  contentStyle: { backgroundColor: 'transparent' },
+                }}
+              />
+            </AppLock>
           </ThemeProvider>
         </KeyboardProvider>
       </SafeAreaProvider>

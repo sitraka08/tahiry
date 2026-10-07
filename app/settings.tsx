@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   Coins,
   EyeOff,
+  KeyRound,
   Landmark,
   PiggyBank,
   Repeat,
@@ -23,11 +24,13 @@ import {
   saveUserName,
   useUserName,
 } from '@/features/settings';
+import { useSecuritySettings } from '@/features/security';
 import { useUiStore } from '@/lib/ui-store';
 
 export default function Settings() {
   const router = useRouter();
   const name = useUserName();
+  const { pinEnabled } = useSecuritySettings();
   const hideAmounts = useUiStore((s) => s.hideAmounts);
   const setHideAmounts = useUiStore((s) => s.setHideAmounts);
 
@@ -65,6 +68,12 @@ export default function Settings() {
             onPress={() => router.push('/accounts')}
           />
           <SettingsRow icon={Coins} label="Devise" value="Ariary (Ar)" />
+          <SettingsRow
+            icon={KeyRound}
+            label="Code PIN"
+            value={pinEnabled ? 'Activé' : 'Désactivé'}
+            onPress={() => router.push('/pin')}
+          />
           <SettingsRow
             icon={EyeOff}
             label="Masquer les montants"
