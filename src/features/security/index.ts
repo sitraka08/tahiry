@@ -6,3 +6,6 @@ export { useAppLock } from './hooks/use-app-lock';
 export { resetAllData } from './hooks/use-reset';
 export { setBiometric, setLockDelay, useSecuritySettings } from './hooks/use-security-settings';
 export type { LockDelay, PinStep } from './types';
+export { LockGate } from './components/lock-gate';
+export { PinManage } from './components/pin-manage';
+export { PinSetup } from './components/pin-setup';
