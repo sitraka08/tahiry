@@ -75,9 +75,13 @@ export default function RootLayout() {
               <Stack
                 screenOptions={{
                   headerShown: false,
+                  animation: 'slide_from_right',
                   contentStyle: { backgroundColor: 'transparent' },
                 }}
-              />
+              >
+                <Stack.Screen name="index" options={{ animation: 'fade' }} />
+                <Stack.Screen name="add-transaction" options={{ animation: 'slide_from_bottom' }} />
+              </Stack>
             </AppLock>
           </ThemeProvider>
         </KeyboardProvider>
