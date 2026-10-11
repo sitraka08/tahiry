@@ -11,28 +11,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getSetting, migrate } from '@/db';
 import { LockGate, resetAllData, useLockStore } from '@/features/security';
-import { useUserName } from '@/features/settings';
+import { hydrateSettings, useUserName } from '@/features/settings';
 import { setupNotifications } from '@/lib/notifications';
-import { useUiStore } from '@/lib/ui-store';
-import {
-  FONTS,
-  THEME_NAMES,
-  ThemeProvider,
-  ThemedStatusBar,
-  useThemeStore,
-  type ThemeName,
-} from '@/theme';
+import { FONTS, ThemeProvider, ThemedStatusBar } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
 function boot() {
   migrate();
   setupNotifications();
-  const saved = getSetting('theme');
-  if (saved && THEME_NAMES.includes(saved as ThemeName)) {
-    useThemeStore.getState().setTheme(saved as ThemeName);
-  }
-  useUiStore.setState({ hideAmounts: getSetting('hideAmounts') === '1' });
+  hydrateSettings();
   if (getSetting('pinEnabled') === '1') useLockStore.getState().lock();
   return true;
 }
