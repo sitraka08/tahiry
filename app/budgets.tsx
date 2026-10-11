@@ -13,6 +13,7 @@ import {
   useBudget,
 } from '@/features/budgets';
 import { useThemeTokens } from '@/theme';
+import { toast } from '@/lib/toast-store';
 
 const preposition = (month: string) => (/^[aeiouhéèô]/i.test(month) ? "d'" : 'de ');
 
@@ -76,6 +77,7 @@ export default function Budgets() {
         limits={limits}
         onSubmit={(values) => {
           saveBudget(values);
+          toast('Budget enregistré');
           sheetRef.current?.dismiss();
         }}
       />

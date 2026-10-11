@@ -13,6 +13,7 @@ import {
 } from '@/features/transactions';
 import { success } from '@/lib/haptics';
 import { formatNumber } from '@/lib/money';
+import { toast } from '@/lib/toast-store';
 
 export default function AddTransaction() {
   const router = useRouter();
@@ -56,6 +57,7 @@ export default function AddTransaction() {
             if (editId) updateTransaction(editId, values);
             else createTransaction(values);
             success();
+            toast(editId ? 'Opération mise à jour' : 'Opération enregistrée');
             router.back();
           }}
         />

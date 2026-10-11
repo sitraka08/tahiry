@@ -17,6 +17,7 @@ import {
   type DebtFilter,
   type DebtItem,
 } from '@/features/debts';
+import { toast } from '@/lib/toast-store';
 
 const FILTERS: { value: DebtFilter; label: string }[] = [
   { value: 'all', label: 'Tout' },
@@ -91,6 +92,7 @@ export default function Debts() {
         accounts={options}
         onSubmit={(debt, values) => {
           addPayment(debt, values);
+          toast('Paiement enregistré');
           paymentRef.current?.dismiss();
         }}
       />
@@ -99,6 +101,7 @@ export default function Debts() {
         accounts={options}
         onSubmit={(values) => {
           createDebt(values);
+          toast('Ajouté à tes dettes et prêts');
           debtRef.current?.dismiss();
         }}
       />

@@ -16,6 +16,7 @@ import {
 } from '@/features/goals';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
+import { toast } from '@/lib/toast-store';
 
 export default function Goals() {
   const t = useThemeTokens();
@@ -82,6 +83,7 @@ export default function Goals() {
         accounts={accounts.map((a) => ({ id: a.id, name: a.name }))}
         onSubmit={(values) => {
           createGoal(values);
+          toast('Objectif créé');
           goalRef.current?.dismiss();
         }}
       />
@@ -90,6 +92,7 @@ export default function Goals() {
         goal={target}
         onSubmit={(goal, values) => {
           addDeposit(goal.id, values);
+          toast('Argent mis de côté');
           depositRef.current?.dismiss();
         }}
       />

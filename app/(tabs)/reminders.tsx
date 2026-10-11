@@ -20,6 +20,7 @@ import {
   useReminders,
   type ReminderItem,
 } from '@/features/reminders';
+import { toast } from '@/lib/toast-store';
 
 export default function Reminders() {
   const router = useRouter();
@@ -35,7 +36,13 @@ export default function Reminders() {
       return;
     }
     Alert.alert(item.title, undefined, [
-      { text: 'Marquer payé', onPress: () => markReminderPaid(item) },
+      {
+        text: 'Marquer payé',
+        onPress: async () => {
+          await markReminderPaid(item);
+          toast('Marqué comme payé');
+        },
+      },
       { text: 'Supprimer', style: 'destructive', onPress: () => deleteReminder(item.id) },
       { text: 'Annuler', style: 'cancel' },
     ]);
@@ -82,6 +89,7 @@ export default function Reminders() {
         onSubmit={async (values) => {
           sheetRef.current?.dismiss();
           await createReminder(values);
+          toast('Rappel ajouté');
         }}
       />
     </SafeAreaView>

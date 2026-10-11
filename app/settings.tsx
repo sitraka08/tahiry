@@ -30,6 +30,7 @@ import {
 import { restoreBackup, shareBackup } from '@/features/backup';
 import { useSecuritySettings } from '@/features/security';
 import { useUiStore } from '@/lib/ui-store';
+import { toast } from '@/lib/toast-store';
 
 export default function Settings() {
   const router = useRouter();
@@ -92,7 +93,15 @@ export default function Settings() {
             icon={Download}
             label="Importer une sauvegarde"
             last
-            onPress={() => restoreBackup({ confirm: true, onRestored: hydrateSettings })}
+            onPress={() =>
+              restoreBackup({
+                confirm: true,
+                onRestored: () => {
+                  hydrateSettings();
+                  toast('Sauvegarde importée');
+                },
+              })
+            }
           />
         </SettingsSection>
 

@@ -20,6 +20,7 @@ import {
 import { success } from '@/lib/haptics';
 import { formatNumber } from '@/lib/money';
 import { useBottomInset } from '@/lib/use-bottom-inset';
+import { toast } from '@/lib/toast-store';
 
 export default function CashCount() {
   const router = useRouter();
@@ -53,6 +54,7 @@ export default function CashCount() {
     resolved.current = true;
     clearCashGap();
     success();
+    toast('Comptage enregistré');
     router.back();
   };
 

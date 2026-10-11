@@ -17,6 +17,7 @@ import {
 } from '@/features/accounts';
 import { CashGapAlert, useCashGap } from '@/features/cash-count';
 import { useAmountMask } from '@/lib/use-amount-mask';
+import { toast } from '@/lib/toast-store';
 
 export default function Accounts() {
   const router = useRouter();
@@ -104,6 +105,7 @@ export default function Accounts() {
           } else {
             createAccount(values);
           }
+          toast(editing ? 'Compte mis à jour' : 'Compte ajouté');
           sheetRef.current?.dismiss();
         }}
         onArchive={() => {
