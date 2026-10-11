@@ -13,6 +13,7 @@ import { getSetting, migrate } from '@/db';
 import { LockGate, resetAllData, useLockStore } from '@/features/security';
 import { hydrateSettings, useUserName } from '@/features/settings';
 import { setupNotifications } from '@/lib/notifications';
+import { ToastHost } from '@/components';
 import { FONTS, ThemeProvider, ThemedStatusBar } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
@@ -82,6 +83,7 @@ export default function RootLayout() {
                 <Stack.Screen name="index" options={{ animation: 'fade' }} />
                 <Stack.Screen name="add-transaction" options={{ animation: 'slide_from_bottom' }} />
               </Stack>
+              <ToastHost />
             </AppLock>
           </ThemeProvider>
         </KeyboardProvider>

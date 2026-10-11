@@ -10,4 +10,5 @@ export { ProgressBar } from './progress-bar';
 export { SearchInput } from './search-input';
 export { ScreenHeader } from './screen-header';
 export { Segmented } from './segmented';
+export { ToastHost } from './toast-host';
 export { MoneyField, TextField } from './text-field';
