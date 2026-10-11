@@ -4,12 +4,14 @@ import {
   Bell,
   ChevronLeft,
   Coins,
+  Download,
   EyeOff,
   KeyRound,
   Landmark,
   PiggyBank,
   Repeat,
   Target,
+  Upload,
 } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,9 +23,11 @@ import {
   SettingsSection,
   ThemePicker,
   chooseTheme,
+  hydrateSettings,
   saveUserName,
   useUserName,
 } from '@/features/settings';
+import { restoreBackup, shareBackup } from '@/features/backup';
 import { useSecuritySettings } from '@/features/security';
 import { useUiStore } from '@/lib/ui-store';
 
@@ -48,7 +52,7 @@ export default function Settings() {
         contentContainerClassName="pb-8"
         showsVerticalScrollIndicator={false}
       >
-        <ProfileCard name={name} onSaveName={saveUserName} />
+        <ProfileCard name={name} onSaveName={saveUserName} onBackup={shareBackup} />
 
         <View className="mx-5 mt-5">
           <AppText
@@ -80,6 +84,16 @@ export default function Settings() {
             toggle={{ value: hideAmounts, onChange: setHideAmounts }}
           />
           <SettingsRow icon={Bell} label="Rappels" last onPress={() => router.push('/reminders')} />
+        </SettingsSection>
+
+        <SettingsSection title="Sauvegarde">
+          <SettingsRow icon={Upload} label="Exporter mes données" onPress={shareBackup} />
+          <SettingsRow
+            icon={Download}
+            label="Importer une sauvegarde"
+            last
+            onPress={() => restoreBackup({ confirm: true, onRestored: hydrateSettings })}
+          />
         </SettingsSection>
 
         <SettingsSection title="Outils">

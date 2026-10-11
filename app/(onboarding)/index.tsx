@@ -1,6 +1,8 @@
 import { useRouter } from 'expo-router';
 
-import { WelcomeStep } from '@/features/onboarding';
+import { restoreBackup } from '@/features/backup';
+import { WelcomeStep, markOnboarded } from '@/features/onboarding';
+import { hydrateSettings } from '@/features/settings';
 
 export default function Welcome() {
   const router = useRouter();
@@ -8,7 +10,16 @@ export default function Welcome() {
   return (
     <WelcomeStep
       onStart={() => router.push('/(onboarding)/setup-accounts')}
-      onRestore={() => router.push('/(onboarding)/backup')}
+      onRestore={() =>
+        restoreBackup({
+          confirm: false,
+          onRestored: () => {
+            hydrateSettings();
+            markOnboarded();
+            router.replace('/(tabs)');
+          },
+        })
+      }
     />
   );
 }

@@ -90,7 +90,7 @@ export function BackupStep({ onFinish, onBack }: Props) {
             onPress={onFinish}
           />
           <AppText className="mt-0.5 text-center text-xs text-muted">
-            La sauvegarde Google arrive bientôt. Tu pourras l’activer dans Réglages.
+            La sauvegarde Google arrive bientôt. En attendant, exporte un fichier depuis Réglages.
           </AppText>
         </>
       }

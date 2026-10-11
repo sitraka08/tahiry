@@ -58,12 +58,7 @@ export function WelcomeStep({ onStart, onRestore }: Props) {
             icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
             onPress={onStart}
           />
-          <Button
-            label="J’ai déjà une sauvegarde Google"
-            variant="ghost"
-            size="sm"
-            onPress={onRestore}
-          />
+          <Button label="J’ai déjà une sauvegarde" variant="ghost" size="sm" onPress={onRestore} />
         </View>
       </Animated.View>
     </View>

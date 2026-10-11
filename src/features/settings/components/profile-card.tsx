@@ -1,13 +1,13 @@
 import { CloudUpload, Pencil, User } from 'lucide-react-native';
 import { useRef, useState } from 'react';
-import { Alert, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { AppSheet, AppText, Button, TextField, type SheetMethods } from '@/components';
 import { useThemeTokens } from '@/theme';
 
-type Props = { name: string; onSaveName: (name: string) => void };
+type Props = { name: string; onSaveName: (name: string) => void; onBackup: () => void };
 
-export function ProfileCard({ name, onSaveName }: Props) {
+export function ProfileCard({ name, onSaveName, onBackup }: Props) {
   const t = useThemeTokens();
   const sheetRef = useRef<SheetMethods>(null);
   const [draft, setDraft] = useState(name);
@@ -36,12 +36,10 @@ export function ProfileCard({ name, onSaveName }: Props) {
       </Pressable>
 
       <Button
-        label="Sauvegarder avec Google (facultatif)"
+        label="Exporter une sauvegarde"
         size="sm"
         icon={<CloudUpload size={18} color={t.onDark} strokeWidth={1.8} />}
-        onPress={() =>
-          Alert.alert('Bientôt disponible', 'La sauvegarde Google arrive prochainement.')
-        }
+        onPress={onBackup}
       />
 
       <AppSheet sheetRef={sheetRef}>
