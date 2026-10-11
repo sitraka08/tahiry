@@ -4,7 +4,7 @@ import { Bell, ChevronRight, Eye, EyeOff, Plus, Repeat, Settings, User } from 'l
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Headline, IconButton } from '@/components';
+import { AppText, Headline, IconButton, QuickActions } from '@/components';
 import { AccountChip, useAccounts } from '@/features/accounts';
 import { useDebts } from '@/features/debts';
 import { useReminders } from '@/features/reminders';
@@ -117,6 +117,8 @@ export default function Home() {
             ))}
           </View>
         </View>
+
+        <QuickActions onPick={(type) => router.push(`/add-transaction?type=${type}`)} />
 
         <View className="mt-5 flex-row items-baseline justify-between px-5">
           <AppText weight="bold" className="text-[17px]">

@@ -17,7 +17,7 @@ import { toast } from '@/lib/toast-store';
 
 export default function AddTransaction() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const editId = id ? Number(id) : null;
   const { accounts } = useAccounts();
   const existing = useTransaction(editId ?? 0);
@@ -51,7 +51,9 @@ export default function AddTransaction() {
                   note: existing.note ?? '',
                   date: existing.date,
                 }
-              : undefined
+              : type === 'in' || type === 'out' || type === 'transfer'
+                ? { type }
+                : undefined
           }
           onSubmit={(values) => {
             if (editId) updateTransaction(editId, values);
