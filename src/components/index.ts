@@ -4,6 +4,7 @@ export { Button } from './button';
 export { Card } from './card';
 export { Chip } from './chip';
 export { Headline } from './headline';
+export { EmptyState } from './empty-state';
 export { IconButton } from './icon-button';
 export { PressableFeedback } from './pressable-feedback';
 export { ProgressBar } from './progress-bar';

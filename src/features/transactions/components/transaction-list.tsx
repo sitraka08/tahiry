@@ -15,10 +15,10 @@ type Props = {
   groups: DayGroup[];
   onPressItem: (item: TransactionItem) => void;
   header?: ReactElement;
-  emptyLabel: string;
+  empty: ReactElement;
 };
 
-export function TransactionList({ groups, onPressItem, header, emptyLabel }: Props) {
+export function TransactionList({ groups, onPressItem, header, empty }: Props) {
   const entries: Entry[] = groups.flatMap((g) => [
     { kind: 'header' as const, key: `h-${g.key}`, label: g.label },
     ...g.items.map((item) => ({ kind: 'row' as const, key: `r-${item.id}`, item })),
@@ -30,9 +30,7 @@ export function TransactionList({ groups, onPressItem, header, emptyLabel }: Pro
       keyExtractor={(e) => e.key}
       getItemType={(e) => e.kind}
       ListHeaderComponent={header}
-      ListEmptyComponent={
-        <AppText className="mt-8 text-center text-sm text-muted">{emptyLabel}</AppText>
-      }
+      ListEmptyComponent={empty}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
       renderItem={({ item: e }) =>

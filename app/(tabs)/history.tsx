@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Chip, Headline, SearchInput } from '@/components';
+import { SearchX } from 'lucide-react-native';
+
+import { Chip, EmptyState, Headline, SearchInput } from '@/components';
 import { useAccounts } from '@/features/accounts';
 import {
   PeriodSummary,
@@ -74,7 +76,17 @@ export default function History() {
       <TransactionList
         groups={groups}
         header={header}
-        emptyLabel="Aucune opération pour ce filtre."
+        empty={
+          <EmptyState
+            icon={SearchX}
+            title="Rien à afficher"
+            description={
+              search || filter !== 'all'
+                ? 'Aucune opération ne correspond à ta recherche ou à ce filtre.'
+                : 'Tes opérations apparaîtront ici dès que tu en ajoutes une.'
+            }
+          />
+        }
         onPressItem={(item) => router.push(`/transaction/${item.id}`)}
       />
     </SafeAreaView>

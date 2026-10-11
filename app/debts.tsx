@@ -1,9 +1,9 @@
-import { Plus } from 'lucide-react-native';
+import { Plus, Repeat } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { Alert, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, IconButton, ScreenHeader, Segmented, type SheetMethods } from '@/components';
+import { EmptyState, IconButton, ScreenHeader, Segmented, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
 import {
   DebtCard,
@@ -78,9 +78,13 @@ export default function Debts() {
             <DebtCard key={debt.id} debt={debt} onPay={openPayment} onLongPress={confirmDelete} />
           ))}
           {visible.length === 0 ? (
-            <AppText className="mt-6 text-center text-sm text-muted">
-              Rien ici pour le moment. Appuie sur + pour ajouter une dette ou un prêt.
-            </AppText>
+            <EmptyState
+              icon={Repeat}
+              title="Aucune dette ni aucun prêt"
+              description="Note l’argent que tu prêtes ou que tu empruntes pour ne jamais l’oublier."
+              actionLabel="Ajouter"
+              onAction={() => debtRef.current?.present()}
+            />
           ) : null}
         </View>
       </ScrollView>
