@@ -8,6 +8,6 @@ type ThemeState = {
 };
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  theme: 'Citron',
+  theme: 'Menthe',
   setTheme: (theme) => set({ theme }),
 }));
