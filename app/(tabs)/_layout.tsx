@@ -19,13 +19,13 @@ export default function TabsLayout() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
-            minHeight: 84,
+            minHeight: 72,
             paddingTop: 8,
             paddingHorizontal: 12,
-            paddingBottom: Math.max(insets.bottom, 18),
-            backgroundColor: t.dark,
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
+            paddingBottom: Math.max(insets.bottom, 12),
+            backgroundColor: t.bg,
+            borderTopWidth: 1,
+            borderTopColor: t.line,
           }}
         >
           <TabTrigger name="index" href="/" asChild>

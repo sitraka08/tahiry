@@ -24,7 +24,7 @@ export function TextField({
 }: FieldProps) {
   const t = useThemeTokens();
   const [focused, setFocused] = useState(false);
-  const border = error ? 'border-danger' : focused ? 'border-ink' : 'border-outline';
+  const border = error ? 'border-danger' : focused ? 'border-ink' : 'border-transparent';
 
   return (
     <View className={className}>
@@ -33,7 +33,7 @@ export function TextField({
           {label}
         </AppText>
       ) : null}
-      <View className={`h-12 flex-row items-center rounded-[14px] border bg-tile px-3.5 ${border}`}>
+      <View className={`h-12 flex-row items-center rounded-2xl border bg-card px-3.5 ${border}`}>
         <TextInput
           accessibilityLabel={label ?? rest.placeholder}
           placeholderTextColor={t.muted}

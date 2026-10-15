@@ -13,11 +13,11 @@ type Props = {
 export function Chip({ label, selected = false, onPress, dashed = false, large = false }: Props) {
   const base = `${large ? 'h-10 px-3.5' : 'h-9 px-3'} justify-center rounded-full active:opacity-80`;
   const tone = selected
-    ? 'bg-dark'
+    ? 'bg-inverse'
     : dashed
       ? 'border-[1.5px] border-dashed border-seg3'
-      : 'border border-line bg-card';
-  const textTone = selected ? 'font-gs-bold text-accent' : 'font-gs-medium text-ink';
+      : 'border border-outline';
+  const textTone = selected ? 'font-gs-bold text-on-inverse' : 'font-gs-medium text-ink';
   return (
     <Pressable
       accessibilityRole="button"

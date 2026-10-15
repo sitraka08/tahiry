@@ -45,13 +45,12 @@ export function ToastHost() {
       >
         <View
           accessibilityRole="alert"
-          style={{ backgroundColor: t.dark }}
-          className="flex-row items-center gap-2 rounded-full px-4 py-3"
+          className="flex-row items-center gap-2 rounded-full bg-inverse px-4 py-3"
         >
           <View className="size-5 items-center justify-center rounded-full bg-accent">
             <Check size={12} color={t.onAccent} strokeWidth={3} />
           </View>
-          <AppText weight="medium" className="text-sm text-on-dark">
+          <AppText weight="medium" className="text-sm text-on-inverse">
             {message}
           </AppText>
         </View>

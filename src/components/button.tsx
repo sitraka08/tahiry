@@ -19,7 +19,7 @@ type Props = {
 };
 
 const container: Record<Variant, string> = {
-  primary: 'bg-dark',
+  primary: 'bg-inverse',
   accent: 'bg-accent',
   soft: 'bg-card',
   ghost: 'bg-transparent',
@@ -27,7 +27,7 @@ const container: Record<Variant, string> = {
 };
 
 const text: Record<Variant, string> = {
-  primary: 'text-on-dark',
+  primary: 'text-on-inverse',
   accent: 'text-on-accent',
   soft: 'text-ink',
   ghost: 'text-ink',
@@ -57,7 +57,7 @@ export function Button({
         press();
         onPress?.();
       }}
-      className={`flex-row items-center justify-center gap-2 rounded-[18px] ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`flex-row items-center justify-center gap-2 rounded-2xl ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
       <Text className={`${weight} ${textSize} ${text[variant]}`}>{label}</Text>

@@ -3,7 +3,7 @@ import { View, type ViewProps } from 'react-native';
 
 type Props = ViewProps & { tone?: 'card' | 'dark' | 'tile'; children: ReactNode };
 
-const tones = { card: 'border border-line bg-card', dark: 'bg-dark', tile: 'bg-tile' };
+const tones = { card: 'bg-card', dark: 'bg-dark', tile: 'bg-tile' };
 
 export function Card({
   tone = 'card',
@@ -12,7 +12,7 @@ export function Card({
   ...rest
 }: Props & { className?: string }) {
   return (
-    <View className={`rounded-[20px] p-4 ${tones[tone]} ${className}`} {...rest}>
+    <View className={`rounded-3xl p-4 ${tones[tone]} ${className}`} {...rest}>
       {children}
     </View>
   );

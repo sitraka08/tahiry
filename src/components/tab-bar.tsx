@@ -9,15 +9,15 @@ type ButtonProps = TabTriggerSlotProps & { icon: LucideIcon; label: string };
 
 export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps) {
   const t = useThemeTokens();
-  const color = isFocused ? t.accent : t.darkMuted;
+  const color = isFocused ? t.ink : t.muted;
   return (
     <Pressable
       {...rest}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
-      style={{ height: 52, width: 64, alignItems: 'center', justifyContent: 'center', gap: 4 }}
+      className="h-[52px] w-16 items-center justify-center gap-1"
     >
-      <Icon size={22} color={color} strokeWidth={1.8} />
+      <Icon size={22} color={color} strokeWidth={isFocused ? 2 : 1.8} />
       <Text
         style={{ color }}
         className={`text-[11px] ${isFocused ? 'font-gs-bold' : 'font-gs-medium'}`}
@@ -31,24 +31,14 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
 export function TabFab() {
   const t = useThemeTokens();
   return (
-    <View style={{ width: 58 }}>
+    <View className="w-16 items-center">
       <Link href="/add-transaction" asChild>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Ajouter une opération"
-          style={{
-            width: 58,
-            height: 58,
-            borderRadius: 19,
-            borderWidth: 3,
-            borderColor: t.bg,
-            backgroundColor: t.accent,
-            alignItems: 'center',
-            justifyContent: 'center',
-            transform: [{ translateY: -16 }],
-          }}
+          className="size-12 items-center justify-center rounded-2xl bg-accent active:opacity-80"
         >
-          <Plus size={26} color={t.onAccent} strokeWidth={2.2} />
+          <Plus size={24} color={t.onAccent} strokeWidth={2} />
         </Pressable>
       </Link>
     </View>
