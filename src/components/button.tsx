@@ -33,7 +33,7 @@ const text: Record<Variant, string> = {
   danger: 'text-danger',
 };
 
-const heights: Record<Size, string> = { lg: 'h-14', md: 'h-12', sm: 'h-11' };
+const heights: Record<Size, string> = { lg: 'h-12', md: 'h-11', sm: 'h-10' };
 
 export function Button({
   label,
