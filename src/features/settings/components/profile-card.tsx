@@ -13,7 +13,7 @@ export function ProfileCard({ name, onSaveName, onBackup }: Props) {
   const [draft, setDraft] = useState(name);
 
   return (
-    <View className="mx-5 mt-4 gap-3 rounded-[22px] border border-line bg-card p-4">
+    <View className="mx-4 mt-4 gap-3 rounded-card bg-card p-4">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Modifier mon prénom"

@@ -30,7 +30,7 @@ export function AccountsDonut({ groups, total }: Props) {
   });
 
   return (
-    <View className="flex-row items-center gap-[18px] rounded-[22px] border border-line bg-card p-4">
+    <View className="flex-row items-center gap-[18px] rounded-card bg-card p-4">
       <View style={{ width: SIZE, height: SIZE }} className="items-center justify-center">
         <Svg width={SIZE} height={SIZE} viewBox="0 0 150 150">
           <Circle cx={75} cy={75} r={R} fill="none" stroke={t.tile} strokeWidth={STROKE} />
@@ -52,11 +52,11 @@ export function AccountsDonut({ groups, total }: Props) {
             : null}
         </Svg>
         <View style={{ position: 'absolute' }} className="items-center">
-          <AppText className="text-[11px] text-muted">Total</AppText>
+          <AppText className="text-micro text-muted">Total</AppText>
           <AppText weight="bold" className="text-lg">
             {hide ? '••••' : formatCompact(total)}
           </AppText>
-          <AppText className="text-[11px] text-muted">Ar</AppText>
+          <AppText className="text-micro text-muted">Ar</AppText>
         </View>
       </View>
       <View className="flex-1 gap-3">

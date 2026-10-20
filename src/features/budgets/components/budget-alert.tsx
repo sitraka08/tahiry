@@ -14,9 +14,9 @@ export function BudgetAlert({ monthLabel, alerts }: Props) {
   const more = alerts.length - 1;
 
   return (
-    <View className="mx-5 mt-3 flex-row items-center gap-2.5 rounded-2xl bg-accent px-3.5 py-3">
+    <View className="mx-4 mt-3 flex-row items-center gap-2.5 rounded-2xl bg-accent px-3.5 py-3">
       <TriangleAlert size={20} color={t.onAccent} strokeWidth={1.8} />
-      <AppText className="flex-1 text-[13px] leading-[18px] text-on-accent">
+      <AppText className="flex-1 text-caption leading-[18px] text-on-accent">
         En {monthLabel},{' '}
         <AppText weight="bold" className="text-on-accent">
           {first.label}

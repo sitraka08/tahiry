@@ -34,7 +34,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
         tap();
         onPress();
       }}
-      className={`flex-row items-center overflow-hidden rounded-2xl border border-line bg-card ${
+      className={`flex-row items-center overflow-hidden rounded-2xl bg-card ${
         isType ? 'h-[60px] gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
       }`}
     >
@@ -49,7 +49,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       </View>
       <AppText
         weight={selected ? 'bold' : 'medium'}
-        className={`flex-1 ${selected ? 'text-on-dark' : 'text-ink'} ${isType ? 'text-sm' : 'text-[15px]'}`}
+        className={`flex-1 ${selected ? 'text-on-dark' : 'text-ink'} ${isType ? 'text-sm' : 'text-body'}`}
       >
         {label}
       </AppText>

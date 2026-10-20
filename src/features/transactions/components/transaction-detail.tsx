@@ -19,9 +19,7 @@ const FROM_LABEL = { out: 'Payé avec', in: 'Reçu sur', transfer: 'Depuis' } as
 
 function Row({ label, value, last = false }: { label: string; value: string; last?: boolean }) {
   return (
-    <View
-      className={`min-h-12 flex-row items-center justify-between gap-4 ${last ? '' : 'border-b border-line'}`}
-    >
+    <View className={`min-h-12 flex-row items-center justify-between gap-4 ${last ? '' : ''}`}>
       <AppText className="text-sm text-muted">{label}</AppText>
       <AppText weight="bold" className="flex-1 text-right text-sm">
         {value}
@@ -53,10 +51,10 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
 
   return (
     <View>
-      <View className="mx-5 mt-6 items-center gap-2">
+      <View className="mx-4 mt-6 items-center gap-2">
         <View
           style={{ backgroundColor: tone.bg }}
-          className="size-[60px] items-center justify-center rounded-[20px]"
+          className="size-[60px] items-center justify-center rounded-card"
         >
           <Icon size={28} color={tone.fg} strokeWidth={2} />
         </View>
@@ -81,7 +79,7 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
         </View>
       </View>
 
-      <View className="mx-5 mt-[22px] rounded-[20px] border border-line bg-card px-4 py-1">
+      <View className="mx-4 mt-[22px] rounded-card bg-card px-4 py-1">
         {rows.map((r) => (
           <Row
             key={r.label}
@@ -99,7 +97,7 @@ export function TransactionDetail({ item, balanceAfter, onPickReceipt }: Props) 
           item.receiptUri ? 'Changer la photo du reçu' : 'Ajouter une photo du reçu'
         }
         onPress={onPickReceipt}
-        className="mx-5 mt-3 h-24 items-center justify-center gap-1.5 overflow-hidden rounded-[20px] border-[1.5px] border-dashed border-seg3"
+        className="mx-4 mt-3 h-24 items-center justify-center gap-1.5 overflow-hidden rounded-card border-[1.5px] border-dashed border-seg3"
       >
         {item.receiptUri ? (
           <Image source={{ uri: item.receiptUri }} resizeMode="cover" className="size-full" />

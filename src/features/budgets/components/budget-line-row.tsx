@@ -11,7 +11,7 @@ export function BudgetLineRow({ line }: { line: Line }) {
   const show = (n: number) => (hide ? '••••' : formatNumber(n));
 
   return (
-    <View className="gap-1.5 rounded-2xl border border-line bg-card px-3.5 py-3">
+    <View className="gap-1.5 rounded-2xl bg-card px-3.5 py-3">
       <View className="flex-row justify-between gap-2">
         <AppText weight="medium" numberOfLines={1} className="flex-1 text-sm">
           {line.label}

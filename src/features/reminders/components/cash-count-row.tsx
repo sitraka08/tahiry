@@ -26,7 +26,7 @@ export function CashCountRow({ frequency, onChange }: Props) {
         onPress={() => router.push('/cash-count')}
         className="min-w-0 flex-1 gap-0.5"
       >
-        <AppText weight="medium" className="text-[15px]">
+        <AppText weight="medium" className="text-body">
           Compter mes espèces
         </AppText>
         <AppText className="text-xs text-muted">{LABEL[frequency]}</AppText>

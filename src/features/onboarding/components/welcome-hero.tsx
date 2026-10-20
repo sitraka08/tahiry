@@ -37,7 +37,7 @@ export function WelcomeHero() {
       <Float style={{ left: 150, top: 110 }} delay={300} float={5}>
         <View
           style={{ transform: [{ rotate: '3deg' }] }}
-          className="h-[150px] w-24 items-center justify-center rounded-[22px] bg-tile"
+          className="h-[150px] w-24 items-center justify-center rounded-card bg-tile"
         >
           <Smartphone size={46} color={t.ink} strokeWidth={1.6} />
         </View>
@@ -46,7 +46,7 @@ export function WelcomeHero() {
       <Float style={{ left: 236, top: 200 }} delay={400}>
         <View
           style={{ transform: [{ rotate: '-3deg' }] }}
-          className="h-[76px] w-[110px] items-center justify-center rounded-[18px] bg-dark"
+          className="h-[76px] w-[110px] items-center justify-center rounded-card bg-dark"
         >
           <Banknote size={46} color={t.accent} strokeWidth={1.6} />
         </View>
@@ -54,7 +54,7 @@ export function WelcomeHero() {
 
       <Float style={{ left: 196, top: 46 }} delay={550} float={4}>
         <View className="rounded-2xl rounded-bl-[4px] bg-dark px-3.5 py-2.5">
-          <AppText weight="medium" className="text-[13px] text-on-dark">
+          <AppText weight="medium" className="text-caption text-on-dark">
             −42 500 Ar · Espèces
           </AppText>
         </View>
@@ -62,7 +62,7 @@ export function WelcomeHero() {
 
       <Float style={{ left: 30, top: 300 }} delay={650} float={-4}>
         <View className="rounded-2xl rounded-br-[4px] bg-tile px-3.5 py-2.5">
-          <AppText weight="bold" className="text-[13px]">
+          <AppText weight="bold" className="text-caption">
             +1 200 000 Ar · Banque
           </AppText>
         </View>

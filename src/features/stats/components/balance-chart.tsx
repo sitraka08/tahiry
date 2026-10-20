@@ -26,9 +26,9 @@ export function BalanceChart({ period, labels, values, change }: Props) {
   const first = points[0];
 
   return (
-    <View className="mx-5 mt-3.5 rounded-[22px] bg-dark p-4">
+    <View className="mx-4 mt-3.5 rounded-card bg-dark p-4">
       <View className="flex-row items-baseline justify-between gap-2">
-        <AppText weight="bold" className="text-[15px] text-on-dark">
+        <AppText weight="bold" className="text-body text-on-dark">
           Évolution du solde
         </AppText>
         {change !== null ? (
@@ -98,7 +98,7 @@ export function BalanceChart({ period, labels, values, change }: Props) {
 
       <View className="mt-1.5 flex-row justify-between px-0.5">
         {labels.map((label, i) => (
-          <AppText key={`${label}-${i}`} className="text-[11px] text-dark-muted">
+          <AppText key={`${label}-${i}`} className="text-micro text-dark-muted">
             {label}
           </AppText>
         ))}

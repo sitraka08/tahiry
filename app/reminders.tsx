@@ -67,8 +67,8 @@ export default function Reminders() {
         showsVerticalScrollIndicator={false}
       >
         <RemindersSummary summary={summary} />
-        <View className="mx-5 mt-[18px]">
-          <AppText weight="bold" className="text-[17px]">
+        <View className="mx-4 mt-5">
+          <AppText weight="bold" className="text-headline">
             À venir
           </AppText>
           <View className="mt-2">
@@ -79,7 +79,7 @@ export default function Reminders() {
           </View>
         </View>
         {goals[0] ? (
-          <View className="mx-5 mt-3.5">
+          <View className="mx-4 mt-3.5">
             <GoalSummary goal={goals[0]} onPress={() => router.push('/goals')} />
           </View>
         ) : null}

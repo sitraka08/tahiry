@@ -10,16 +10,16 @@ export function CountSummary({ counted, expected }: Props) {
   const sign = gap > 0 ? '+' : '−';
 
   return (
-    <View className="mx-5 mt-4 flex-row flex-wrap gap-3 rounded-[22px] bg-dark px-[18px] py-4">
+    <View className="mx-4 mt-4 flex-row flex-wrap gap-3 rounded-card bg-dark px-[18px] py-4">
       <View className="w-[46%] gap-0.5">
         <AppText className="text-xs text-dark-muted">Compté</AppText>
-        <AppText weight="bold" className="text-[22px] text-on-dark">
+        <AppText weight="bold" className="text-title text-on-dark">
           {formatNumber(counted)} Ar
         </AppText>
       </View>
       <View className="w-[46%] gap-0.5">
         <AppText className="text-xs text-dark-muted">Attendu par l’app</AppText>
-        <AppText weight="bold" className="text-[22px] text-on-dark">
+        <AppText weight="bold" className="text-title text-on-dark">
           {formatNumber(expected)} Ar
         </AppText>
       </View>

@@ -32,7 +32,7 @@ export function OnboardingShell({
 
   return (
     <View style={{ flex: 1, paddingTop: insets.top }}>
-      <View className="flex-row items-center gap-3.5 px-5 pt-5">
+      <View className="flex-row items-center gap-3.5 px-4 pt-5">
         <IconButton icon={ChevronLeft} label="Retour" onPress={onBack} />
         <ProgressSegments step={step} />
         {headerRight?.kind === 'skip' ? (
@@ -60,13 +60,13 @@ export function OnboardingShell({
           style={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerClassName="px-5 pb-6"
+          contentContainerClassName="px-4 pb-6"
         >
           <Animated.View entering={FadeInDown.duration(320)}>
-            <View className="mt-[18px]">
+            <View className="mt-5">
               {title}
               {subtitle ? (
-                <AppText className="mt-2 text-[15px] leading-[22px] text-muted">{subtitle}</AppText>
+                <AppText className="mt-2 text-body leading-[22px] text-muted">{subtitle}</AppText>
               ) : null}
             </View>
           </Animated.View>
@@ -76,7 +76,7 @@ export function OnboardingShell({
           entering={FadeInDown.delay(140).duration(320)}
           style={{ paddingBottom: Math.max(insets.bottom + 12, 28), paddingTop: 8 }}
         >
-          <View className="gap-2 px-5">{footer}</View>
+          <View className="gap-2 px-4">{footer}</View>
         </Animated.View>
       </KeyboardAvoidingView>
     </View>

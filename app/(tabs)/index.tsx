@@ -132,7 +132,7 @@ export default function Home() {
           <PressableFeedback
             accessibilityRole="button"
             onPress={() => router.push('/add-transaction')}
-            className="mx-4 items-center gap-2 rounded-card border border-dashed border-outline px-5 py-6"
+            className="mx-4 items-center gap-2 rounded-card border border-dashed border-outline px-4 py-6"
           >
             <View className="size-11 items-center justify-center rounded-full bg-accent">
               <Plus size={22} color={t.onAccent} strokeWidth={2.2} />

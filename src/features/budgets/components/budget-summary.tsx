@@ -12,9 +12,9 @@ export function BudgetSummary({ view }: { view: BudgetView }) {
   const over = view.remaining < 0;
 
   return (
-    <View className="mx-5 mt-4 gap-3 rounded-[22px] bg-dark px-5 py-[18px]">
+    <View className="mx-4 mt-4 gap-3 rounded-card bg-dark px-4 py-[18px]">
       <View className="flex-row items-baseline justify-between">
-        <AppText className="text-[13px] text-dark-muted">
+        <AppText className="text-caption text-dark-muted">
           {over ? 'Budget dépassé de' : 'Reste à dépenser'}
         </AppText>
         <AppText className="text-xs text-dark-muted">

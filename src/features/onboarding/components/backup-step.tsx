@@ -36,7 +36,7 @@ function BackupHero() {
       <Float style={{ left: 76, top: 30 }} delay={200}>
         <View
           style={{ transform: [{ rotate: '-5deg' }] }}
-          className="h-[140px] w-[84px] items-center justify-center rounded-[20px] bg-dark"
+          className="h-[140px] w-[84px] items-center justify-center rounded-card bg-dark"
         >
           <Smartphone size={40} color={t.onDark} strokeWidth={1.6} />
         </View>
@@ -47,7 +47,7 @@ function BackupHero() {
       <Float style={{ left: 228, top: 52 }} delay={450} float={5}>
         <View
           style={{ transform: [{ rotate: '4deg' }] }}
-          className="h-[92px] w-[104px] items-center justify-center rounded-3xl bg-tile"
+          className="h-[92px] w-[104px] items-center justify-center rounded-card bg-tile"
         >
           <Cloud size={50} color={t.ink} strokeWidth={1.6} />
         </View>
@@ -77,7 +77,7 @@ export function BackupStep({ onFinish, onBack }: Props) {
             disabled
             icon={
               <View className="size-[26px] items-center justify-center rounded-full bg-on-dark">
-                <AppText weight="bold" className="text-[15px]">
+                <AppText weight="bold" className="text-body">
                   G
                 </AppText>
               </View>
@@ -95,7 +95,7 @@ export function BackupStep({ onFinish, onBack }: Props) {
         </>
       }
     >
-      <View className="mt-4 gap-3 rounded-[20px] border border-line bg-card px-4 py-3.5">
+      <View className="mt-4 gap-3 rounded-card bg-card px-4 py-3.5">
         {PERKS.map((perk, i) => (
           <Animated.View key={perk} entering={FadeInRight.delay(250 + i * 90).duration(320)}>
             <View className="flex-row items-center gap-2.5">

@@ -25,7 +25,7 @@ export default function AddTransaction() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="flex-row items-center justify-between px-5 pb-4 pt-5">
+      <View className="flex-row items-center justify-between px-4 pb-4 pt-5">
         <IconButton icon={X} label="Fermer" onPress={() => router.back()} />
         <AppText weight="bold" className="text-base">
           {editId ? 'Modifier l’opération' : 'Nouvelle opération'}
@@ -33,7 +33,7 @@ export default function AddTransaction() {
         <View className="w-11" />
       </View>
       {accounts.length === 0 || waiting ? (
-        <AppText className="px-5 text-center text-muted">
+        <AppText className="px-4 text-center text-muted">
           {waiting ? 'Chargement…' : 'Ajoute d’abord un compte.'}
         </AppText>
       ) : (

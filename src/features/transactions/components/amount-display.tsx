@@ -21,7 +21,7 @@ export function AmountDisplay({ value, hint, error }: Props) {
         >
           {value || '0'}
         </AppText>
-        <AppText weight="medium" tone="muted" className="text-[22px]">
+        <AppText weight="medium" tone="muted" className="text-title">
           Ar
         </AppText>
       </View>

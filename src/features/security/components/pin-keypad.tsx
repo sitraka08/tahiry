@@ -37,7 +37,7 @@ function Digit({
         onDigit(digit);
       }}
       className={`size-[72px] items-center justify-center rounded-full active:opacity-60 ${
-        dark ? 'bg-white/10' : 'border border-line bg-card'
+        dark ? 'bg-white/10' : 'bg-card'
       }`}
     >
       <AppText weight="medium" className={`text-[26px] ${dark ? 'text-on-dark' : 'text-ink'}`}>

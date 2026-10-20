@@ -27,7 +27,7 @@ export function TextField({
   return (
     <View className={className}>
       {label ? (
-        <AppText weight="medium" className="mb-1.5 text-[13px] text-muted">
+        <AppText weight="medium" className="mb-1.5 text-caption text-muted">
           {label}
         </AppText>
       ) : null}
@@ -43,7 +43,7 @@ export function TextField({
             setFocused(false);
             onBlur?.(e);
           }}
-          className="flex-1 py-0 text-[15px]"
+          className="flex-1 py-0 text-body"
         />
         {suffix ? <AppText className="ml-2 text-sm text-muted">{suffix}</AppText> : null}
       </View>

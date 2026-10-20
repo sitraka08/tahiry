@@ -76,7 +76,7 @@ export function LockScreen({ name, biometric, onForgot }: Props) {
         <View className="size-16 items-center justify-center rounded-full bg-accent">
           <Lock size={28} color={t.onAccent} strokeWidth={1.8} />
         </View>
-        <AppText weight="bold" className="mt-[18px] text-2xl text-on-dark">
+        <AppText weight="bold" className="mt-5 text-2xl text-on-dark">
           {name ? `Bon retour, ${name}` : 'Bon retour'}
         </AppText>
         <AppText className="mt-1.5 text-sm text-dark-muted">
@@ -120,7 +120,7 @@ export function LockScreen({ name, biometric, onForgot }: Props) {
         style={{ position: 'absolute', left: 0, right: 0, bottom: Math.max(insets.bottom, 16) + 8 }}
         className="h-11 items-center justify-center"
       >
-        <AppText className="text-[13px] text-dark-muted">Code oublié ?</AppText>
+        <AppText className="text-caption text-dark-muted">Code oublié ?</AppText>
       </Pressable>
     </View>
   );

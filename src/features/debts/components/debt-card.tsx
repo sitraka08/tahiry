@@ -32,7 +32,7 @@ function Action({
       onPress={onPress}
       className={`h-10 flex-1 items-center justify-center rounded-xl ${box}`}
     >
-      <AppText weight={tone === 'accent' ? 'bold' : 'medium'} className={`text-[13px] ${text}`}>
+      <AppText weight={tone === 'accent' ? 'bold' : 'medium'} className={`text-caption ${text}`}>
         {label}
       </AppText>
     </PressableFeedback>
@@ -65,7 +65,7 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
       accessibilityHint="Appui long pour supprimer"
       onLongPress={() => onLongPress(debt)}
 
-      className={`gap-2.5 rounded-[20px] p-3.5 ${borrowed ? 'bg-dark' : 'border border-line bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
+      className={`gap-2.5 rounded-card p-3.5 ${borrowed ? 'bg-dark' : 'bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
     >
       <View className="flex-row items-center gap-3">
         <View
@@ -79,7 +79,7 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
           <AppText
             weight="bold"
             numberOfLines={1}
-            className={`text-[15px] ${borrowed ? 'text-on-dark' : ''}`}
+            className={`text-body ${borrowed ? 'text-on-dark' : ''}`}
           >
             {debt.person}
             {borrowed ? ' · je dois' : ''}
@@ -90,10 +90,10 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
           </AppText>
         </View>
         <View className="items-end gap-0.5">
-          <AppText weight="bold" className={`text-[15px] ${borrowed ? 'text-on-dark' : ''}`}>
+          <AppText weight="bold" className={`text-body ${borrowed ? 'text-on-dark' : ''}`}>
             {fmt(debt.settled ? debt.amount : remaining)}
           </AppText>
-          {sub ? <AppText className={`text-[11px] ${muted}`}>{sub}</AppText> : null}
+          {sub ? <AppText className={`text-micro ${muted}`}>{sub}</AppText> : null}
         </View>
       </View>
 

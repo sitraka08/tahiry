@@ -32,7 +32,7 @@ export function IconButton({
       <Icon size={20} color={tone === 'accent' ? onAccent : ink} strokeWidth={1.8} />
       {badge > 0 ? (
         <View className="absolute -right-[5px] -top-[5px] h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1">
-          <AppText weight="bold" className="text-[11px] text-on-accent">
+          <AppText weight="bold" className="text-micro text-on-accent">
             {badge}
           </AppText>
         </View>

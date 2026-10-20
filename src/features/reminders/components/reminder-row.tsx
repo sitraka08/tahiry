@@ -39,18 +39,18 @@ export function ReminderRow({ item, now, onPress }: Props) {
     <Pressable
       accessibilityRole="button"
       onPress={() => onPress(item)}
-      className="flex-row items-center gap-3 border-b border-line py-2 active:opacity-70"
+      className="flex-row items-center gap-3 py-2 active:opacity-70"
     >
       <View className={`h-12 w-[46px] items-center justify-center rounded-xl ${BLOCK[tone].box}`}>
         <AppText weight="bold" className={`text-lg leading-[18px] ${BLOCK[tone].text}`}>
           {format(item.dueDate, 'd')}
         </AppText>
-        <AppText className={`mt-0.5 text-[11px] leading-[11px] ${BLOCK[tone].text}`}>
+        <AppText className={`mt-0.5 text-micro leading-[11px] ${BLOCK[tone].text}`}>
           {format(item.dueDate, 'MMM', { locale: fr })}
         </AppText>
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <AppText weight="medium" numberOfLines={1} className="text-[15px]">
+        <AppText weight="medium" numberOfLines={1} className="text-body">
           {item.title}
         </AppText>
         {subtitle ? (

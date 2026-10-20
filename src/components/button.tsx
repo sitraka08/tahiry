@@ -56,7 +56,7 @@ export function Button({
         press();
         onPress?.();
       }}
-      className={`flex-row items-center justify-center gap-2 rounded-full px-5 ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`flex-row items-center justify-center gap-2 rounded-full px-4 ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
       <AppText weight={weight} className={`${textSize} ${text[variant]}`}>

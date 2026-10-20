@@ -9,17 +9,15 @@ import { useThemeTokens } from '@/theme';
 
 export function SettingsSection({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <View className="mx-5 mt-5">
+    <View className="mx-4 mt-5">
       <AppText
         weight="medium"
-        className="text-[13px] uppercase text-muted"
+        className="text-caption uppercase text-muted"
         style={{ letterSpacing: 0.6 }}
       >
         {title}
       </AppText>
-      <View className="mt-2.5 rounded-[20px] border border-line bg-card px-3.5 py-1">
-        {children}
-      </View>
+      <View className="mt-2.5 rounded-card bg-card px-3.5 py-1">{children}</View>
     </View>
   );
 }
@@ -36,12 +34,10 @@ type RowProps = {
 export function SettingsRow({ icon: Icon, label, value, last, onPress, toggle }: RowProps) {
   const t = useThemeTokens();
   const body = (
-    <View
-      className={`min-h-[50px] flex-row items-center gap-3 ${last ? '' : 'border-b border-line'}`}
-    >
+    <View className={`min-h-[50px] flex-row items-center gap-3 ${last ? '' : ''}`}>
       <Icon size={20} color={t.ink} strokeWidth={1.8} />
-      <AppText className="flex-1 text-[15px]">{label}</AppText>
-      {value ? <AppText className="text-[13px] text-muted">{value}</AppText> : null}
+      <AppText className="flex-1 text-body">{label}</AppText>
+      {value ? <AppText className="text-caption text-muted">{value}</AppText> : null}
       {toggle ? (
         <Switch
           accessibilityLabel={label}

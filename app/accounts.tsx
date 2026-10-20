@@ -52,26 +52,26 @@ export default function Accounts() {
         contentContainerClassName="pb-8"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-5 mt-3.5">
+        <View className="mx-4 mt-3.5">
           <Headline lead="Où est passé " highlight="mon argent" tail=" ?" />
         </View>
-        <View className="mx-5 mt-4">
+        <View className="mx-4 mt-4">
           <AccountsDonut groups={groups} total={total} />
         </View>
 
         {groups
           .filter((g) => g.accounts.length > 0)
           .map((g) => (
-            <View key={g.type} className="mx-5 mt-[18px]">
+            <View key={g.type} className="mx-4 mt-5">
               <View className="flex-row items-baseline justify-between">
                 <AppText
                   weight="medium"
-                  className="text-[13px] uppercase text-muted"
+                  className="text-caption uppercase text-muted"
                   style={{ letterSpacing: 0.6 }}
                 >
                   {g.label}
                 </AppText>
-                <AppText weight="bold" className="text-[13px]">
+                <AppText weight="bold" className="text-caption">
                   {fmt(g.total)}
                 </AppText>
               </View>

@@ -70,7 +70,7 @@ export default function TransactionScreen() {
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <TransactionDetail item={item} balanceAfter={balanceAfter} onPickReceipt={changeReceipt} />
       </ScrollView>
-      <View style={{ paddingBottom: bottomInset + 8 }} className="flex-row gap-2 px-5 pt-2">
+      <View style={{ paddingBottom: bottomInset + 8 }} className="flex-row gap-2 px-4 pt-2">
         <View className="flex-1">
           <Button label="Dupliquer" variant="soft" size="md" onPress={duplicate} />
         </View>

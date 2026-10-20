@@ -25,7 +25,7 @@ export default function Stats() {
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <View className="flex-row items-center justify-between gap-2 px-5 pt-5">
+      <View className="flex-row items-center justify-between gap-2 px-4 pt-5">
         <Headline lead="Statistiques" />
         <View className="flex-row gap-1.5">
           <Pressable
@@ -33,16 +33,16 @@ export default function Stats() {
             onPress={() => router.push('/budgets')}
             className="h-10 justify-center rounded-full bg-accent px-3 active:opacity-80"
           >
-            <AppText weight="bold" className="text-[13px] text-on-accent">
+            <AppText weight="bold" className="text-caption text-on-accent">
               Budgets
             </AppText>
           </Pressable>
           <Pressable
             accessibilityRole="button"
             onPress={() => router.push('/goals')}
-            className="h-10 justify-center rounded-full border border-line bg-card px-3 active:opacity-80"
+            className="h-10 justify-center rounded-full bg-card px-3 active:opacity-80"
           >
-            <AppText weight="medium" className="text-[13px]">
+            <AppText weight="medium" className="text-caption">
               Objectifs
             </AppText>
           </Pressable>
@@ -53,7 +53,7 @@ export default function Stats() {
         contentContainerClassName="pb-8"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-5 mt-3.5">
+        <View className="mx-4 mt-3.5">
           <Segmented options={PERIODS} value={period} onChange={setPeriod} />
         </View>
         <StatTiles income={stats.income} expense={stats.expense} saved={stats.saved} />

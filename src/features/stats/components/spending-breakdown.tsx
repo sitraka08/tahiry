@@ -10,12 +10,12 @@ export function SpendingBreakdown({ categories }: { categories: CategoryShare[] 
   const hide = useUiStore((s) => s.hideAmounts);
 
   return (
-    <View className="mx-5 mt-[18px]">
-      <AppText weight="bold" className="text-[17px]">
+    <View className="mx-4 mt-5">
+      <AppText weight="bold" className="text-headline">
         Où part l’argent
       </AppText>
       {categories.length === 0 ? (
-        <View className="mt-2.5 items-center rounded-[20px] border border-dashed border-seg3 px-5 py-6">
+        <View className="mt-2.5 items-center rounded-card border border-dashed border-seg3 px-4 py-6">
           <AppText className="text-center text-sm text-muted">
             Aucune dépense sur cette période.
           </AppText>

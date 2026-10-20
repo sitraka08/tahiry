@@ -18,9 +18,9 @@ export function RemindersSummary({ summary }: { summary: ReminderSummary }) {
     .join(' · ');
 
   return (
-    <View className="mx-5 mt-3.5 flex-row items-center justify-between gap-3 rounded-[22px] bg-dark px-5 py-[18px]">
+    <View className="mx-4 mt-3.5 flex-row items-center justify-between gap-3 rounded-card bg-dark px-4 py-[18px]">
       <View className="gap-1">
-        <AppText className="text-[13px] text-dark-muted">À payer d’ici 30 jours</AppText>
+        <AppText className="text-caption text-dark-muted">À payer d’ici 30 jours</AppText>
         <AppText weight="bold" className="text-[30px] text-on-dark" style={{ letterSpacing: -0.5 }}>
           {fmt(summary.total, false)}{' '}
           <AppText weight="medium" className="text-base text-on-dark">
@@ -31,7 +31,7 @@ export function RemindersSummary({ summary }: { summary: ReminderSummary }) {
       </View>
       <View
         style={{ transform: [{ rotate: '-6deg' }] }}
-        className="size-14 items-center justify-center rounded-[18px] bg-accent"
+        className="size-14 items-center justify-center rounded-card bg-accent"
       >
         <CalendarClock size={28} color={t.onAccent} strokeWidth={1.8} />
       </View>

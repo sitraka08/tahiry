@@ -28,11 +28,11 @@ export function AccountRow({ account, onPress }: Props) {
       accessibilityRole="button"
       accessibilityLabel={`Modifier ${account.name}`}
       onPress={onPress}
-      className="flex-row items-center gap-3 rounded-[18px] border border-line bg-card p-3 active:opacity-80"
+      className="flex-row items-center gap-3 rounded-card bg-card p-3 active:opacity-80"
     >
       <AccountTypeIcon type={account.type} size={42} />
       <View className="min-w-0 flex-1 gap-0.5">
-        <AppText weight="bold" numberOfLines={1} className="text-[15px]">
+        <AppText weight="bold" numberOfLines={1} className="text-body">
           {account.name}
         </AppText>
         <AppText numberOfLines={1} className="text-xs text-muted">
@@ -40,10 +40,10 @@ export function AccountRow({ account, onPress }: Props) {
         </AppText>
       </View>
       <View className="items-end gap-0.5">
-        <AppText weight="bold" className="text-[15px]">
+        <AppText weight="bold" className="text-body">
           {fmt(account.balance)}
         </AppText>
-        <AppText className="text-[11px] text-muted">{updated}</AppText>
+        <AppText className="text-micro text-muted">{updated}</AppText>
       </View>
     </Pressable>
   );

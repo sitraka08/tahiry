@@ -72,7 +72,7 @@ function ReminderForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         )}
       />
 
-      <AppText weight="medium" className="text-[13px] text-muted">
+      <AppText weight="medium" className="text-caption text-muted">
         Payé avec
       </AppText>
       <Controller
@@ -92,7 +92,7 @@ function ReminderForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         )}
       />
 
-      <AppText weight="medium" className="text-[13px] text-muted">
+      <AppText weight="medium" className="text-caption text-muted">
         Échéance
       </AppText>
       <Controller

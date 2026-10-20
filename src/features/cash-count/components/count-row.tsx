@@ -15,11 +15,11 @@ type Props = {
 export function CountRow({ value, count, onChange }: Props) {
   const t = useThemeTokens();
   return (
-    <View className="flex-row items-center gap-3 rounded-2xl border border-line bg-card py-1.5 pl-3.5 pr-1.5">
-      <AppText weight="bold" className="w-[72px] text-[15px]">
+    <View className="flex-row items-center gap-3 rounded-2xl bg-card py-1.5 pl-3.5 pr-1.5">
+      <AppText weight="bold" className="w-[72px] text-body">
         {formatNumber(value)}
       </AppText>
-      <AppText className="flex-1 text-[13px] text-muted">
+      <AppText className="flex-1 text-caption text-muted">
         = {formatNumber(value * count)} Ar
       </AppText>
       <Pressable

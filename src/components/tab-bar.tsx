@@ -20,7 +20,7 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
       className="h-14 w-16 items-center justify-center gap-1"
     >
       <Icon size={24} color={color} strokeWidth={isFocused ? 2.2 : 1.8} />
-      <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-[11px]">
+      <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-micro">
         {label}
       </AppText>
     </Pressable>

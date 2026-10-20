@@ -51,7 +51,7 @@ export function PinSetup({ onDone }: Props) {
       <View className="items-center px-6 pt-12">
         <View
           style={{ transform: [{ rotate: '-6deg' }] }}
-          className="size-16 items-center justify-center rounded-[20px] bg-accent"
+          className="size-16 items-center justify-center rounded-card bg-accent"
         >
           <KeyRound size={30} color={t.onAccent} strokeWidth={1.8} />
         </View>

@@ -43,7 +43,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="flex-row items-center gap-3 px-5 pt-5">
+      <View className="flex-row items-center gap-3 px-4 pt-5">
         <IconButton icon={ChevronLeft} label="Retour" onPress={() => router.back()} />
         <AppText accessibilityRole="header" weight="bold" className="text-2xl">
           Réglages
@@ -57,10 +57,10 @@ export default function Settings() {
       >
         <ProfileCard name={name} onSaveName={saveUserName} onBackup={shareBackup} />
 
-        <View className="mx-5 mt-5">
+        <View className="mx-4 mt-5">
           <AppText
             weight="medium"
-            className="mb-2.5 text-[13px] uppercase text-muted"
+            className="mb-2.5 text-caption uppercase text-muted"
             style={{ letterSpacing: 0.6 }}
           >
             Apparence

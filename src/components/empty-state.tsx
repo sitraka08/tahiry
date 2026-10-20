@@ -17,7 +17,7 @@ type Props = {
 export function EmptyState({ icon: Icon, title, description, actionLabel, onAction }: Props) {
   const t = useThemeTokens();
   return (
-    <View className="mx-4 mt-6 items-center gap-2.5 rounded-card bg-card px-5 py-8">
+    <View className="mx-4 mt-6 items-center gap-2.5 rounded-card bg-card px-4 py-8">
       <View className="size-14 items-center justify-center rounded-full bg-tile">
         <Icon size={26} color={t.ink} strokeWidth={1.8} />
       </View>

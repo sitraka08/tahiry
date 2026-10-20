@@ -27,10 +27,10 @@ export function GoalCard({ goal, dark, now, onDeposit }: Props) {
   const muted = dark ? 'text-dark-muted' : 'text-muted';
 
   return (
-    <View className={`gap-3 rounded-[22px] p-4 ${dark ? 'bg-dark' : 'border border-line bg-card'}`}>
+    <View className={`gap-3 rounded-card p-4 ${dark ? 'bg-dark' : 'bg-card'}`}>
       <View className="flex-row items-center gap-3">
         <View
-          className={`size-11 items-center justify-center rounded-[14px] ${dark ? 'bg-accent' : 'bg-tile'}`}
+          className={`size-11 items-center justify-center rounded-tile ${dark ? 'bg-accent' : 'bg-tile'}`}
         >
           <Icon size={22} color={dark ? t.onAccent : t.ink} strokeWidth={1.8} />
         </View>
@@ -55,13 +55,13 @@ export function GoalCard({ goal, dark, now, onDeposit }: Props) {
       />
 
       <View className="flex-row justify-between">
-        <AppText className={`text-[13px] ${text}`}>{fmt(goal.saved)}</AppText>
-        <AppText className={`text-[13px] ${muted}`}>sur {fmt(goal.target)}</AppText>
+        <AppText className={`text-caption ${text}`}>{fmt(goal.saved)}</AppText>
+        <AppText className={`text-caption ${muted}`}>sur {fmt(goal.target)}</AppText>
       </View>
 
       {monthly ? (
         <View className={`rounded-xl px-3 py-2.5 ${dark ? 'bg-white/10' : 'bg-tile'}`}>
-          <AppText className={`text-[13px] leading-[18px] ${text}`}>
+          <AppText className={`text-caption leading-[18px] ${text}`}>
             Mets{' '}
             <AppText weight="bold" className={dark ? 'text-accent' : 'text-ink'}>
               {fmt(monthly)} par mois

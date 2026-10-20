@@ -16,14 +16,14 @@ type Props = {
 export function CashGapAlert({ missing, counted, expected, onAddExpense, onRecount }: Props) {
   const t = useThemeTokens();
   return (
-    <View className="mx-5 mt-[18px] gap-2 rounded-[20px] bg-accent p-4">
+    <View className="mx-4 mt-5 gap-2 rounded-card bg-accent p-4">
       <View className="flex-row items-center gap-2">
         <TriangleAlert size={20} color={t.onAccent} strokeWidth={1.8} />
         <AppText weight="bold" className="text-base text-on-accent">
           {formatNumber(missing)} Ar introuvables
         </AppText>
       </View>
-      <AppText className="text-[13px] leading-[19px] text-on-accent">
+      <AppText className="text-caption leading-[19px] text-on-accent">
         Tu as compté {formatNumber(counted)} Ar en espèces, l’app en attendait{' '}
         {formatNumber(expected)} Ar. Une dépense oubliée ?
       </AppText>

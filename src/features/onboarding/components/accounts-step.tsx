@@ -124,10 +124,10 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
         ))}
       </View>
 
-      <AppText weight="bold" className="mt-[22px] text-[17px]">
+      <AppText weight="bold" className="mt-[22px] text-headline">
         Tes comptes et leur solde actuel
       </AppText>
-      <AppText className="mt-1 text-[13px] text-muted">
+      <AppText className="mt-1 text-caption text-muted">
         Renomme-les comme tu veux. Tu peux en ajouter plusieurs.
       </AppText>
 
@@ -139,7 +139,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
             exiting={FadeOut.duration(140)}
             layout={LinearTransition.duration(200)}
           >
-            <View className="flex-row items-center gap-3 rounded-2xl border border-line bg-card py-2 pl-2.5 pr-2">
+            <View className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2">
               <RowIcon type={field.type} />
               <Controller
                 control={control}
