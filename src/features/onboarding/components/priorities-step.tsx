@@ -51,7 +51,7 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
       footer={
         <Button
           label="Continuer"
-          icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
+          icon={<ArrowRight size={20} color={t.onInverse} strokeWidth={2} />}
           onPress={() => onSubmit(prefs)}
         />
       }

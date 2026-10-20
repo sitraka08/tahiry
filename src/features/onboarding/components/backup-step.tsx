@@ -36,9 +36,9 @@ function BackupHero() {
       <Float style={{ left: 76, top: 30 }} delay={200}>
         <View
           style={{ transform: [{ rotate: '-5deg' }] }}
-          className="h-[140px] w-[84px] items-center justify-center rounded-card bg-dark"
+          className="h-[140px] w-[84px] items-center justify-center rounded-card bg-inverse"
         >
-          <Smartphone size={40} color={t.onDark} strokeWidth={1.6} />
+          <Smartphone size={40} color={t.onInverse} strokeWidth={1.6} />
         </View>
       </Float>
       <Float style={{ left: 172, top: 84 }} delay={350} float={6} axis="x">
@@ -99,8 +99,8 @@ export function BackupStep({ onFinish, onBack }: Props) {
         {PERKS.map((perk, i) => (
           <Animated.View key={perk} entering={FadeInRight.delay(250 + i * 90).duration(320)}>
             <View className="flex-row items-center gap-2.5">
-              <View className="size-6 items-center justify-center rounded-full bg-dark">
-                <Check size={14} color={t.accent} strokeWidth={3} />
+              <View className="size-6 items-center justify-center rounded-full bg-accent">
+                <Check size={14} color={t.onAccent} strokeWidth={3} />
               </View>
               <AppText className="flex-1 text-sm">{perk}</AppText>
             </View>

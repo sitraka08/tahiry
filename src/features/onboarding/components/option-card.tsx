@@ -40,7 +40,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
     >
       <Animated.View
         pointerEvents="none"
-        style={[StyleSheet.absoluteFill, { backgroundColor: t.dark }, fill]}
+        style={[StyleSheet.absoluteFill, { backgroundColor: t.inverse }, fill]}
       />
       <View
         className={`size-[22px] items-center justify-center rounded-[7px] ${selected ? 'bg-accent' : 'border-[1.5px] border-seg3'}`}
@@ -49,7 +49,7 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       </View>
       <AppText
         weight={selected ? 'bold' : 'medium'}
-        className={`flex-1 ${selected ? 'text-on-dark' : 'text-ink'} ${isType ? 'text-sm' : 'text-body'}`}
+        className={`flex-1 ${selected ? 'text-on-inverse' : 'text-ink'} ${isType ? 'text-sm' : 'text-body'}`}
       >
         {label}
       </AppText>

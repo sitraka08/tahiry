@@ -39,7 +39,7 @@ function RowIcon({ type }: { type: AccountKind }) {
   const Icon = KINDS.find((k) => k.type === type)?.icon ?? Banknote;
   const tone = {
     bank: { bg: t.accent, fg: t.onAccent },
-    mobile: { bg: t.dark, fg: t.onDark },
+    mobile: { bg: t.inverse, fg: t.onInverse },
     cash: { bg: t.tile, fg: t.ink },
     group: { bg: t.tile, fg: t.ink },
   }[type];
@@ -98,7 +98,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
       footer={
         <Button
           label="Continuer"
-          icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
+          icon={<ArrowRight size={20} color={t.onInverse} strokeWidth={2} />}
           onPress={handleSubmit((v) => onSubmit(v.accounts))}
         />
       }
