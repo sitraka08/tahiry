@@ -29,6 +29,7 @@ export type ThemeTokens = {
   catTeal: string;
   catGreen: string;
   illusInk: string;
+  shadow: string;
 };
 
 // The balance card keeps the same dark look in both schemes.
@@ -62,6 +63,7 @@ export const THEMES: Record<ColorScheme, ThemeTokens> = {
     catTeal: '#76BDB2',
     catGreen: '#1ED760',
     illusInk: '#E9E6DF',
+    shadow: 'rgba(0,0,0,0.55)',
   },
   light: {
     ...CARD,
@@ -90,5 +92,6 @@ export const THEMES: Record<ColorScheme, ThemeTokens> = {
     catTeal: '#2F8579',
     catGreen: '#11833A',
     illusInk: '#2B2925',
+    shadow: 'rgba(20,20,19,0.25)',
   },
 };
