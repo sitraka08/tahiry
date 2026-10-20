@@ -20,7 +20,7 @@ export function SearchInput({ value, onChangeText, placeholder }: Props) {
         onChangeText={onChangeText}
         placeholder={placeholder}
         returnKeyType="search"
-        className="h-12 rounded-2xl bg-card py-0 pl-11 pr-3.5 text-body"
+        className="h-12 rounded-2xl bg-card py-0 pl-11 pr-3.5 text-input"
       />
     </View>
   );

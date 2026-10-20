@@ -8,7 +8,7 @@ import { family, type Weight } from './app-text';
 
 type Props = TextInputProps & { weight?: Weight; className?: string; ref?: Ref<TextInput> };
 
-export function AppTextInput({ weight = 'regular', className = '', ...rest }: Props) {
+export function AppTextInput({ weight = 'regular', className = '', style, ...rest }: Props) {
   const t = useThemeTokens();
   return (
     <TextInput
@@ -16,6 +16,7 @@ export function AppTextInput({ weight = 'regular', className = '', ...rest }: Pr
       selectionColor={t.accent}
       {...rest}
       allowFontScaling={false}
+      style={[{ includeFontPadding: false, textAlignVertical: 'center' }, style]}
       className={`${family[weight]} text-ink ${className}`}
     />
   );

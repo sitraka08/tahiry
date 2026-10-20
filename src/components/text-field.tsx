@@ -43,7 +43,7 @@ export function TextField({
             setFocused(false);
             onBlur?.(e);
           }}
-          className="flex-1 py-0 text-body"
+          className="flex-1 py-0 text-input"
         />
         {suffix ? <AppText className="ml-2 text-sm text-muted">{suffix}</AppText> : null}
       </View>
