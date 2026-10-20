@@ -1,11 +1,11 @@
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppText } from '@/components';
+import { AppText, IconTile, ListRow } from '@/components';
 import { formatUpdated } from '@/lib/dates';
 import { useAmountMask } from '@/lib/use-amount-mask';
+import { accountVisual } from '@/lib/visuals';
 
 import type { AccountWithBalance } from '../types';
-import { AccountTypeIcon } from './account-type-icon';
 
 const TYPE_LABEL = {
   bank: 'Compte bancaire',
@@ -18,33 +18,29 @@ type Props = { account: AccountWithBalance; onPress: () => void };
 
 export function AccountRow({ account, onPress }: Props) {
   const fmt = useAmountMask();
+  const visual = accountVisual(account.type);
   const updated =
     account.type === 'cash'
       ? formatUpdated(account.countedAt, true)
       : formatUpdated(account.lastActivity);
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`Modifier ${account.name}`}
+    <ListRow
+      leading={<IconTile icon={visual.icon} color={visual.color} />}
+      title={account.name}
+      subtitle={account.detail || TYPE_LABEL[account.type]}
+      trailing={
+        <View className="items-end gap-0.5">
+          <AppText variant="body" weight="bold">
+            {fmt(account.balance)}
+          </AppText>
+          <AppText variant="micro" tone="muted">
+            {updated}
+          </AppText>
+        </View>
+      }
       onPress={onPress}
-      className="flex-row items-center gap-3 rounded-card bg-card p-3 active:opacity-80"
-    >
-      <AccountTypeIcon type={account.type} size={42} />
-      <View className="min-w-0 flex-1 gap-0.5">
-        <AppText weight="bold" numberOfLines={1} className="text-body">
-          {account.name}
-        </AppText>
-        <AppText numberOfLines={1} className="text-xs text-muted">
-          {account.detail || TYPE_LABEL[account.type]}
-        </AppText>
-      </View>
-      <View className="items-end gap-0.5">
-        <AppText weight="bold" className="text-body">
-          {fmt(account.balance)}
-        </AppText>
-        <AppText className="text-micro text-muted">{updated}</AppText>
-      </View>
-    </Pressable>
+      accessibilityLabel={`Modifier ${account.name}`}
+    />
   );
 }

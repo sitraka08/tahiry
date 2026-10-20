@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Headline, IconButton, ScreenHeader, type SheetMethods } from '@/components';
+import { AppText, IconButton, ScreenHeader, type SheetMethods } from '@/components';
 import {
   AccountRow,
   AccountSheet,
@@ -52,9 +52,6 @@ export default function Accounts() {
         contentContainerClassName="pb-8"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-4 mt-3.5">
-          <Headline lead="Où est passé " highlight="mon argent" tail=" ?" />
-        </View>
         <View className="mx-4 mt-4">
           <AccountsDonut groups={groups} total={total} />
         </View>
@@ -62,20 +59,22 @@ export default function Accounts() {
         {groups
           .filter((g) => g.accounts.length > 0)
           .map((g) => (
-            <View key={g.type} className="mx-4 mt-5">
-              <View className="flex-row items-baseline justify-between">
+            <View key={g.type} className="mt-5">
+              <View className="flex-row items-baseline justify-between px-4 pb-1">
                 <AppText
-                  weight="medium"
-                  className="text-caption uppercase text-muted"
+                  variant="caption"
+                  weight="bold"
+                  tone="muted"
+                  className="uppercase"
                   style={{ letterSpacing: 0.6 }}
                 >
                   {g.label}
                 </AppText>
-                <AppText weight="bold" className="text-caption">
+                <AppText variant="caption" weight="bold">
                   {fmt(g.total)}
                 </AppText>
               </View>
-              <View className="mt-2 gap-1.5">
+              <View>
                 {g.accounts.map((a) => (
                   <AccountRow key={a.id} account={a} onPress={() => open(a)} />
                 ))}
