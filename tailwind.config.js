@@ -36,7 +36,13 @@ module.exports = {
         'cat-green': token('cat-green'),
         'illus-ink': token('illus-ink'),
       },
+      borderRadius: {
+        tile: '10px',
+        card: '16px',
+        bank: '18px',
+      },
       fontSize: {
+        hero: ['38px', { lineHeight: '42px', letterSpacing: '-1px' }],
         display: ['34px', { lineHeight: '40px', letterSpacing: '-0.8px' }],
         title: ['22px', { lineHeight: '28px', letterSpacing: '-0.4px' }],
         headline: ['17px', { lineHeight: '22px', letterSpacing: '-0.2px' }],
