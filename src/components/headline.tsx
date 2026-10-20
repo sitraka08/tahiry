@@ -18,8 +18,8 @@ export function Headline({ lead, highlight, tail = '', size = 'md' }: Props) {
     <AppText accessibilityRole="header" weight="bold" style={style}>
       {lead}
       {highlight ? (
-        <AppText weight="bold" style={style} className="bg-accent text-on-accent">
-          {`\u00A0${highlight}\u00A0`}
+        <AppText weight="bold" style={style} className="text-accent">
+          {highlight}
         </AppText>
       ) : null}
       {tail}

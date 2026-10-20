@@ -20,9 +20,9 @@ type Props = {
 const container: Record<Variant, string> = {
   primary: 'bg-inverse',
   accent: 'bg-accent',
-  soft: 'bg-card',
+  soft: 'bg-tile',
   ghost: 'bg-transparent',
-  danger: 'bg-card',
+  danger: 'bg-tile',
 };
 
 const text: Record<Variant, string> = {
@@ -33,7 +33,7 @@ const text: Record<Variant, string> = {
   danger: 'text-danger',
 };
 
-const heights: Record<Size, string> = { lg: 'h-14', md: 'h-[52px]', sm: 'h-12' };
+const heights: Record<Size, string> = { lg: 'h-14', md: 'h-12', sm: 'h-11' };
 
 export function Button({
   label,
@@ -45,7 +45,7 @@ export function Button({
   className = '',
 }: Props) {
   const weight = variant === 'soft' || variant === 'ghost' ? 'medium' : 'bold';
-  const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px]' : 'text-sm';
+  const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-body' : 'text-sm';
   return (
     <PressableFeedback
       accessibilityRole="button"
@@ -56,7 +56,7 @@ export function Button({
         press();
         onPress?.();
       }}
-      className={`flex-row items-center justify-center gap-2 rounded-2xl ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`flex-row items-center justify-center gap-2 rounded-full px-5 ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
       <AppText weight={weight} className={`${textSize} ${text[variant]}`}>

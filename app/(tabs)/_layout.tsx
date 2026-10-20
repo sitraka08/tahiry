@@ -20,12 +20,10 @@ export default function TabsLayout() {
             alignItems: 'center',
             justifyContent: 'space-around',
             minHeight: 72,
-            paddingTop: 8,
+            paddingTop: 6,
             paddingHorizontal: 12,
             paddingBottom: Math.max(insets.bottom, 12),
             backgroundColor: t.bg,
-            borderTopWidth: 1,
-            borderTopColor: t.line,
           }}
         >
           <TabTrigger name="index" href="/" asChild>

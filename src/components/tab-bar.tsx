@@ -17,9 +17,9 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
       {...rest}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
-      className="h-[52px] w-16 items-center justify-center gap-1"
+      className="h-14 w-16 items-center justify-center gap-1"
     >
-      <Icon size={22} color={color} strokeWidth={isFocused ? 2 : 1.8} />
+      <Icon size={24} color={color} strokeWidth={isFocused ? 2.2 : 1.8} />
       <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-[11px]">
         {label}
       </AppText>
@@ -35,9 +35,9 @@ export function TabFab() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Ajouter une opération"
-          className="size-12 items-center justify-center rounded-2xl bg-accent active:opacity-80"
+          className="size-14 items-center justify-center rounded-full bg-accent active:opacity-80"
         >
-          <Plus size={24} color={t.onAccent} strokeWidth={2} />
+          <Plus size={26} color={t.onAccent} strokeWidth={2.2} />
         </Pressable>
       </Link>
     </View>

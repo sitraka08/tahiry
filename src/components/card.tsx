@@ -12,7 +12,7 @@ export function Card({
   ...rest
 }: Props & { className?: string }) {
   return (
-    <View className={`rounded-3xl p-4 ${tones[tone]} ${className}`} {...rest}>
+    <View className={`rounded-card p-4 ${tones[tone]} ${className}`} {...rest}>
       {children}
     </View>
   );
