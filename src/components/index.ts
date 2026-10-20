@@ -3,7 +3,6 @@ export { AppText } from './app-text';
 export { AppTextInput } from './app-text-input';
 export { BalanceCard } from './balance-card';
 export { Button } from './button';
-export { Card } from './card';
 export { Chip } from './chip';
 export { Headline } from './headline';
 export { EmptyState } from './empty-state';

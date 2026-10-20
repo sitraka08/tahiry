@@ -67,7 +67,7 @@ export function PinSetup({ onDone }: Props) {
               ? 'Tape le même code une seconde fois.'
               : 'Il protège ton argent si quelqu’un prend ton téléphone.'}
         </AppText>
-        <View className="mt-[26px]">
+        <View className="mt-7">
           <PinDots filled={pin.length} shake={shake} />
         </View>
       </View>

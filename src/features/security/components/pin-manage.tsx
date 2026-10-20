@@ -61,7 +61,7 @@ export function PinManage({ onChange, onDone }: Props) {
 
       <View className="mt-4 rounded-card bg-card px-3.5 py-1">
         {available ? (
-          <View className="min-h-[52px] flex-row items-center gap-3">
+          <View className="min-h-14 flex-row items-center gap-3">
             <Fingerprint size={20} color={t.ink} strokeWidth={1.8} />
             <AppText className="flex-1 text-body">Déverrouiller avec l’empreinte</AppText>
             <Switch

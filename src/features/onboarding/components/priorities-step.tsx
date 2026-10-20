@@ -69,7 +69,7 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
         ))}
       </View>
 
-      <AppText weight="bold" className="mt-[22px] text-headline">
+      <AppText weight="bold" className="mt-6 text-headline">
         Un petit bilan, tu le veux quand ?
       </AppText>
       <View className="mt-2.5">

@@ -46,7 +46,7 @@ function RowIcon({ type }: { type: AccountKind }) {
   return (
     <View
       style={{ backgroundColor: tone.bg }}
-      className="size-9 items-center justify-center rounded-[11px]"
+      className="size-9 items-center justify-center rounded-tile"
     >
       <Icon size={18} color={tone.fg} strokeWidth={1.8} />
     </View>
@@ -124,7 +124,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
         ))}
       </View>
 
-      <AppText weight="bold" className="mt-[22px] text-headline">
+      <AppText weight="bold" className="mt-6 text-headline">
         Tes comptes et leur solde actuel
       </AppText>
       <AppText className="mt-1 text-caption text-muted">
