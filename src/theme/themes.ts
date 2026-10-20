@@ -99,6 +99,6 @@ export const THEMES: Record<ColorScheme, ThemeTokens> = {
 // Sheets sit one step lighter than the screen, like Spotify, so the
 // surfaces inside them move up one step as well.
 export const SHEET: Record<ColorScheme, Partial<ThemeTokens>> = {
-  dark: { bg: '#282828', card: '#333333', tile: '#3A3A3A', raised: '#474747', line: '#3A3A3A' },
+  dark: { bg: '#212121', card: '#2A2A2A', tile: '#303030', raised: '#3D3D3D', line: '#303030' },
   light: { bg: '#FFFFFF', card: '#F4F2EC', tile: '#EEECE6', raised: '#E4E1DA', line: '#ECE9E2' },
 };
