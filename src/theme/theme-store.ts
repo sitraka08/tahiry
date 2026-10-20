@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-import type { ThemeName } from './themes';
+import type { ColorSchemePref } from './scheme';
 
 type ThemeState = {
-  theme: ThemeName;
-  setTheme: (theme: ThemeName) => void;
+  colorScheme: ColorSchemePref;
+  setColorScheme: (colorScheme: ColorSchemePref) => void;
 };
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  theme: 'Menthe',
-  setTheme: (theme) => set({ theme }),
+  colorScheme: 'system',
+  setColorScheme: (colorScheme) => set({ colorScheme }),
 }));

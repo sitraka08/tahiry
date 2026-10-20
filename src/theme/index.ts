@@ -1,5 +1,16 @@
 export { FONTS } from './fonts';
-export { ThemeProvider, ThemeScope, useThemeTokens } from './theme-provider';
+export {
+  ThemeProvider,
+  ThemeScope,
+  useResolvedColorScheme,
+  useThemeTokens,
+} from './theme-provider';
 export { ThemedStatusBar } from './themed-status-bar';
 export { useThemeStore } from './theme-store';
-export { THEMES, THEME_NAMES, type ThemeName, type ThemeTokens } from './themes';
+export { THEMES, type ThemeTokens } from './themes';
+export {
+  COLOR_SCHEME_PREFS,
+  isColorSchemePref,
+  type ColorScheme,
+  type ColorSchemePref,
+} from './scheme';

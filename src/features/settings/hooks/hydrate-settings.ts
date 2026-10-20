@@ -1,11 +1,9 @@
 import { getSetting } from '@/db';
 import { useUiStore } from '@/lib/ui-store';
-import { THEME_NAMES, useThemeStore, type ThemeName } from '@/theme';
+import { isColorSchemePref, useThemeStore } from '@/theme';
 
 export function hydrateSettings() {
-  const theme = getSetting('theme');
-  if (theme && THEME_NAMES.includes(theme as ThemeName)) {
-    useThemeStore.getState().setTheme(theme as ThemeName);
-  }
+  const colorScheme = getSetting('colorScheme');
+  if (isColorSchemePref(colorScheme)) useThemeStore.getState().setColorScheme(colorScheme);
   useUiStore.setState({ hideAmounts: getSetting('hideAmounts') === '1' });
 }

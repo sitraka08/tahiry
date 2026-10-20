@@ -1,35 +1,29 @@
 import { useMemo, type ReactNode } from 'react';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 import { vars } from 'nativewind';
 
+import { resolveColorScheme, type ColorScheme } from './scheme';
 import { useThemeStore } from './theme-store';
 import { THEMES, type ThemeTokens } from './themes';
 
 const toCssVars = (t: ThemeTokens) =>
-  vars({
-    '--bg': t.bg,
-    '--card': t.card,
-    '--tile': t.tile,
-    '--ink': t.ink,
-    '--muted': t.muted,
-    '--accent': t.accent,
-    '--on-accent': t.onAccent,
-    '--dark': t.dark,
-    '--on-dark': t.onDark,
-    '--dark-muted': t.darkMuted,
-    '--inverse': t.inverse,
-    '--on-inverse': t.onInverse,
-    '--positive': t.positive,
-    '--negative': t.negative,
-    '--line': t.line,
-    '--outline': t.outline,
-    '--seg3': t.seg3,
-    '--danger': t.danger,
-  });
+  vars(
+    Object.fromEntries(
+      Object.entries(t).map(([key, value]) => [
+        `--${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}`,
+        value,
+      ]),
+    ),
+  );
+
+export function useResolvedColorScheme(): ColorScheme {
+  const pref = useThemeStore((s) => s.colorScheme);
+  const system = useColorScheme();
+  return resolveColorScheme(pref, system);
+}
 
 export function useThemeTokens() {
-  const name = useThemeStore((s) => s.theme);
-  return THEMES[name];
+  return THEMES[useResolvedColorScheme()];
 }
 
 export function ThemeScope({ children, className }: { children: ReactNode; className?: string }) {

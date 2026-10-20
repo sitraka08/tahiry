@@ -18,13 +18,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, IconButton } from '@/components';
 import {
+  AppearancePicker,
   ProfileCard,
   SettingsRow,
   SettingsSection,
-  ThemePicker,
-  chooseTheme,
+  chooseColorScheme,
   hydrateSettings,
   saveUserName,
+  useColorSchemeChoice,
   useUserName,
 } from '@/features/settings';
 import { restoreBackup, shareBackup } from '@/features/backup';
@@ -35,6 +36,7 @@ import { toast } from '@/lib/toast-store';
 export default function Settings() {
   const router = useRouter();
   const name = useUserName();
+  const colorScheme = useColorSchemeChoice();
   const { pinEnabled } = useSecuritySettings();
   const hideAmounts = useUiStore((s) => s.hideAmounts);
   const setHideAmounts = useUiStore((s) => s.setHideAmounts);
@@ -61,9 +63,9 @@ export default function Settings() {
             className="mb-2.5 text-[13px] uppercase text-muted"
             style={{ letterSpacing: 0.6 }}
           >
-            Thème de l’app
+            Apparence
           </AppText>
-          <ThemePicker onChoose={chooseTheme} />
+          <AppearancePicker value={colorScheme} onChange={chooseColorScheme} />
         </View>
 
         <SettingsSection title="Général">
