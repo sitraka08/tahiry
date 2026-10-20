@@ -11,6 +11,9 @@ import { AppText } from './app-text';
 // solid: filled shape, cutout: filled shape with inner lines in the background color.
 type Fill = 'solid' | 'cutout';
 
+// Inline on purpose: TabTrigger passes its own style and would override classes.
+const CELL = { flex: 1, height: 56, alignItems: 'center', justifyContent: 'center' } as const;
+
 type ButtonProps = TabTriggerSlotProps & { icon: LucideIcon; label: string; fill?: Fill };
 
 export function TabButton({ icon: Icon, label, fill, isFocused, ...rest }: ButtonProps) {
@@ -22,7 +25,7 @@ export function TabButton({ icon: Icon, label, fill, isFocused, ...rest }: Butto
       {...rest}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
-      className="h-14 w-16 items-center justify-center"
+      style={CELL}
     >
       <View style={{ flexDirection: 'column', alignItems: 'center', gap: 4 }}>
         <Icon
@@ -42,7 +45,7 @@ export function TabButton({ icon: Icon, label, fill, isFocused, ...rest }: Butto
 export function TabFab() {
   const t = useThemeTokens();
   return (
-    <View className="w-16 items-center">
+    <View style={CELL}>
       <Link href="/add-transaction" asChild>
         <Pressable
           accessibilityRole="button"

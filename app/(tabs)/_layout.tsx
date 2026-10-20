@@ -20,9 +20,8 @@ export default function TabsLayout() {
             bottom: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-around',
             paddingTop: 28,
-            paddingHorizontal: 12,
+            paddingHorizontal: 8,
             paddingBottom: Math.max(insets.bottom, 12),
           }}
         >
