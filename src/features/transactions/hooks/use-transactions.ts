@@ -4,9 +4,8 @@ import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { useMemo } from 'react';
 
 import { accounts, categories, db, transactions, useLiveRows } from '@/db';
-import { formatDayLabel, startOfDayKey } from '@/lib/dates';
-
-import type { DayGroup, TransactionFilter, TransactionItem } from '../types';
+import type { TransactionFilter, TransactionItem } from '../types';
+import { groupByDay } from './day-groups';
 
 const toAccount = alias(accounts, 'to_account');
 
@@ -24,6 +23,7 @@ function selectTransactions() {
       categoryId: transactions.categoryId,
       accountName: accounts.name,
       toAccountName: toAccount.name,
+      categoryKey: categories.key,
       categoryLabel: categories.label,
     })
     .from(transactions)
@@ -62,16 +62,7 @@ export function useTransactions(filter: TransactionFilter = {}) {
     [type, accountId, term, limit],
   );
 
-  const groups = useMemo(() => {
-    const map = new Map<string, DayGroup>();
-    (data as TransactionItem[]).forEach((item) => {
-      const key = startOfDayKey(item.date);
-      const group = map.get(key) ?? { key, label: formatDayLabel(item.date), items: [] };
-      group.items.push(item);
-      map.set(key, group);
-    });
-    return [...map.values()];
-  }, [data]);
+  const groups = useMemo(() => groupByDay(data as TransactionItem[]), [data]);
 
   return { items: data as TransactionItem[], groups };
 }

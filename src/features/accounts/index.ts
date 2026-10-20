@@ -10,6 +10,7 @@ export {
   setAccountBalance,
   updateAccount,
 } from './hooks/use-account-actions';
+export { litTicks, shareOf } from './hooks/account-math';
 export { useAccounts } from './hooks/use-accounts';
 export { accountSchema, type AccountFormValues } from './schemas/account-schema';
 export type { AccountGroup, AccountType, AccountWithBalance } from './types';

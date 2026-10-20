@@ -1,4 +1,4 @@
-export { dueLabel, monthlyNeeded, percentOf } from './hooks/goal-math';
+export { dueLabel, highlightGoal, monthlyNeeded, percentOf } from './hooks/goal-math';
 export { addDeposit, createGoal, deleteGoal } from './hooks/use-goal-actions';
 export { useGoals } from './hooks/use-goals';
 export {
