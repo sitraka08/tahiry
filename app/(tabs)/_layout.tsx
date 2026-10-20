@@ -1,5 +1,5 @@
 import { TabList, TabSlot, TabTrigger, Tabs } from 'expo-router/ui';
-import { Bell, ChartColumn, Clock, House } from 'lucide-react-native';
+import { ChartColumn, Clock, House, LayoutGrid } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -36,8 +36,8 @@ export default function TabsLayout() {
           <TabTrigger name="stats" href="/stats" asChild>
             <TabButton icon={ChartColumn} label="Stats" />
           </TabTrigger>
-          <TabTrigger name="reminders" href="/reminders" asChild>
-            <TabButton icon={Bell} label="Rappels" />
+          <TabTrigger name="more" href="/more" asChild>
+            <TabButton icon={LayoutGrid} label="Plus" />
           </TabTrigger>
         </View>
       </TabList>

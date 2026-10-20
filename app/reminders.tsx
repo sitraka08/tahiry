@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Alert, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Headline, IconButton, type SheetMethods } from '@/components';
+import { AppText, IconButton, ScreenHeader, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
 import { GoalSummary, useGoals } from '@/features/goals';
 import {
@@ -49,16 +49,18 @@ export default function Reminders() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <View className="flex-row items-center justify-between px-5 pt-5">
-        <Headline lead="Rappels" />
-        <IconButton
-          icon={Plus}
-          label="Ajouter un rappel"
-          tone="accent"
-          onPress={() => sheetRef.current?.present()}
-        />
-      </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScreenHeader
+        title="Rappels"
+        right={
+          <IconButton
+            icon={Plus}
+            label="Ajouter un rappel"
+            tone="accent"
+            onPress={() => sheetRef.current?.present()}
+          />
+        }
+      />
       <ScrollView
         style={{ flex: 1 }}
         contentContainerClassName="pb-8"
