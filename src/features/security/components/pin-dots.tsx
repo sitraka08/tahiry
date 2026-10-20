@@ -10,9 +10,9 @@ import Animated, {
 import { PIN_LENGTH } from '../hooks/pin-logic';
 import { useThemeTokens } from '@/theme';
 
-type Props = { filled: number; tone: 'light' | 'dark'; shake?: number };
+type Props = { filled: number; shake?: number };
 
-export function PinDots({ filled, tone, shake = 0 }: Props) {
+export function PinDots({ filled, shake = 0 }: Props) {
   const t = useThemeTokens();
   const offset = useSharedValue(0);
 
@@ -29,8 +29,6 @@ export function PinDots({ filled, tone, shake = 0 }: Props) {
   }, [offset, shake]);
 
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: offset.get() }] }));
-  const on = tone === 'dark' ? t.accent : t.dark;
-  const off = tone === 'dark' ? t.onDark : t.line;
 
   return (
     <Animated.View
@@ -45,8 +43,7 @@ export function PinDots({ filled, tone, shake = 0 }: Props) {
             width: 16,
             height: 16,
             borderRadius: 8,
-            backgroundColor: i < filled ? on : off,
-            opacity: i < filled ? 1 : tone === 'dark' ? 0.25 : 1,
+            backgroundColor: i < filled ? t.accent : t.raised,
           }}
         />
       ))}

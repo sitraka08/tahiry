@@ -2,7 +2,7 @@ import { Check, Fingerprint } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Alert, Switch, View } from 'react-native';
 
-import { AppText, Button, Segmented } from '@/components';
+import { AppText, Button, Segmented, TopoPattern } from '@/components';
 import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
@@ -46,15 +46,14 @@ export function PinManage({ onChange, onDone }: Props) {
 
   return (
     <View className="px-4 pt-8">
-      <View className="flex-row items-center gap-3.5 rounded-card bg-dark p-5">
+      <View className="flex-row items-center gap-3.5 overflow-hidden rounded-card bg-card p-5">
+        <TopoPattern color={t.ink} />
         <View className="size-12 items-center justify-center rounded-full bg-accent">
           <Check size={24} color={t.onAccent} strokeWidth={2.4} />
         </View>
         <View className="gap-0.5">
-          <AppText weight="bold" className="text-lg text-on-dark">
-            Code PIN activé
-          </AppText>
-          <AppText className="text-caption text-dark-muted">
+          <AppText variant="headline">Code PIN activé</AppText>
+          <AppText variant="caption" tone="muted">
             Il sera demandé à chaque ouverture.
           </AppText>
         </View>
@@ -72,8 +71,8 @@ export function PinManage({ onChange, onDone }: Props) {
                 tap();
                 setBiometric(on);
               }}
-              trackColor={{ true: t.dark, false: t.line }}
-              thumbColor={biometric ? t.accent : t.tile}
+              trackColor={{ true: t.accent, false: t.raised }}
+              thumbColor={t.card}
             />
           </View>
         ) : null}

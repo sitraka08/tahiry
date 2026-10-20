@@ -68,7 +68,7 @@ export function PinSetup({ onDone }: Props) {
               : 'Il protège ton argent si quelqu’un prend ton téléphone.'}
         </AppText>
         <View className="mt-[26px]">
-          <PinDots tone="light" filled={pin.length} shake={shake} />
+          <PinDots filled={pin.length} shake={shake} />
         </View>
       </View>
 
@@ -80,7 +80,7 @@ export function PinSetup({ onDone }: Props) {
           bottom: Math.max(insets.bottom, 16) + 24,
         }}
       >
-        <PinKeypad tone="light" onDigit={onDigit} onBackspace={() => setPin(removeDigit(pin))} />
+        <PinKeypad onDigit={onDigit} onBackspace={() => setPin(removeDigit(pin))} />
       </View>
     </View>
   );
