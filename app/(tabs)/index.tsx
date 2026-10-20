@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Bell, Plus } from 'lucide-react-native';
 import { Pressable, ScrollView, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
@@ -19,10 +20,12 @@ import { useUserName } from '@/features/settings';
 import { TransactionRow, useMonthTotals, useTransactions } from '@/features/transactions';
 import { useUiStore } from '@/lib/ui-store';
 import { useAmountMask } from '@/lib/use-amount-mask';
+import { useCountUp } from '@/lib/use-count-up';
 import { accountVisual } from '@/lib/visuals';
 import { useThemeTokens } from '@/theme';
 
 const DAY = 86_400_000;
+const enter = (step: number) => FadeInDown.delay(step * 60).duration(320);
 
 function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
@@ -42,6 +45,7 @@ export default function Home() {
   const t = useThemeTokens();
   const fmt = useAmountMask();
   const { accounts, total } = useAccounts();
+  const shownTotal = useCountUp(total);
   const { items } = useTransactions({ limit: 5 });
   const { items: goals } = useGoals();
   const { pending } = useReminders();
@@ -79,9 +83,9 @@ export default function Home() {
           />
         </View>
 
-        <View className="mt-4">
+        <Animated.View entering={enter(0)} style={{ marginTop: 16 }}>
           <BalanceCard
-            amount={fmt(total, false)}
+            amount={fmt(shownTotal, false)}
             holder={name || 'Tahiry'}
             hidden={hideAmounts}
             onToggleHidden={() => setHideAmounts(!hideAmounts)}
@@ -91,37 +95,44 @@ export default function Home() {
             }}
             colors={markColors}
           />
-        </View>
-        <View className="flex-row gap-3 px-5 pt-4">
-          <Stat label="Entrées · 30 j" value={`+${fmt(income, false)}`} accent />
-          <Stat label="Sorties · 30 j" value={`−${fmt(expense, false)}`} />
-          <Stat label="Par jour" value={`−${fmt(Math.round(expense / 30), false)}`} />
-        </View>
+        </Animated.View>
+        <Animated.View entering={enter(1)}>
+          <View className="flex-row gap-3 px-5 pt-4">
+            <Stat label="Entrées · 30 j" value={`+${fmt(income, false)}`} accent />
+            <Stat label="Sorties · 30 j" value={`−${fmt(expense, false)}`} />
+            <Stat label="Par jour" value={`−${fmt(Math.round(expense / 30), false)}`} />
+          </View>
+          <QuickActions onPick={(type) => router.push(`/add-transaction?type=${type}`)} />
+        </Animated.View>
 
-        <QuickActions onPick={(type) => router.push(`/add-transaction?type=${type}`)} />
+        <Animated.View entering={enter(2)}>
+          <SectionHeader
+            title="Comptes"
+            actionLabel="Tout voir"
+            onAction={() => router.push('/accounts')}
+          />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerClassName="gap-2 px-4"
+          >
+            {accounts.map((a) => (
+              <AccountCard
+                key={a.id}
+                account={a}
+                total={total}
+                onPress={() => router.push('/accounts')}
+              />
+            ))}
+            <AddAccountCard onPress={() => router.push('/accounts')} />
+          </ScrollView>
+        </Animated.View>
 
-        <SectionHeader
-          title="Comptes"
-          actionLabel="Tout voir"
-          onAction={() => router.push('/accounts')}
-        />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerClassName="gap-2 px-4"
-        >
-          {accounts.map((a) => (
-            <AccountCard
-              key={a.id}
-              account={a}
-              total={total}
-              onPress={() => router.push('/accounts')}
-            />
-          ))}
-          <AddAccountCard onPress={() => router.push('/accounts')} />
-        </ScrollView>
-
-        {goal ? <GoalHighlight goal={goal} onPress={() => router.push('/goals')} /> : null}
+        {goal ? (
+          <Animated.View entering={enter(3)}>
+            <GoalHighlight goal={goal} onPress={() => router.push('/goals')} />
+          </Animated.View>
+        ) : null}
 
         <SectionHeader
           title="Récents"
