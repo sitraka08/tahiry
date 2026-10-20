@@ -50,8 +50,8 @@ module.exports = {
         caption: ['13px', { lineHeight: '16px' }],
         micro: ['11px', { lineHeight: '14px' }],
         // Inputs never get a line height: Android clips and scrolls the text otherwise.
-        input: '15px',
-        'input-sm': '14px',
+        input: '14px',
+        'input-sm': '13px',
       },
       fontFamily: {
         gs: ['GoogleSans-Regular'],
