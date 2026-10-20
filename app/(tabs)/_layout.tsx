@@ -3,12 +3,10 @@ import { ChartColumn, Clock, House, LayoutGrid } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { TabButton, TabFab } from '@/components/tab-bar';
-import { useThemeTokens } from '@/theme';
+import { TabBarFade, TabButton, TabFab } from '@/components/tab-bar';
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-  const t = useThemeTokens();
 
   return (
     <Tabs style={{ flex: 1 }}>
@@ -16,28 +14,31 @@ export default function TabsLayout() {
       <TabList asChild>
         <View
           style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
-            minHeight: 72,
-            paddingTop: 6,
+            paddingTop: 28,
             paddingHorizontal: 12,
             paddingBottom: Math.max(insets.bottom, 12),
-            backgroundColor: t.bg,
           }}
         >
+          <TabBarFade />
           <TabTrigger name="index" href="/" asChild>
-            <TabButton icon={House} label="Accueil" />
+            <TabButton icon={House} label="Accueil" fill="cutout" />
           </TabTrigger>
           <TabTrigger name="history" href="/history" asChild>
-            <TabButton icon={Clock} label="Historique" />
+            <TabButton icon={Clock} label="Historique" fill="cutout" />
           </TabTrigger>
           <TabFab />
           <TabTrigger name="stats" href="/stats" asChild>
             <TabButton icon={ChartColumn} label="Stats" />
           </TabTrigger>
           <TabTrigger name="more" href="/more" asChild>
-            <TabButton icon={LayoutGrid} label="Plus" />
+            <TabButton icon={LayoutGrid} label="Plus" fill="solid" />
           </TabTrigger>
         </View>
       </TabList>
