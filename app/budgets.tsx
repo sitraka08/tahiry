@@ -3,7 +3,14 @@ import { useRef } from 'react';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Button, IconButton, ScreenHeader, type SheetMethods } from '@/components';
+import {
+  AppText,
+  Button,
+  IconButton,
+  ScreenHeader,
+  SectionHeader,
+  type SheetMethods,
+} from '@/components';
 import {
   BudgetAlert,
   BudgetLineRow,
@@ -43,19 +50,13 @@ export default function Budgets() {
           <>
             <BudgetSummary view={view} />
             <BudgetAlert monthLabel={prevMonthLabel} alerts={alerts} />
-            <View className="mx-4 mt-5">
-              <AppText weight="bold" className="text-headline">
-                Par motif
-              </AppText>
-              <View className="mt-2.5 gap-2">
-                {view.lines.map((line) => (
-                  <BudgetLineRow key={line.key} line={line} />
-                ))}
-              </View>
-            </View>
+            <SectionHeader title="Par motif" />
+            {view.lines.map((line) => (
+              <BudgetLineRow key={line.key} line={line} />
+            ))}
           </>
         ) : (
-          <View className="mx-4 mt-6 items-center gap-3 rounded-card border border-dashed border-seg3 px-4 py-8">
+          <View className="mx-4 mt-6 items-center gap-3 rounded-card border border-dashed border-outline px-4 py-8">
             <View className="size-12 items-center justify-center rounded-full bg-accent">
               <PiggyBank size={24} color={t.onAccent} strokeWidth={1.8} />
             </View>

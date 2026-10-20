@@ -1,29 +1,29 @@
 import { View } from 'react-native';
 
 import { AppText, ProgressBar } from '@/components';
-import { formatNumber } from '@/lib/money';
-import { useUiStore } from '@/lib/ui-store';
+import { useAmountMask } from '@/lib/use-amount-mask';
+import { useThemeTokens } from '@/theme';
 
 import type { BudgetLine as Line } from '../types';
 
 export function BudgetLineRow({ line }: { line: Line }) {
-  const hide = useUiStore((s) => s.hideAmounts);
-  const show = (n: number) => (hide ? '••••' : formatNumber(n));
+  const t = useThemeTokens();
+  const fmt = useAmountMask();
 
   return (
-    <View className="gap-1.5 rounded-2xl bg-card px-3.5 py-3">
+    <View className="gap-2 px-4 py-3">
       <View className="flex-row justify-between gap-2">
-        <AppText weight="medium" numberOfLines={1} className="flex-1 text-sm">
+        <AppText variant="body" weight="medium" numberOfLines={1} className="flex-1">
           {line.label}
         </AppText>
-        <AppText className={`text-sm ${line.over ? 'text-danger' : ''}`}>
-          <AppText weight="bold" className={line.over ? 'text-danger' : ''}>
-            {show(line.spent)}
+        <AppText variant="caption" tone={line.over ? 'danger' : 'muted'}>
+          <AppText variant="caption" weight="bold" tone={line.over ? 'danger' : 'ink'}>
+            {fmt(line.spent, false)}
           </AppText>{' '}
-          / {show(line.limit)}
+          / {fmt(line.limit, false)}
         </AppText>
       </View>
-      <ProgressBar value={line.percent} />
+      <ProgressBar value={line.percent} color={line.over ? t.danger : t.catOrange} />
     </View>
   );
 }
