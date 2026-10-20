@@ -22,17 +22,19 @@ export function TabButton({ icon: Icon, label, fill, isFocused, ...rest }: Butto
       {...rest}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
-      className="h-14 w-16 items-center justify-center gap-1"
+      className="h-14 w-16 items-center justify-center"
     >
-      <Icon
-        size={24}
-        color={filled === 'cutout' ? t.bg : color}
-        fill={filled ? t.ink : 'none'}
-        strokeWidth={isFocused ? 2.2 : 1.8}
-      />
-      <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-micro">
-        {label}
-      </AppText>
+      <View style={{ flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <Icon
+          size={24}
+          color={filled === 'cutout' ? t.bg : color}
+          fill={filled ? t.ink : 'none'}
+          strokeWidth={isFocused ? 2.2 : 1.8}
+        />
+        <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-micro">
+          {label}
+        </AppText>
+      </View>
     </Pressable>
   );
 }
