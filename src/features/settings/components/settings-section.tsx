@@ -11,13 +11,15 @@ export function SettingsSection({ title, children }: { title: string; children: 
   return (
     <View className="mx-4 mt-5">
       <AppText
-        weight="medium"
-        className="text-caption uppercase text-muted"
+        variant="caption"
+        weight="bold"
+        tone="muted"
+        className="uppercase"
         style={{ letterSpacing: 0.6 }}
       >
         {title}
       </AppText>
-      <View className="mt-2.5 rounded-card bg-card px-3.5 py-1">{children}</View>
+      <View className="mt-2 rounded-card bg-card px-3.5 py-1">{children}</View>
     </View>
   );
 }
@@ -26,18 +28,25 @@ type RowProps = {
   icon: LucideIcon;
   label: string;
   value?: string;
-  last?: boolean;
   onPress?: () => void;
   toggle?: { value: boolean; onChange: (value: boolean) => void };
 };
 
-export function SettingsRow({ icon: Icon, label, value, last, onPress, toggle }: RowProps) {
+export function SettingsRow({ icon: Icon, label, value, onPress, toggle }: RowProps) {
   const t = useThemeTokens();
   const body = (
-    <View className={`min-h-[50px] flex-row items-center gap-3 ${last ? '' : ''}`}>
-      <Icon size={20} color={t.ink} strokeWidth={1.8} />
-      <AppText className="flex-1 text-body">{label}</AppText>
-      {value ? <AppText className="text-caption text-muted">{value}</AppText> : null}
+    <View className="min-h-14 flex-row items-center gap-3">
+      <View className="size-9 items-center justify-center rounded-tile bg-tile">
+        <Icon size={18} color={t.ink} strokeWidth={1.8} />
+      </View>
+      <AppText variant="body" className="flex-1">
+        {label}
+      </AppText>
+      {value ? (
+        <AppText variant="caption" tone="muted">
+          {value}
+        </AppText>
+      ) : null}
       {toggle ? (
         <Switch
           accessibilityLabel={label}
@@ -46,8 +55,8 @@ export function SettingsRow({ icon: Icon, label, value, last, onPress, toggle }:
             tap();
             toggle.onChange(v);
           }}
-          trackColor={{ true: t.dark, false: t.line }}
-          thumbColor={toggle.value ? t.accent : t.tile}
+          trackColor={{ true: t.accent, false: t.raised }}
+          thumbColor={t.card}
         />
       ) : onPress ? (
         <ChevronRight size={18} color={t.muted} strokeWidth={2} />

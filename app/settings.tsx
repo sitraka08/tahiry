@@ -59,8 +59,10 @@ export default function Settings() {
 
         <View className="mx-4 mt-5">
           <AppText
-            weight="medium"
-            className="mb-2.5 text-caption uppercase text-muted"
+            variant="caption"
+            weight="bold"
+            tone="muted"
+            className="mb-2 uppercase"
             style={{ letterSpacing: 0.6 }}
           >
             Apparence
@@ -86,7 +88,7 @@ export default function Settings() {
             label="Masquer les montants"
             toggle={{ value: hideAmounts, onChange: setHideAmounts }}
           />
-          <SettingsRow icon={Bell} label="Rappels" last onPress={() => router.push('/reminders')} />
+          <SettingsRow icon={Bell} label="Rappels" onPress={() => router.push('/reminders')} />
         </SettingsSection>
 
         <SettingsSection title="Sauvegarde">
@@ -94,7 +96,6 @@ export default function Settings() {
           <SettingsRow
             icon={Download}
             label="Importer une sauvegarde"
-            last
             onPress={() =>
               restoreBackup({
                 confirm: true,
@@ -118,7 +119,6 @@ export default function Settings() {
           <SettingsRow
             icon={Banknote}
             label="Compter mes espèces"
-            last
             onPress={() => router.push('/cash-count')}
           />
         </SettingsSection>
