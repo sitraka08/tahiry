@@ -19,13 +19,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppText, IconButton } from '@/components';
 import {
   AppearancePicker,
+  PalettePicker,
   ProfileCard,
   SettingsRow,
   SettingsSection,
   chooseColorScheme,
+  choosePalette,
   hydrateSettings,
   saveUserName,
   useColorSchemeChoice,
+  usePaletteChoice,
   useUserName,
 } from '@/features/settings';
 import { restoreBackup, shareBackup } from '@/features/backup';
@@ -37,6 +40,7 @@ export default function Settings() {
   const router = useRouter();
   const name = useUserName();
   const colorScheme = useColorSchemeChoice();
+  const palette = usePaletteChoice();
   const { pinEnabled } = useSecuritySettings();
   const hideAmounts = useUiStore((s) => s.hideAmounts);
   const setHideAmounts = useUiStore((s) => s.setHideAmounts);
@@ -68,6 +72,9 @@ export default function Settings() {
             Apparence
           </AppText>
           <AppearancePicker value={colorScheme} onChange={chooseColorScheme} />
+          <View className="mt-3">
+            <PalettePicker value={palette} onChange={choosePalette} />
+          </View>
         </View>
 
         <SettingsSection title="Général">
