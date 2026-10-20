@@ -25,7 +25,7 @@ type Props = {
 function CardChip() {
   const line = withAlpha(DARK.dark, 0.35);
   return (
-    <Svg width={42} height={32} viewBox="0 0 42 32">
+    <Svg width={34} height={26} viewBox="0 0 42 32">
       <Rect x={1} y={1} width={40} height={30} rx={6} fill={DARK.catSand} stroke={line} />
       <Path d="M1 11h13M1 21h13M28 11h13M28 21h13M14 1v30M28 1v30" stroke={line} />
       <Rect x={14} y={8} width={14} height={16} rx={2} fill={DARK.catSand} stroke={line} />
@@ -54,7 +54,7 @@ export function BalanceCard({ amount, holder, hidden, onToggleHidden, change, co
   return (
     <View
       style={{
-        aspectRatio: 1.586,
+        aspectRatio: 1.9,
         boxShadow: `0 14px 30px ${t.shadow}`,
         borderColor: withAlpha(DARK.onDark, 0.07),
       }}
@@ -77,9 +77,9 @@ export function BalanceCard({ amount, holder, hidden, onToggleHidden, change, co
         {colors.length > 0 ? <AccountMark colors={colors} /> : null}
       </View>
 
-      <View className="mt-1 flex-row items-center gap-2.5">
+      <View className="flex-row items-center gap-2">
         <CardChip />
-        <Nfc size={22} color={DARK.darkMuted} strokeWidth={1.8} />
+        <Nfc size={18} color={DARK.darkMuted} strokeWidth={1.8} />
       </View>
 
       <View className="flex-1" />
@@ -89,16 +89,16 @@ export function BalanceCard({ amount, holder, hidden, onToggleHidden, change, co
           weight="bold"
           numberOfLines={1}
           adjustsFontSizeToFit
-          className="shrink text-hero text-on-dark"
+          className="shrink text-display text-on-dark"
         >
           {amount}
         </AppText>
-        <AppText weight="medium" className="text-lg text-dark-muted">
+        <AppText weight="medium" className="text-base text-dark-muted">
           Ar
         </AppText>
       </View>
 
-      <View className="mt-2.5 flex-row items-center justify-between gap-3">
+      <View className="mt-1.5 flex-row items-center justify-between gap-3">
         <AppText
           weight="medium"
           numberOfLines={1}
