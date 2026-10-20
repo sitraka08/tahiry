@@ -8,10 +8,10 @@ import {
   type LucideIcon,
 } from 'lucide-react-native';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, LinearTransition } from 'react-native-reanimated';
 
-import { AppText, Button, Chip, Headline } from '@/components';
+import { AppText, AppTextInput, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
 import { useThemeTokens } from '@/theme';
 
@@ -39,14 +39,14 @@ function RowIcon({ type }: { type: AccountKind }) {
   const Icon = KINDS.find((k) => k.type === type)?.icon ?? Banknote;
   const tone = {
     bank: { bg: t.accent, fg: t.onAccent },
-    mobile: { bg: t.dark, fg: t.onDark },
+    mobile: { bg: t.inverse, fg: t.onInverse },
     cash: { bg: t.tile, fg: t.ink },
     group: { bg: t.tile, fg: t.ink },
   }[type];
   return (
     <View
       style={{ backgroundColor: tone.bg }}
-      className="size-9 items-center justify-center rounded-[11px]"
+      className="size-9 items-center justify-center rounded-tile"
     >
       <Icon size={18} color={tone.fg} strokeWidth={1.8} />
     </View>
@@ -98,7 +98,7 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
       footer={
         <Button
           label="Continuer"
-          icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
+          icon={<ArrowRight size={20} color={t.onInverse} strokeWidth={2} />}
           onPress={handleSubmit((v) => onSubmit(v.accounts))}
         />
       }
@@ -124,10 +124,10 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
         ))}
       </View>
 
-      <AppText weight="bold" className="mt-[22px] text-[17px]">
+      <AppText weight="bold" className="mt-6 text-headline">
         Tes comptes et leur solde actuel
       </AppText>
-      <AppText className="mt-1 text-[13px] text-muted">
+      <AppText className="mt-1 text-caption text-muted">
         Renomme-les comme tu veux. Tu peux en ajouter plusieurs.
       </AppText>
 
@@ -139,18 +139,19 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
             exiting={FadeOut.duration(140)}
             layout={LinearTransition.duration(200)}
           >
-            <View className="flex-row items-center gap-3 rounded-2xl border border-line bg-card py-2 pl-2.5 pr-2">
+            <View className="flex-row items-center gap-3 rounded-2xl bg-card py-2 pl-2.5 pr-2">
               <RowIcon type={field.type} />
               <Controller
                 control={control}
                 name={`accounts.${index}.name`}
                 render={({ field: f }) => (
-                  <TextInput
+                  <AppTextInput
+                    weight="medium"
                     accessibilityLabel="Nom du compte"
                     value={f.value}
                     onChangeText={f.onChange}
                     numberOfLines={1}
-                    className="h-10 flex-1 border-b border-dashed border-outline p-0 font-gs-medium text-sm text-ink"
+                    className="h-10 flex-1 border-b border-dashed border-outline p-0 text-input-sm"
                   />
                 )}
               />
@@ -158,17 +159,17 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
                 control={control}
                 name={`accounts.${index}.balance`}
                 render={({ field: f }) => (
-                  <TextInput
+                  <AppTextInput
+                    weight="bold"
                     accessibilityLabel={`Solde de ${values[index]?.name ?? 'ce compte'}`}
                     placeholder="0 Ar"
-                    placeholderTextColor={t.muted}
                     keyboardType="number-pad"
                     value={f.value}
                     onChangeText={(text) => {
                       const n = parseAmount(text);
                       f.onChange(n ? formatNumber(n) : '');
                     }}
-                    className="h-10 w-28 rounded-xl border border-outline bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
+                    className="h-10 w-28 rounded-xl border border-outline bg-tile px-3 py-0 text-right text-input-sm"
                   />
                 )}
               />

@@ -1,14 +1,12 @@
 import { TabList, TabSlot, TabTrigger, Tabs } from 'expo-router/ui';
-import { Bell, ChartColumn, Clock, House } from 'lucide-react-native';
+import { ChartColumn, Clock, House, LayoutGrid } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { TabButton, TabFab } from '@/components/tab-bar';
-import { useThemeTokens } from '@/theme';
+import { TabBarFade, TabButton, TabFab } from '@/components/tab-bar';
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-  const t = useThemeTokens();
 
   return (
     <Tabs style={{ flex: 1 }}>
@@ -16,30 +14,30 @@ export default function TabsLayout() {
       <TabList asChild>
         <View
           style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-around',
-            minHeight: 84,
-            paddingTop: 8,
-            paddingHorizontal: 12,
-            paddingBottom: Math.max(insets.bottom, 18),
-            backgroundColor: t.dark,
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
+            paddingTop: 28,
+            paddingHorizontal: 8,
+            paddingBottom: Math.max(insets.bottom, 12),
           }}
         >
+          <TabBarFade />
           <TabTrigger name="index" href="/" asChild>
-            <TabButton icon={House} label="Accueil" />
+            <TabButton icon={House} label="Accueil" fill="cutout" />
           </TabTrigger>
           <TabTrigger name="history" href="/history" asChild>
-            <TabButton icon={Clock} label="Historique" />
+            <TabButton icon={Clock} label="Historique" fill="cutout" />
           </TabTrigger>
           <TabFab />
           <TabTrigger name="stats" href="/stats" asChild>
             <TabButton icon={ChartColumn} label="Stats" />
           </TabTrigger>
-          <TabTrigger name="reminders" href="/reminders" asChild>
-            <TabButton icon={Bell} label="Rappels" />
+          <TabTrigger name="more" href="/more" asChild>
+            <TabButton icon={LayoutGrid} label="Plus" fill="solid" />
           </TabTrigger>
         </View>
       </TabList>

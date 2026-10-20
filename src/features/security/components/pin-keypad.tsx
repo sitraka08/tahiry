@@ -7,7 +7,6 @@ import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
 type Props = {
-  tone: 'light' | 'dark';
   onDigit: (digit: string) => void;
   onBackspace: () => void;
   leftKey?: ReactNode;
@@ -19,15 +18,7 @@ const ROWS = [
   ['7', '8', '9'],
 ];
 
-function Digit({
-  digit,
-  dark,
-  onDigit,
-}: {
-  digit: string;
-  dark: boolean;
-  onDigit: (digit: string) => void;
-}) {
+function Digit({ digit, onDigit }: { digit: string; onDigit: (digit: string) => void }) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -36,33 +27,30 @@ function Digit({
         tap();
         onDigit(digit);
       }}
-      className={`size-[72px] items-center justify-center rounded-full active:opacity-60 ${
-        dark ? 'bg-white/10' : 'border border-line bg-card'
-      }`}
+      className="size-[72px] items-center justify-center rounded-full bg-card active:bg-tile"
     >
-      <AppText weight="medium" className={`text-[26px] ${dark ? 'text-on-dark' : 'text-ink'}`}>
+      <AppText weight="medium" className="text-[26px]">
         {digit}
       </AppText>
     </Pressable>
   );
 }
 
-export function PinKeypad({ tone, onDigit, onBackspace, leftKey }: Props) {
+export function PinKeypad({ onDigit, onBackspace, leftKey }: Props) {
   const t = useThemeTokens();
-  const dark = tone === 'dark';
 
   return (
     <View className="gap-3.5">
       {ROWS.map((row) => (
         <View key={row[0]} className="flex-row justify-between">
           {row.map((digit) => (
-            <Digit key={digit} digit={digit} dark={dark} onDigit={onDigit} />
+            <Digit key={digit} digit={digit} onDigit={onDigit} />
           ))}
         </View>
       ))}
       <View className="flex-row justify-between">
         <View className="size-[72px] items-center justify-center">{leftKey}</View>
-        <Digit digit="0" dark={dark} onDigit={onDigit} />
+        <Digit digit="0" onDigit={onDigit} />
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Effacer"
@@ -72,7 +60,7 @@ export function PinKeypad({ tone, onDigit, onBackspace, leftKey }: Props) {
           }}
           className="size-[72px] items-center justify-center rounded-full active:opacity-60"
         >
-          <Delete size={26} color={dark ? t.onDark : t.ink} strokeWidth={1.8} />
+          <Delete size={26} color={t.ink} strokeWidth={1.8} />
         </Pressable>
       </View>
     </View>

@@ -51,7 +51,7 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
       footer={
         <Button
           label="Continuer"
-          icon={<ArrowRight size={20} color={t.onDark} strokeWidth={2} />}
+          icon={<ArrowRight size={20} color={t.onInverse} strokeWidth={2} />}
           onPress={() => onSubmit(prefs)}
         />
       }
@@ -69,7 +69,7 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
         ))}
       </View>
 
-      <AppText weight="bold" className="mt-[22px] text-[17px]">
+      <AppText weight="bold" className="mt-6 text-headline">
         Un petit bilan, tu le veux quand ?
       </AppText>
       <View className="mt-2.5">
@@ -80,7 +80,7 @@ export function PrioritiesStep({ initial, onSubmit, onSkip, onBack }: Props) {
         />
       </View>
 
-      <AppText weight="bold" className="mt-5 text-[15px]">
+      <AppText weight="bold" className="mt-5 text-body">
         Budget mensuel <AppText className="text-muted">(facultatif)</AppText>
       </AppText>
       <MoneyField

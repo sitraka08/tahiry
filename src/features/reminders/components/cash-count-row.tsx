@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { Banknote } from 'lucide-react-native';
 import { Pressable, Switch, View } from 'react-native';
 
-import { AppText } from '@/components';
+import { AppText, IconTile } from '@/components';
 import { useThemeTokens } from '@/theme';
 
 import type { CashFrequency } from '../types';
@@ -17,30 +17,27 @@ export function CashCountRow({ frequency, onChange }: Props) {
   const active = frequency !== 'never';
 
   return (
-    <View className="flex-row items-center gap-3 py-2">
-      <View className="h-12 w-[46px] items-center justify-center rounded-xl bg-card">
-        <Banknote size={22} color={t.ink} strokeWidth={1.8} />
-      </View>
+    <View className="min-h-16 flex-row items-center gap-3 px-4 py-2">
+      <IconTile icon={Banknote} color="catSand" />
       <Pressable
         accessibilityRole="button"
         onPress={() => router.push('/cash-count')}
         className="min-w-0 flex-1 gap-0.5"
       >
-        <AppText weight="medium" className="text-[15px]">
+        <AppText variant="body" weight="medium">
           Compter mes espèces
         </AppText>
-        <AppText className="text-xs text-muted">{LABEL[frequency]}</AppText>
+        <AppText variant="caption" tone="muted">
+          {LABEL[frequency]}
+        </AppText>
       </Pressable>
-      <View className="flex-row items-center gap-1.5">
-        <AppText className="text-xs">Actif</AppText>
-        <Switch
-          accessibilityLabel="Rappel pour compter mes espèces"
-          value={active}
-          onValueChange={(on) => onChange(on ? 'week' : 'never')}
-          trackColor={{ true: t.dark, false: t.line }}
-          thumbColor={active ? t.accent : t.tile}
-        />
-      </View>
+      <Switch
+        accessibilityLabel="Rappel pour compter mes espèces"
+        value={active}
+        onValueChange={(on) => onChange(on ? 'week' : 'never')}
+        trackColor={{ true: t.accent, false: t.raised }}
+        thumbColor={t.card}
+      />
     </View>
   );
 }

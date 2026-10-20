@@ -1,45 +1,43 @@
 import { View } from 'react-native';
 
-import { AppText, ProgressBar } from '@/components';
-import { formatAmount, formatNumber } from '@/lib/money';
-import { useUiStore } from '@/lib/ui-store';
+import { AppText, ProgressRing, TopoPattern } from '@/components';
+import { useAmountMask } from '@/lib/use-amount-mask';
+import { useThemeTokens } from '@/theme';
 
 import type { BudgetView } from '../types';
 
 export function BudgetSummary({ view }: { view: BudgetView }) {
-  const hide = useUiStore((s) => s.hideAmounts);
-  const money = (n: number) => (hide ? '••••••' : formatAmount(n));
+  const t = useThemeTokens();
+  const fmt = useAmountMask();
   const over = view.remaining < 0;
+  const color = over ? t.danger : t.catOrange;
 
   return (
-    <View className="mx-5 mt-4 gap-3 rounded-[22px] bg-dark px-5 py-[18px]">
-      <View className="flex-row items-baseline justify-between">
-        <AppText className="text-[13px] text-dark-muted">
+    <View className="mx-4 mt-4 flex-row items-center gap-4 overflow-hidden rounded-card bg-card p-4">
+      <TopoPattern color={t.ink} />
+      <ProgressRing value={view.percent} color={color}>
+        <AppText variant="body" weight="bold">
+          {Math.round(view.percent)} %
+        </AppText>
+      </ProgressRing>
+      <View className="flex-1 gap-0.5">
+        <AppText variant="caption" tone="muted">
           {over ? 'Budget dépassé de' : 'Reste à dépenser'}
         </AppText>
-        <AppText className="text-xs text-dark-muted">
-          Jour {view.day} sur {view.days}
+        <AppText
+          variant="title"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          style={over ? { color: t.danger } : null}
+        >
+          {fmt(Math.abs(view.remaining))}
         </AppText>
-      </View>
-      <AppText
-        weight="bold"
-        className="text-[34px] leading-[38px] text-on-dark"
-        style={{ letterSpacing: -0.6 }}
-      >
-        {hide ? '••••••' : formatNumber(Math.abs(view.remaining))}{' '}
-        <AppText weight="medium" className="text-lg text-on-dark">
-          Ar
-        </AppText>
-      </AppText>
-      <ProgressBar thick value={view.percent} tone="accent" trackClassName="bg-white/15" />
-      <View className="flex-row justify-between gap-2">
-        <AppText className="flex-1 text-xs text-dark-muted">
-          Dépensé {hide ? '••••' : formatNumber(view.spent)} sur{' '}
-          {hide ? '••••' : formatNumber(view.total)}
+        <AppText variant="caption" tone="muted" numberOfLines={1}>
+          {fmt(view.spent, false)} sur {fmt(view.total, false)} · jour {view.day}/{view.days}
         </AppText>
         {!over ? (
-          <AppText weight="bold" className="text-xs text-accent">
-            ≈ {money(view.perDay)} / jour
+          <AppText variant="caption" weight="bold" style={{ color }}>
+            ≈ {fmt(view.perDay)} / jour
           </AppText>
         ) : null}
       </View>

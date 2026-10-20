@@ -1,5 +1,12 @@
 import type { GoalItem } from '../../types';
-import { dueLabel, monthlyNeeded, percentOf, savedAccounts, totalSaved } from '../goal-math';
+import {
+  dueLabel,
+  highlightGoal,
+  monthlyNeeded,
+  percentOf,
+  savedAccounts,
+  totalSaved,
+} from '../goal-math';
 
 const NOW = new Date(2026, 9, 9).getTime();
 
@@ -43,5 +50,28 @@ describe('goal math', () => {
     const goals = [goal(), goal({ id: 2, saved: 30000, accountName: 'Banque 2' })];
     expect(totalSaved(goals)).toBe(450000);
     expect(savedAccounts(goals)).toEqual(['Banque 2']);
+  });
+});
+
+describe('highlightGoal', () => {
+  it('skips finished goals', () => {
+    expect(highlightGoal([goal({ saved: 1_000_000 })])).toBeNull();
+  });
+
+  it('prefers the nearest due date', () => {
+    const picked = highlightGoal([
+      goal({ id: 1, dueDate: 3_000 }),
+      goal({ id: 2, dueDate: 1_000 }),
+      goal({ id: 3, saved: 900_000, dueDate: null }),
+    ]);
+    expect(picked?.id).toBe(2);
+  });
+
+  it('falls back to the most advanced goal', () => {
+    const picked = highlightGoal([
+      goal({ id: 1, saved: 100, dueDate: null }),
+      goal({ id: 2, saved: 600_000, dueDate: null }),
+    ]);
+    expect(picked?.id).toBe(2);
   });
 });

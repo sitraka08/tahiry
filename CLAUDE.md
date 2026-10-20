@@ -5,7 +5,7 @@ Personal money manager (Ariary). Offline-first, French UI. Expo + React Native, 
 ## Stack
 
 - Expo SDK 57, expo-router, TypeScript strict
-- NativeWind v4 (Tailwind 3), 4 themes via CSS variables
+- NativeWind v4 (Tailwind 3), light and dark schemes via CSS variables, one accent
 - lucide-react-native for icons
 - react-hook-form + zod for forms
 - `@expo/ui/community/bottom-sheet` for sheets (wrapped in `AppSheet`)
@@ -64,8 +64,10 @@ src/constants/
 ## UI and styling
 
 - Style with NativeWind classes. Avoid inline `style` unless the value is dynamic.
-- Colors come from theme tokens (`bg-bg`, `text-ink`, `bg-accent`), never hardcoded hex.
-- Use `AppText` for text so the font family is applied.
+- Colors come from theme tokens (`bg-bg`, `text-ink`, `bg-accent`), never hardcoded hex. Every screen must work in light and dark.
+- Categories and account types get their icon and color from `src/lib/visuals.ts` (`cat-*` tokens).
+- Use the named type scale (`text-display`, `title`, `headline`, `body`, `caption`, `micro`) and radii (`rounded-card`, `rounded-tile`), not pixel values.
+- Use `AppText` and `AppTextInput`, never `Text` or `TextInput` from react-native (ESLint enforces it). They apply the font and disable font scaling.
 - Icons: lucide only, `strokeWidth` 1.8 to 2.
 - Touch targets are at least 44px. Icon-only buttons need an `accessibilityLabel`.
 - Interactive elements use `Pressable` with `accessibilityRole`.

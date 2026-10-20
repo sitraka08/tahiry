@@ -62,7 +62,7 @@ export default function CashCount() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <ScreenHeader title="Compter mes espèces" />
-        <AppText className="mx-5 mt-10 text-center text-muted">
+        <AppText className="mx-4 mt-10 text-center text-muted">
           Ajoute un compte « Espèces » pour pouvoir compter ton portefeuille.
         </AppText>
       </SafeAreaView>
@@ -78,7 +78,7 @@ export default function CashCount() {
         showsVerticalScrollIndicator={false}
       >
         {cashAccounts.length > 1 ? (
-          <View className="mx-5 mt-3.5 flex-row flex-wrap gap-1.5">
+          <View className="mx-4 mt-3.5 flex-row flex-wrap gap-1.5">
             {cashAccounts.map((a) => (
               <Chip
                 key={a.id}
@@ -90,10 +90,10 @@ export default function CashCount() {
           </View>
         ) : null}
         <CountSummary counted={counted} expected={expected} />
-        <AppText className="mx-5 mt-4 text-sm text-muted">
+        <AppText className="mx-4 mt-4 text-sm text-muted">
           Compte tes billets et pièces, l’app fait le calcul.
         </AppText>
-        <View className="mx-5 mt-2.5 gap-1.5">
+        <View className="mx-4 mt-2.5 gap-1.5">
           {DENOMINATIONS.map((value) => (
             <CountRow
               key={value}
@@ -107,7 +107,7 @@ export default function CashCount() {
 
       <View
         style={{ paddingBottom: bottomInset + 8 }}
-        className="absolute inset-x-0 bottom-0 gap-2 bg-bg px-5 pt-2"
+        className="absolute inset-x-0 bottom-0 gap-2 bg-bg px-4 pt-2"
       >
         {gap < 0 && counted > 0 ? (
           <Button

@@ -1,9 +1,9 @@
 import { Check } from 'lucide-react-native';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { PressableFeedback } from '@/components';
+import { AppText, PressableFeedback } from '@/components';
 import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
@@ -34,26 +34,25 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
         tap();
         onPress();
       }}
-      className={`flex-row items-center overflow-hidden rounded-2xl border border-line bg-card ${
+      className={`flex-row items-center overflow-hidden rounded-2xl bg-card ${
         isType ? 'h-[60px] gap-2.5 px-3' : 'min-h-14 gap-3 px-3.5 py-2'
       }`}
     >
       <Animated.View
         pointerEvents="none"
-        style={[StyleSheet.absoluteFill, { backgroundColor: t.dark }, fill]}
+        style={[StyleSheet.absoluteFill, { backgroundColor: t.inverse }, fill]}
       />
       <View
         className={`size-[22px] items-center justify-center rounded-[7px] ${selected ? 'bg-accent' : 'border-[1.5px] border-seg3'}`}
       >
         {selected ? <Check size={14} color={t.onAccent} strokeWidth={3} /> : null}
       </View>
-      <Text
-        className={`flex-1 ${selected ? 'font-gs-bold text-on-dark' : 'font-gs-medium text-ink'} ${
-          isType ? 'text-sm' : 'text-[15px]'
-        }`}
+      <AppText
+        weight={selected ? 'bold' : 'medium'}
+        className={`flex-1 ${selected ? 'text-on-inverse' : 'text-ink'} ${isType ? 'text-sm' : 'text-body'}`}
       >
         {label}
-      </Text>
+      </AppText>
     </PressableFeedback>
   );
 }

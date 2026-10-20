@@ -21,3 +21,15 @@ export function savedAccounts(goals: GoalItem[]) {
   const names = goals.flatMap((g) => (g.accountName ? [g.accountName] : []));
   return [...new Set(names)];
 }
+
+// The goal to show on the home screen: unfinished, nearest due date first,
+// then the most advanced one.
+export function highlightGoal(goals: GoalItem[]) {
+  const open = goals.filter((g) => g.saved < g.target);
+  if (open.length === 0) return null;
+  return [...open].sort((a, b) => {
+    const dueA = a.dueDate ?? Infinity;
+    const dueB = b.dueDate ?? Infinity;
+    return dueA !== dueB ? dueA - dueB : percentOf(b) - percentOf(a);
+  })[0];
+}

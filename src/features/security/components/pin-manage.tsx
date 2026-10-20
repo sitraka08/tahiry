@@ -2,7 +2,7 @@ import { Check, Fingerprint } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Alert, Switch, View } from 'react-native';
 
-import { AppText, Button, Segmented } from '@/components';
+import { AppText, Button, Segmented, TopoPattern } from '@/components';
 import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
@@ -45,26 +45,25 @@ export function PinManage({ onChange, onDone }: Props) {
     ]);
 
   return (
-    <View className="px-5 pt-8">
-      <View className="flex-row items-center gap-3.5 rounded-[22px] bg-dark p-5">
+    <View className="px-4 pt-8">
+      <View className="flex-row items-center gap-3.5 overflow-hidden rounded-card bg-card p-5">
+        <TopoPattern color={t.ink} />
         <View className="size-12 items-center justify-center rounded-full bg-accent">
           <Check size={24} color={t.onAccent} strokeWidth={2.4} />
         </View>
         <View className="gap-0.5">
-          <AppText weight="bold" className="text-lg text-on-dark">
-            Code PIN activé
-          </AppText>
-          <AppText className="text-[13px] text-dark-muted">
+          <AppText variant="headline">Code PIN activé</AppText>
+          <AppText variant="caption" tone="muted">
             Il sera demandé à chaque ouverture.
           </AppText>
         </View>
       </View>
 
-      <View className="mt-4 rounded-[20px] border border-line bg-card px-3.5 py-1">
+      <View className="mt-4 rounded-card bg-card px-3.5 py-1">
         {available ? (
-          <View className="min-h-[52px] flex-row items-center gap-3 border-b border-line">
+          <View className="min-h-14 flex-row items-center gap-3">
             <Fingerprint size={20} color={t.ink} strokeWidth={1.8} />
-            <AppText className="flex-1 text-[15px]">Déverrouiller avec l’empreinte</AppText>
+            <AppText className="flex-1 text-body">Déverrouiller avec l’empreinte</AppText>
             <Switch
               accessibilityLabel="Déverrouiller avec l’empreinte"
               value={biometric}
@@ -72,13 +71,13 @@ export function PinManage({ onChange, onDone }: Props) {
                 tap();
                 setBiometric(on);
               }}
-              trackColor={{ true: t.dark, false: t.line }}
-              thumbColor={biometric ? t.accent : t.tile}
+              trackColor={{ true: t.accent, false: t.raised }}
+              thumbColor={t.card}
             />
           </View>
         ) : null}
         <View className="gap-2.5 py-3">
-          <AppText className="text-[15px]">Verrouiller l’app</AppText>
+          <AppText className="text-body">Verrouiller l’app</AppText>
           <Segmented
             options={DELAYS}
             value={`${delay}` as `${LockDelay}`}

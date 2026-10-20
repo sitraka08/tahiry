@@ -17,17 +17,16 @@ type Props = {
 export function EmptyState({ icon: Icon, title, description, actionLabel, onAction }: Props) {
   const t = useThemeTokens();
   return (
-    <View className="mx-5 mt-6 items-center gap-2.5 rounded-[22px] border border-dashed border-seg3 px-5 py-8">
-      <View
-        style={{ transform: [{ rotate: '-6deg' }] }}
-        className="size-14 items-center justify-center rounded-[18px] bg-accent"
-      >
-        <Icon size={26} color={t.onAccent} strokeWidth={1.8} />
+    <View className="mx-4 mt-6 items-center gap-2.5 rounded-card bg-card px-4 py-8">
+      <View className="size-14 items-center justify-center rounded-full bg-tile">
+        <Icon size={26} color={t.ink} strokeWidth={1.8} />
       </View>
-      <AppText weight="bold" className="mt-1 text-base">
+      <AppText variant="headline" className="mt-1">
         {title}
       </AppText>
-      <AppText className="text-center text-[13px] leading-[19px] text-muted">{description}</AppText>
+      <AppText variant="caption" tone="muted" className="text-center">
+        {description}
+      </AppText>
       {actionLabel && onAction ? (
         <View className="mt-2 self-stretch">
           <Button label={actionLabel} size="sm" onPress={onAction} />

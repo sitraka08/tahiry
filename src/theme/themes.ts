@@ -1,91 +1,104 @@
-export const THEME_NAMES = ['Citron', 'Nuit', 'Ciel', 'Pêche'] as const;
-export type ThemeName = (typeof THEME_NAMES)[number];
+import type { ColorScheme } from './scheme';
 
 export type ThemeTokens = {
-  mode: 'light' | 'dark';
   bg: string;
   card: string;
   tile: string;
+  raised: string;
   ink: string;
   muted: string;
+  subtle: string;
   accent: string;
   onAccent: string;
   dark: string;
   onDark: string;
   darkMuted: string;
+  inverse: string;
+  onInverse: string;
+  positive: string;
+  negative: string;
   line: string;
   outline: string;
   seg3: string;
   danger: string;
+  catOrange: string;
+  catBlue: string;
+  catSand: string;
+  catViolet: string;
+  catRose: string;
+  catTeal: string;
+  catGreen: string;
+  illusInk: string;
+  shadow: string;
 };
 
-export const THEMES: Record<ThemeName, ThemeTokens> = {
-  Citron: {
-    mode: 'light',
-    bg: '#FCFDF0',
-    card: '#EFF1DD',
-    tile: '#FFFFFF',
-    ink: '#121212',
-    muted: '#55584A',
-    accent: '#D4F542',
-    onAccent: '#121212',
-    dark: '#121212',
-    onDark: '#FCFDF0',
-    darkMuted: '#C9CBB8',
-    line: '#E3E5D2',
-    outline: '#CDD0B4',
-    seg3: '#7A7D6A',
-    danger: '#B3261E',
+// The balance card keeps the same dark look in both schemes.
+const CARD = { dark: '#171A18', onDark: '#FFFFFF', darkMuted: '#A7A7A7' };
+
+export const THEMES: Record<ColorScheme, ThemeTokens> = {
+  dark: {
+    ...CARD,
+    bg: '#0B0B0B',
+    card: '#161616',
+    tile: '#1F1F1F',
+    raised: '#2A2A2A',
+    ink: '#FFFFFF',
+    muted: '#A7A7A7',
+    subtle: '#6E6E6E',
+    accent: '#1ED760',
+    onAccent: '#0B0B0B',
+    inverse: '#FFFFFF',
+    onInverse: '#0B0B0B',
+    positive: '#1ED760',
+    negative: '#FFFFFF',
+    line: '#262626',
+    outline: '#3A3A3A',
+    seg3: '#6B6B6B',
+    danger: '#FF6B5E',
+    catOrange: '#D9906E',
+    catBlue: '#82A9D4',
+    catSand: '#D4B872',
+    catViolet: '#A59BD6',
+    catRose: '#D18FA3',
+    catTeal: '#76BDB2',
+    catGreen: '#1ED760',
+    illusInk: '#E9E6DF',
+    shadow: 'rgba(0,0,0,0.55)',
   },
-  Nuit: {
-    mode: 'dark',
-    bg: '#121212',
-    card: '#1F201B',
-    tile: '#2E3029',
-    ink: '#F4F5E6',
-    muted: '#A9AC98',
-    accent: '#D4F542',
-    onAccent: '#121212',
-    dark: '#262720',
-    onDark: '#F4F5E6',
-    darkMuted: '#A9AC98',
-    line: '#2A2B24',
-    outline: '#3F4037',
-    seg3: '#6E7160',
-    danger: '#F2B8B5',
+  light: {
+    ...CARD,
+    bg: '#F6F5F1',
+    card: '#FFFFFF',
+    tile: '#EEECE6',
+    raised: '#E4E1DA',
+    ink: '#141413',
+    muted: '#6B6862',
+    subtle: '#9A968D',
+    accent: '#11833A',
+    onAccent: '#FFFFFF',
+    inverse: '#141413',
+    onInverse: '#F6F5F1',
+    positive: '#11833A',
+    negative: '#141413',
+    line: '#E6E3DC',
+    outline: '#D3CFC6',
+    seg3: '#9A968D',
+    danger: '#C2412D',
+    catOrange: '#B3633F',
+    catBlue: '#3F6E9E',
+    catSand: '#8C6F24',
+    catViolet: '#6B5FB0',
+    catRose: '#A85470',
+    catTeal: '#2F8579',
+    catGreen: '#11833A',
+    illusInk: '#2B2925',
+    shadow: 'rgba(20,20,19,0.25)',
   },
-  Ciel: {
-    mode: 'light',
-    bg: '#F3F8FC',
-    card: '#E3EDF5',
-    tile: '#FFFFFF',
-    ink: '#0F1A24',
-    muted: '#4A5866',
-    accent: '#8FD0F5',
-    onAccent: '#0F1A24',
-    dark: '#0F1A24',
-    onDark: '#F3F8FC',
-    darkMuted: '#B8C6D2',
-    line: '#D8E3EC',
-    outline: '#C2D2DF',
-    seg3: '#5C6D7C',
-    danger: '#B3261E',
-  },
-  Pêche: {
-    mode: 'light',
-    bg: '#FFF6EF',
-    card: '#F8E6D8',
-    tile: '#FFFFFF',
-    ink: '#1E1410',
-    muted: '#6A5246',
-    accent: '#FFB07A',
-    onAccent: '#1E1410',
-    dark: '#1E1410',
-    onDark: '#FFF6EF',
-    darkMuted: '#D9C2B4',
-    line: '#EFDCCD',
-    outline: '#E5CBB6',
-    seg3: '#8A6E60',
-    danger: '#B3261E',
-  },
+};
+
+// Sheets sit one step lighter than the screen, like Spotify, so the
+// surfaces inside them move up one step as well.
+export const SHEET: Record<ColorScheme, Partial<ThemeTokens>> = {
+  dark: { bg: '#212121', card: '#2A2A2A', tile: '#303030', raised: '#3D3D3D', line: '#303030' },
+  light: { bg: '#FFFFFF', card: '#F4F2EC', tile: '#EEECE6', raised: '#E4E1DA', line: '#ECE9E2' },
 };

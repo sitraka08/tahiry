@@ -1,9 +1,11 @@
 import { Linking, View } from 'react-native';
 
 import { AppText, PressableFeedback, ProgressBar } from '@/components';
+import { withAlpha } from '@/lib/color';
 import { formatShortDate } from '@/lib/dates';
 import { formatNumber } from '@/lib/money';
 import { useAmountMask } from '@/lib/use-amount-mask';
+import { useThemeTokens } from '@/theme';
 
 import { initialsOf, progressOf, remainingOf } from '../hooks/debt-math';
 import type { DebtItem } from '../types';
@@ -20,19 +22,19 @@ function Action({
   onPress,
 }: {
   label: string;
-  tone: 'dark' | 'light' | 'accent';
+  tone: 'light' | 'accent';
   onPress: () => void;
 }) {
-  const box = { dark: 'bg-dark', light: 'bg-tile', accent: 'bg-accent' }[tone];
-  const text = { dark: 'text-on-dark', light: 'text-ink', accent: 'text-on-accent' }[tone];
+  const box = { light: 'bg-tile', accent: 'bg-accent' }[tone];
+  const text = { light: 'text-ink', accent: 'text-on-accent' }[tone];
   return (
     <PressableFeedback
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={onPress}
-      className={`h-10 flex-1 items-center justify-center rounded-xl ${box}`}
+      className={`h-11 flex-1 items-center justify-center rounded-full ${box}`}
     >
-      <AppText weight={tone === 'accent' ? 'bold' : 'medium'} className={`text-[13px] ${text}`}>
+      <AppText weight={tone === 'accent' ? 'bold' : 'medium'} className={`text-caption ${text}`}>
         {label}
       </AppText>
     </PressableFeedback>
@@ -45,12 +47,13 @@ function remind(debt: DebtItem) {
 }
 
 export function DebtCard({ debt, onPay, onLongPress }: Props) {
+  const t = useThemeTokens();
   const fmt = useAmountMask();
   const borrowed = debt.direction === 'borrowed';
   const remaining = remainingOf(debt);
   const place = debt.accountName ? ` · ${debt.accountName}` : '';
 
-  const muted = borrowed ? 'text-dark-muted' : 'text-muted';
+  const tint = borrowed ? t.catViolet : t.catTeal;
   const sub = debt.settled
     ? 'remboursé'
     : debt.paid > 0
@@ -64,36 +67,36 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
       accessibilityRole="button"
       accessibilityHint="Appui long pour supprimer"
       onLongPress={() => onLongPress(debt)}
-
-      className={`gap-2.5 rounded-[20px] p-3.5 ${borrowed ? 'bg-dark' : 'border border-line bg-card'} ${debt.settled ? 'opacity-60' : ''}`}
+      className={`gap-3 rounded-card bg-card p-4 ${debt.settled ? 'opacity-60' : ''}`}
     >
       <View className="flex-row items-center gap-3">
         <View
-          className={`size-10 items-center justify-center rounded-full ${borrowed ? 'bg-accent' : 'bg-tile'}`}
+          style={{ backgroundColor: withAlpha(tint, 0.16) }}
+          className="size-11 items-center justify-center rounded-full"
         >
-          <AppText weight="bold" className={`text-sm ${borrowed ? 'text-on-accent' : ''}`}>
+          <AppText weight="bold" style={{ color: tint }} className="text-sm">
             {initialsOf(debt.person)}
           </AppText>
         </View>
         <View className="min-w-0 flex-1 gap-0.5">
-          <AppText
-            weight="bold"
-            numberOfLines={1}
-            className={`text-[15px] ${borrowed ? 'text-on-dark' : ''}`}
-          >
+          <AppText variant="body" weight="bold" numberOfLines={1}>
             {debt.person}
             {borrowed ? ' · je dois' : ''}
           </AppText>
-          <AppText numberOfLines={1} className={`text-xs ${muted}`}>
+          <AppText variant="caption" tone="muted" numberOfLines={1}>
             {borrowed ? 'Emprunté' : 'Prêté'} le {formatShortDate(debt.date)}
             {place}
           </AppText>
         </View>
         <View className="items-end gap-0.5">
-          <AppText weight="bold" className={`text-[15px] ${borrowed ? 'text-on-dark' : ''}`}>
+          <AppText variant="body" weight="bold">
             {fmt(debt.settled ? debt.amount : remaining)}
           </AppText>
-          {sub ? <AppText className={`text-[11px] ${muted}`}>{sub}</AppText> : null}
+          {sub ? (
+            <AppText variant="micro" tone="muted">
+              {sub}
+            </AppText>
+          ) : null}
         </View>
       </View>
 
@@ -103,7 +106,7 @@ export function DebtCard({ debt, onPay, onLongPress }: Props) {
         <Action label="Rembourser maintenant" tone="accent" onPress={() => onPay(debt, true)} />
       ) : (
         <View className="flex-row gap-2">
-          <Action label="Relancer par SMS" tone="dark" onPress={() => remind(debt)} />
+          <Action label="Relancer par SMS" tone="light" onPress={() => remind(debt)} />
           <Action
             label={debt.paid > 0 ? 'Ajouter un paiement' : 'Marquer remboursé'}
             tone="light"

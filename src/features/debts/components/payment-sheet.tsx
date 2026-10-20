@@ -37,7 +37,7 @@ function PaymentForm({ debt, full, accounts, onSubmit }: FormProps) {
       <AppText weight="bold" className="text-base">
         {borrowed ? `Rembourser ${debt.person}` : `Paiement de ${debt.person}`}
       </AppText>
-      <AppText className="text-[13px] text-muted">
+      <AppText className="text-caption text-muted">
         Reste à {borrowed ? 'rendre' : 'recevoir'} : {formatNumber(remaining)} Ar
       </AppText>
 
@@ -54,7 +54,7 @@ function PaymentForm({ debt, full, accounts, onSubmit }: FormProps) {
         )}
       />
 
-      <AppText weight="medium" className="text-[13px] text-muted">
+      <AppText weight="medium" className="text-caption text-muted">
         {borrowed ? 'Payé avec' : 'Reçu sur'}
       </AppText>
       <Controller

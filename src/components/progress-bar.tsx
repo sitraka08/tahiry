@@ -5,15 +5,22 @@ type Props = {
   tone?: 'ink' | 'accent';
   trackClassName?: string;
   thick?: boolean;
+  color?: string;
 };
 
-export function ProgressBar({ value, tone = 'ink', trackClassName = 'bg-tile', thick }: Props) {
+export function ProgressBar({
+  value,
+  tone = 'accent',
+  trackClassName = 'bg-raised',
+  thick,
+  color,
+}: Props) {
   const pct = Math.max(0, Math.min(100, value));
   return (
-    <View className={`overflow-hidden rounded-full ${thick ? 'h-2.5' : 'h-2'} ${trackClassName}`}>
+    <View className={`overflow-hidden rounded-full ${thick ? 'h-2' : 'h-1.5'} ${trackClassName}`}>
       <View
-        className={`h-full rounded-full ${tone === 'ink' ? 'bg-dark' : 'bg-accent'}`}
-        style={{ width: `${pct}%` }}
+        className={`h-full rounded-full ${tone === 'ink' ? 'bg-ink' : 'bg-accent'}`}
+        style={{ width: `${pct}%`, backgroundColor: color }}
       />
     </View>
   );

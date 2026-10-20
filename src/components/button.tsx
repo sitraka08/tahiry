@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
-import { Text } from 'react-native';
-
 import { press } from '@/lib/haptics';
 
+import { AppText } from './app-text';
 import { PressableFeedback } from './pressable-feedback';
 
 type Variant = 'primary' | 'accent' | 'soft' | 'ghost' | 'danger';
@@ -19,22 +18,22 @@ type Props = {
 };
 
 const container: Record<Variant, string> = {
-  primary: 'bg-dark',
+  primary: 'bg-inverse',
   accent: 'bg-accent',
-  soft: 'bg-card',
+  soft: 'bg-tile',
   ghost: 'bg-transparent',
-  danger: 'bg-card',
+  danger: 'bg-tile',
 };
 
 const text: Record<Variant, string> = {
-  primary: 'text-on-dark',
+  primary: 'text-on-inverse',
   accent: 'text-on-accent',
   soft: 'text-ink',
   ghost: 'text-ink',
   danger: 'text-danger',
 };
 
-const heights: Record<Size, string> = { lg: 'h-14', md: 'h-[52px]', sm: 'h-12' };
+const heights: Record<Size, string> = { lg: 'h-12', md: 'h-11', sm: 'h-10' };
 
 export function Button({
   label,
@@ -45,8 +44,8 @@ export function Button({
   disabled,
   className = '',
 }: Props) {
-  const weight = variant === 'soft' || variant === 'ghost' ? 'font-gs-medium' : 'font-gs-bold';
-  const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px]' : 'text-sm';
+  const weight = variant === 'soft' || variant === 'ghost' ? 'medium' : 'bold';
+  const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-body' : 'text-sm';
   return (
     <PressableFeedback
       accessibilityRole="button"
@@ -57,10 +56,12 @@ export function Button({
         press();
         onPress?.();
       }}
-      className={`flex-row items-center justify-center gap-2 rounded-[18px] ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`flex-row items-center justify-center gap-2 rounded-full px-4 ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
-      <Text className={`${weight} ${textSize} ${text[variant]}`}>{label}</Text>
+      <AppText weight={weight} className={`${textSize} ${text[variant]}`}>
+        {label}
+      </AppText>
     </PressableFeedback>
   );
 }

@@ -13,15 +13,19 @@ import {
   TextField,
   type SheetMethods,
 } from '@/components';
-import { formatNumber } from '@/lib/money';
+import { formatDateChip } from '@/lib/dates';
+import { formatNumber, parseAmount } from '@/lib/money';
+import { useAmountMask } from '@/lib/use-amount-mask';
 import { useBottomInset } from '@/lib/use-bottom-inset';
+import { categoryVisual } from '@/lib/visuals';
 import { useThemeTokens } from '@/theme';
 
+import { applyKey, balanceAfter } from '../hooks/amount-keys';
 import { useCategories, createCategory } from '../hooks/use-categories';
 import { transactionSchema, type TransactionFormValues } from '../schemas/transaction-schema';
 import type { AccountOption, TransactionType } from '../types';
-import { AmountInput } from './amount-input';
-import { formatDateChip } from '@/lib/dates';
+import { AmountDisplay } from './amount-display';
+import { AmountKeypad } from './amount-keypad';
 
 const TYPES: { value: TransactionType; label: string }[] = [
   { value: 'out', label: 'Dépense' },
@@ -43,6 +47,7 @@ export function TransactionForm({
   submitLabel = 'Enregistrer',
 }: Props) {
   const t = useThemeTokens();
+  const fmt = useAmountMask();
   const bottomInset = useBottomInset(16);
   const sheetRef = useRef<SheetMethods>(null);
   const [newCategory, setNewCategory] = useState('');
@@ -50,7 +55,7 @@ export function TransactionForm({
   const outCategories = useCategories('out');
   const inCategories = useCategories('in');
 
-  const { control, handleSubmit, setValue, formState } = useForm<TransactionFormValues>({
+  const { control, handleSubmit, setValue, getValues, formState } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: 'out',
@@ -66,10 +71,18 @@ export function TransactionForm({
   });
   const type = useWatch({ control, name: 'type' });
   const accountId = useWatch({ control, name: 'accountId' });
+  const amount = useWatch({ control, name: 'amount' });
+  const account = accounts.find((a) => a.id === accountId);
+  const hint = account
+    ? `Solde ${account.name} après : ${fmt(balanceAfter(type, account.balance, parseAmount(amount)))}`
+    : undefined;
   const categories = type === 'in' ? inCategories : outCategories;
   const fromLabel =
     type === 'in' ? 'Reçu sur' : type === 'transfer' ? 'Depuis le compte' : 'Payé avec';
-  const { errors } = formState;
+  const { errors, isSubmitted } = formState;
+
+  const pressKey = (key: Parameters<typeof applyKey>[1]) =>
+    setValue('amount', applyKey(getValues('amount'), key), { shouldValidate: isSubmitted });
 
   const changeType = (next: TransactionType) => {
     setValue('type', next);
@@ -90,10 +103,10 @@ export function TransactionForm({
     <View className="flex-1">
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        contentContainerClassName="gap-3.5 pb-28"
+        contentContainerClassName="gap-4 pb-4"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-5">
+        <View className="mx-4">
           <Controller
             control={control}
             name="type"
@@ -103,26 +116,16 @@ export function TransactionForm({
           />
         </View>
 
-        <Controller
-          control={control}
-          name="amount"
-          render={({ field }) => (
-            <AmountInput
-              value={field.value}
-              onChange={field.onChange}
-              error={errors.amount?.message}
-            />
-          )}
-        />
+        <AmountDisplay value={amount} hint={hint} error={errors.amount?.message} />
 
         <View className="gap-2">
-          <AppText weight="medium" className="ml-5 text-[13px] text-muted">
+          <AppText variant="caption" weight="medium" tone="muted" className="ml-4">
             {fromLabel}
           </AppText>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerClassName="gap-2 px-5"
+            contentContainerClassName="gap-2 px-4"
           >
             {accounts.map((a) => {
               const active = a.id === accountId;
@@ -140,7 +143,7 @@ export function TransactionForm({
 
         {type === 'transfer' ? (
           <View className="gap-2">
-            <AppText weight="medium" className="ml-5 text-[13px] text-muted">
+            <AppText variant="caption" weight="medium" tone="muted" className="ml-4">
               Vers le compte
             </AppText>
             <Controller
@@ -150,7 +153,7 @@ export function TransactionForm({
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                  contentContainerClassName="gap-2 px-5"
+                  contentContainerClassName="gap-2 px-4"
                 >
                   {accounts
                     .filter((a) => a.id !== accountId)
@@ -166,42 +169,52 @@ export function TransactionForm({
               )}
             />
             {errors.toAccountId ? (
-              <AppText className="mx-5 text-xs text-danger">{errors.toAccountId.message}</AppText>
+              <AppText variant="caption" tone="danger" className="mx-4">
+                {errors.toAccountId.message}
+              </AppText>
             ) : (
-              <AppText className="mx-5 text-xs text-muted">
+              <AppText variant="caption" tone="muted" className="mx-4">
                 Un transfert ne change pas ton solde total : l’argent change juste de place.
               </AppText>
             )}
           </View>
         ) : (
-          <View className="mx-5 gap-2">
-            <AppText weight="medium" className="text-[13px] text-muted">
+          <View className="gap-2">
+            <AppText variant="caption" weight="medium" tone="muted" className="ml-4">
               Motif
             </AppText>
             <Controller
               control={control}
               name="categoryId"
               render={({ field }) => (
-                <View className="flex-row flex-wrap gap-1.5">
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
+                  contentContainerClassName="gap-2 px-4"
+                >
                   {categories.map((c) => (
                     <Chip
                       key={c.id}
                       label={c.label}
+                      color={t[categoryVisual(c.kind, c.key).color]}
                       selected={field.value === c.id}
                       onPress={() => field.onChange(c.id)}
                     />
                   ))}
                   <Chip label="+ Créer" dashed onPress={() => sheetRef.current?.present()} />
-                </View>
+                </ScrollView>
               )}
             />
             {errors.categoryId ? (
-              <AppText className="text-xs text-danger">{errors.categoryId.message}</AppText>
+              <AppText variant="caption" tone="danger" className="mx-4">
+                {errors.categoryId.message}
+              </AppText>
             ) : null}
           </View>
         )}
 
-        <View className="mx-5 flex-row gap-2">
+        <View className="mx-4 flex-row gap-2">
           <Controller
             control={control}
             name="note"
@@ -214,9 +227,9 @@ export function TransactionForm({
               />
             )}
           />
-          <View className="h-12 flex-row items-center gap-1.5 self-start rounded-[14px] border border-outline bg-tile px-3">
+          <View className="h-12 flex-row items-center gap-1.5 self-start rounded-card bg-tile px-3">
             <Calendar size={16} color={t.ink} strokeWidth={1.8} />
-            <AppText className="text-[13px]">{formatDateChip(initialValues?.date ?? now)}</AppText>
+            <AppText variant="caption">{formatDateChip(initialValues?.date ?? now)}</AppText>
           </View>
         </View>
 
@@ -224,20 +237,23 @@ export function TransactionForm({
           control={control}
           name="recurring"
           render={({ field }) => (
-            <View className="mx-5 flex-row items-center justify-between">
-              <AppText className="text-[13px]">Répéter chaque mois et me le rappeler</AppText>
+            <View className="mx-4 flex-row items-center justify-between gap-3">
+              <AppText variant="caption" className="flex-1">
+                Répéter chaque mois et me le rappeler
+              </AppText>
               <Switch
                 value={field.value}
                 onValueChange={field.onChange}
-                trackColor={{ true: t.dark, false: t.line }}
-                thumbColor={field.value ? t.accent : t.tile}
+                trackColor={{ true: t.accent, false: t.raised }}
+                thumbColor={t.card}
               />
             </View>
           )}
         />
       </ScrollView>
 
-      <View style={{ bottom: bottomInset + 8 }} className="absolute inset-x-5">
+      <AmountKeypad onKey={pressKey} />
+      <View style={{ paddingBottom: bottomInset }} className="px-4 pt-2">
         <Button
           label={submitLabel}
           variant="accent"
@@ -248,9 +264,7 @@ export function TransactionForm({
 
       <AppSheet sheetRef={sheetRef}>
         <View className="gap-3 pt-2">
-          <AppText weight="bold" className="text-base">
-            Nouveau motif
-          </AppText>
+          <AppText variant="headline">Nouveau motif</AppText>
           <TextField
             label="Nom du motif"
             placeholder="Ex. Abonnement"

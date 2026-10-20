@@ -51,7 +51,7 @@ export function PinSetup({ onDone }: Props) {
       <View className="items-center px-6 pt-12">
         <View
           style={{ transform: [{ rotate: '-6deg' }] }}
-          className="size-16 items-center justify-center rounded-[20px] bg-accent"
+          className="size-16 items-center justify-center rounded-card bg-accent"
         >
           <KeyRound size={30} color={t.onAccent} strokeWidth={1.8} />
         </View>
@@ -67,8 +67,8 @@ export function PinSetup({ onDone }: Props) {
               ? 'Tape le même code une seconde fois.'
               : 'Il protège ton argent si quelqu’un prend ton téléphone.'}
         </AppText>
-        <View className="mt-[26px]">
-          <PinDots tone="light" filled={pin.length} shake={shake} />
+        <View className="mt-7">
+          <PinDots filled={pin.length} shake={shake} />
         </View>
       </View>
 
@@ -80,7 +80,7 @@ export function PinSetup({ onDone }: Props) {
           bottom: Math.max(insets.bottom, 16) + 24,
         }}
       >
-        <PinKeypad tone="light" onDigit={onDigit} onBackspace={() => setPin(removeDigit(pin))} />
+        <PinKeypad onDigit={onDigit} onBackspace={() => setPin(removeDigit(pin))} />
       </View>
     </View>
   );

@@ -66,24 +66,20 @@ export function LockScreen({ name, biometric, onForgot }: Props) {
   return (
     <View
       style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, zIndex: 50 }}
-      className="bg-dark"
+      className="bg-bg"
     >
-      <View
-        style={{ position: 'absolute', left: -30, top: -20, transform: [{ rotate: '-8deg' }] }}
-        className="h-14 w-[180px] bg-accent"
-      />
       <View style={{ paddingTop: 120 }} className="items-center px-6">
         <View className="size-16 items-center justify-center rounded-full bg-accent">
           <Lock size={28} color={t.onAccent} strokeWidth={1.8} />
         </View>
-        <AppText weight="bold" className="mt-[18px] text-2xl text-on-dark">
+        <AppText variant="title" className="mt-5">
           {name ? `Bon retour, ${name}` : 'Bon retour'}
         </AppText>
-        <AppText className="mt-1.5 text-sm text-dark-muted">
+        <AppText variant="body" tone="muted" className="mt-1.5">
           Entre ton code pour ouvrir l’app
         </AppText>
-        <View className="mt-[26px]">
-          <PinDots tone="dark" filled={pin.length} shake={shake} />
+        <View className="mt-7">
+          <PinDots filled={pin.length} shake={shake} />
         </View>
       </View>
 
@@ -96,7 +92,6 @@ export function LockScreen({ name, biometric, onForgot }: Props) {
         }}
       >
         <PinKeypad
-          tone="dark"
           onDigit={onDigit}
           onBackspace={() => setPin(removeDigit(pin))}
           leftKey={
@@ -120,7 +115,9 @@ export function LockScreen({ name, biometric, onForgot }: Props) {
         style={{ position: 'absolute', left: 0, right: 0, bottom: Math.max(insets.bottom, 16) + 8 }}
         className="h-11 items-center justify-center"
       >
-        <AppText className="text-[13px] text-dark-muted">Code oublié ?</AppText>
+        <AppText variant="caption" tone="muted">
+          Code oublié ?
+        </AppText>
       </Pressable>
     </View>
   );

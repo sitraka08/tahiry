@@ -19,7 +19,7 @@ function Segment({ index, step }: { index: number; step: number }) {
   return (
     <View className="h-1.5 flex-1 overflow-hidden rounded-[3px] bg-line">
       <Animated.View
-        style={[{ height: '100%', borderRadius: 3, backgroundColor: t.dark }, style]}
+        style={[{ height: '100%', borderRadius: 3, backgroundColor: t.accent }, style]}
       />
     </View>
   );

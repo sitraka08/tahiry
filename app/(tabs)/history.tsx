@@ -5,18 +5,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { SearchX } from 'lucide-react-native';
 
-import { Chip, EmptyState, Headline, SearchInput } from '@/components';
+import { AppText, Chip, EmptyState, SearchInput } from '@/components';
 import { useAccounts } from '@/features/accounts';
 import {
   PeriodSummary,
   TransactionList,
   useMonthTotals,
   useTransactions,
+  type TransactionType,
 } from '@/features/transactions';
 
 const DAY = 86_400_000;
 
-type Filter = 'all' | 'transfer' | number;
+type Filter = 'all' | TransactionType | number;
+
+const TYPES: { value: TransactionType; label: string }[] = [
+  { value: 'out', label: 'Dépenses' },
+  { value: 'in', label: 'Revenus' },
+  { value: 'transfer', label: 'Transferts' },
+];
 
 export default function History() {
   const router = useRouter();
@@ -27,17 +34,19 @@ export default function History() {
 
   const { groups } = useTransactions({
     search,
-    type: filter === 'transfer' ? 'transfer' : undefined,
+    type: typeof filter === 'string' && filter !== 'all' ? filter : undefined,
     accountId: typeof filter === 'number' ? filter : undefined,
   });
   const { income, expense } = useMonthTotals(now - 30 * DAY, now + DAY);
 
   const header = (
     <View>
-      <View className="px-5 pt-5">
-        <Headline lead="Historique" />
+      <View className="px-4 pt-6">
+        <AppText accessibilityRole="header" variant="display">
+          Historique
+        </AppText>
       </View>
-      <View className="mx-5 mt-3.5">
+      <View className="mx-4 mt-4">
         <SearchInput
           value={search}
           onChangeText={setSearch}
@@ -48,9 +57,18 @@ export default function History() {
         horizontal
         showsHorizontalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        contentContainerClassName="gap-2 px-5 pt-3"
+        contentContainerClassName="gap-2 px-4 pt-3"
       >
         <Chip large label="Tout" selected={filter === 'all'} onPress={() => setFilter('all')} />
+        {TYPES.map((f) => (
+          <Chip
+            large
+            key={f.value}
+            label={f.label}
+            selected={filter === f.value}
+            onPress={() => setFilter(f.value)}
+          />
+        ))}
         {accounts.map((a) => (
           <Chip
             large
@@ -60,14 +78,8 @@ export default function History() {
             onPress={() => setFilter(a.id)}
           />
         ))}
-        <Chip
-          large
-          label="Transferts"
-          selected={filter === 'transfer'}
-          onPress={() => setFilter('transfer')}
-        />
       </ScrollView>
-      <PeriodSummary income={income} expense={expense} label="30 j" />
+      <PeriodSummary income={income} expense={expense} label="30 derniers jours" />
     </View>
   );
 

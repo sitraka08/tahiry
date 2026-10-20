@@ -4,6 +4,7 @@ export { TransactionForm } from './components/transaction-form';
 export { TransactionList } from './components/transaction-list';
 export { TransactionRow } from './components/transaction-row';
 export { useBalanceAfter } from './hooks/use-balance-after';
+export { netOf } from './hooks/day-groups';
 export { createCategory, useCategories } from './hooks/use-categories';
 export {
   createTransaction,

@@ -18,13 +18,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppText, IconButton } from '@/components';
 import {
+  AppearancePicker,
+  PalettePicker,
   ProfileCard,
   SettingsRow,
   SettingsSection,
-  ThemePicker,
-  chooseTheme,
+  chooseColorScheme,
+  choosePalette,
   hydrateSettings,
   saveUserName,
+  useColorSchemeChoice,
+  usePaletteChoice,
   useUserName,
 } from '@/features/settings';
 import { restoreBackup, shareBackup } from '@/features/backup';
@@ -35,13 +39,15 @@ import { toast } from '@/lib/toast-store';
 export default function Settings() {
   const router = useRouter();
   const name = useUserName();
+  const colorScheme = useColorSchemeChoice();
+  const palette = usePaletteChoice();
   const { pinEnabled } = useSecuritySettings();
   const hideAmounts = useUiStore((s) => s.hideAmounts);
   const setHideAmounts = useUiStore((s) => s.setHideAmounts);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="flex-row items-center gap-3 px-5 pt-5">
+      <View className="flex-row items-center gap-3 px-4 pt-5">
         <IconButton icon={ChevronLeft} label="Retour" onPress={() => router.back()} />
         <AppText accessibilityRole="header" weight="bold" className="text-2xl">
           Réglages
@@ -55,15 +61,20 @@ export default function Settings() {
       >
         <ProfileCard name={name} onSaveName={saveUserName} onBackup={shareBackup} />
 
-        <View className="mx-5 mt-5">
+        <View className="mx-4 mt-5">
           <AppText
-            weight="medium"
-            className="mb-2.5 text-[13px] uppercase text-muted"
+            variant="caption"
+            weight="bold"
+            tone="muted"
+            className="mb-2 uppercase"
             style={{ letterSpacing: 0.6 }}
           >
-            Thème de l’app
+            Apparence
           </AppText>
-          <ThemePicker onChoose={chooseTheme} />
+          <AppearancePicker value={colorScheme} onChange={chooseColorScheme} />
+          <View className="mt-3">
+            <PalettePicker value={palette} onChange={choosePalette} />
+          </View>
         </View>
 
         <SettingsSection title="Général">
@@ -84,7 +95,7 @@ export default function Settings() {
             label="Masquer les montants"
             toggle={{ value: hideAmounts, onChange: setHideAmounts }}
           />
-          <SettingsRow icon={Bell} label="Rappels" last onPress={() => router.push('/reminders')} />
+          <SettingsRow icon={Bell} label="Rappels" onPress={() => router.push('/reminders')} />
         </SettingsSection>
 
         <SettingsSection title="Sauvegarde">
@@ -92,7 +103,6 @@ export default function Settings() {
           <SettingsRow
             icon={Download}
             label="Importer une sauvegarde"
-            last
             onPress={() =>
               restoreBackup({
                 confirm: true,
@@ -116,7 +126,6 @@ export default function Settings() {
           <SettingsRow
             icon={Banknote}
             label="Compter mes espèces"
-            last
             onPress={() => router.push('/cash-count')}
           />
         </SettingsSection>

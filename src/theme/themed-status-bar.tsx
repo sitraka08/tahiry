@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { useThemeTokens } from './theme-provider';
+import { useResolvedColorScheme } from './theme-provider';
 
 export function ThemedStatusBar() {
-  const { mode } = useThemeTokens();
-  return <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />;
+  const scheme = useResolvedColorScheme();
+  return <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />;
 }

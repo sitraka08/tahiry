@@ -2,6 +2,7 @@ import { TriangleAlert } from 'lucide-react-native';
 import { View } from 'react-native';
 
 import { AppText } from '@/components';
+import { withAlpha } from '@/lib/color';
 import { formatAmount } from '@/lib/money';
 import { useThemeTokens } from '@/theme';
 
@@ -14,11 +15,14 @@ export function BudgetAlert({ monthLabel, alerts }: Props) {
   const more = alerts.length - 1;
 
   return (
-    <View className="mx-5 mt-3 flex-row items-center gap-2.5 rounded-2xl bg-accent px-3.5 py-3">
-      <TriangleAlert size={20} color={t.onAccent} strokeWidth={1.8} />
-      <AppText className="flex-1 text-[13px] leading-[18px] text-on-accent">
+    <View
+      style={{ backgroundColor: withAlpha(t.danger, 0.12) }}
+      className="mx-4 mt-3 flex-row items-center gap-3 rounded-card px-4 py-3"
+    >
+      <TriangleAlert size={20} color={t.danger} strokeWidth={1.8} />
+      <AppText variant="caption" className="flex-1">
         En {monthLabel},{' '}
-        <AppText weight="bold" className="text-on-accent">
+        <AppText variant="caption" weight="bold">
           {first.label}
         </AppText>{' '}
         a dépassé son budget de {formatAmount(first.excess)}

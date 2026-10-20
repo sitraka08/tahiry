@@ -70,10 +70,10 @@ export default function Debts() {
         showsVerticalScrollIndicator={false}
       >
         <DebtsSummary summary={summary} />
-        <View className="mx-5 mt-3.5">
+        <View className="mx-4 mt-3.5">
           <Segmented options={FILTERS} value={filter} onChange={setFilter} />
         </View>
-        <View className="mx-5 mt-3.5 gap-2.5">
+        <View className="mx-4 mt-3.5 gap-2.5">
           {visible.map((debt) => (
             <DebtCard key={debt.id} debt={debt} onPay={openPayment} onLongPress={confirmDelete} />
           ))}

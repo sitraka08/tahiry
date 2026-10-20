@@ -90,7 +90,7 @@ function DebtForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         )}
       />
 
-      <AppText weight="medium" className="text-[13px] text-muted">
+      <AppText weight="medium" className="text-caption text-muted">
         {direction === 'lent' ? 'Prêté depuis' : 'Reçu sur'}
       </AppText>
       <Controller
@@ -110,7 +110,7 @@ function DebtForm({ accounts, onSubmit }: Omit<Props, 'sheetRef'>) {
         )}
       />
 
-      <AppText weight="medium" className="text-[13px] text-muted">
+      <AppText weight="medium" className="text-caption text-muted">
         À rembourser dans
       </AppText>
       <Controller

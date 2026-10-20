@@ -13,7 +13,7 @@ export function ProfileCard({ name, onSaveName, onBackup }: Props) {
   const [draft, setDraft] = useState(name);
 
   return (
-    <View className="mx-5 mt-4 gap-3 rounded-[22px] border border-line bg-card p-4">
+    <View className="mx-4 mt-4 gap-3 rounded-card bg-card p-4">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Modifier mon prénom"
@@ -27,10 +27,10 @@ export function ProfileCard({ name, onSaveName, onBackup }: Props) {
           <User size={22} color={t.onAccent} strokeWidth={1.8} />
         </View>
         <View className="flex-1 gap-0.5">
-          <AppText weight="bold" className="text-base">
-            {name || 'Ajoute ton prénom'}
+          <AppText variant="headline">{name || 'Ajoute ton prénom'}</AppText>
+          <AppText variant="caption" tone="muted">
+            Données sur ce téléphone uniquement
           </AppText>
-          <AppText className="text-xs text-muted">Données sur ce téléphone uniquement</AppText>
         </View>
         <Pencil size={18} color={t.muted} strokeWidth={1.8} />
       </Pressable>
@@ -38,15 +38,13 @@ export function ProfileCard({ name, onSaveName, onBackup }: Props) {
       <Button
         label="Exporter une sauvegarde"
         size="sm"
-        icon={<CloudUpload size={18} color={t.onDark} strokeWidth={1.8} />}
+        icon={<CloudUpload size={18} color={t.onInverse} strokeWidth={1.8} />}
         onPress={onBackup}
       />
 
       <AppSheet sheetRef={sheetRef}>
         <View className="gap-3 pt-2">
-          <AppText weight="bold" className="text-base">
-            Ton prénom
-          </AppText>
+          <AppText variant="headline">Ton prénom</AppText>
           <TextField
             label="Prénom"
             placeholder="Ex. Tahiry"

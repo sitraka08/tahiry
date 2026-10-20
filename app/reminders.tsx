@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 import { Plus } from 'lucide-react-native';
 import { useRef } from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Headline, IconButton, type SheetMethods } from '@/components';
+import { IconButton, ScreenHeader, SectionHeader, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
-import { GoalSummary, useGoals } from '@/features/goals';
+import { GoalHighlight, highlightGoal, useGoals } from '@/features/goals';
 import {
   CashCountRow,
   ReminderRow,
@@ -28,6 +28,7 @@ export default function Reminders() {
   const { accounts } = useAccounts();
   const frequency = useCashCountFrequency();
   const { items: goals } = useGoals();
+  const goal = highlightGoal(goals);
   const sheetRef = useRef<SheetMethods>(null);
 
   const openItem = (item: ReminderItem) => {
@@ -49,38 +50,30 @@ export default function Reminders() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <View className="flex-row items-center justify-between px-5 pt-5">
-        <Headline lead="Rappels" />
-        <IconButton
-          icon={Plus}
-          label="Ajouter un rappel"
-          tone="accent"
-          onPress={() => sheetRef.current?.present()}
-        />
-      </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScreenHeader
+        title="Rappels"
+        right={
+          <IconButton
+            icon={Plus}
+            label="Ajouter un rappel"
+            tone="accent"
+            onPress={() => sheetRef.current?.present()}
+          />
+        }
+      />
       <ScrollView
         style={{ flex: 1 }}
         contentContainerClassName="pb-8"
         showsVerticalScrollIndicator={false}
       >
         <RemindersSummary summary={summary} />
-        <View className="mx-5 mt-[18px]">
-          <AppText weight="bold" className="text-[17px]">
-            À venir
-          </AppText>
-          <View className="mt-2">
-            {items.map((item) => (
-              <ReminderRow key={item.key} item={item} now={now} onPress={openItem} />
-            ))}
-            <CashCountRow frequency={frequency} onChange={setCashCountFrequency} />
-          </View>
-        </View>
-        {goals[0] ? (
-          <View className="mx-5 mt-3.5">
-            <GoalSummary goal={goals[0]} onPress={() => router.push('/goals')} />
-          </View>
-        ) : null}
+        <SectionHeader title="À venir" />
+        {items.map((item) => (
+          <ReminderRow key={item.key} item={item} now={now} onPress={openItem} />
+        ))}
+        <CashCountRow frequency={frequency} onChange={setCashCountFrequency} />
+        {goal ? <GoalHighlight goal={goal} onPress={() => router.push('/goals')} /> : null}
       </ScrollView>
 
       <ReminderSheet
