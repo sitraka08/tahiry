@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, Headline, IconButton, ScreenHeader, type SheetMethods } from '@/components';
+import { AppText, IconButton, ScreenHeader, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
 import {
   DepositSheet,
@@ -54,21 +54,20 @@ export default function Goals() {
         showsVerticalScrollIndicator={false}
       >
         <View className="mx-4 mt-3.5">
-          <Headline lead="Mettre de côté, " highlight="pas à pas" tail="." />
-          <AppText className="mt-2 text-sm text-muted">
+          <AppText variant="body" tone="muted">
             {fmt(total)} mis de côté
             {accountNames.length > 0 ? ` sur ${accountNames.join(', ')}` : ''}
           </AppText>
         </View>
 
         <View className="mx-4 mt-4 gap-2.5">
-          {items.map((goal, i) => (
-            <GoalCard key={goal.id} goal={goal} dark={i === 0} now={now} onDeposit={openDeposit} />
+          {items.map((goal) => (
+            <GoalCard key={goal.id} goal={goal} now={now} onDeposit={openDeposit} />
           ))}
           <Pressable
             accessibilityRole="button"
             onPress={openGoalSheet}
-            className="h-16 flex-row items-center justify-center gap-2 rounded-card border-[1.5px] border-dashed border-seg3 active:opacity-70"
+            className="h-16 flex-row items-center justify-center gap-2 rounded-card border-[1.5px] border-dashed border-outline active:opacity-70"
           >
             <Plus size={20} color={t.ink} strokeWidth={1.8} />
             <AppText weight="medium" className="text-sm">
