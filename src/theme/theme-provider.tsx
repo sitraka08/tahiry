@@ -2,9 +2,10 @@ import { useMemo, type ReactNode } from 'react';
 import { useColorScheme, View } from 'react-native';
 import { vars } from 'nativewind';
 
+import { getSheetTokens, getThemeTokens } from './palettes';
 import { resolveColorScheme, type ColorScheme } from './scheme';
 import { useThemeStore } from './theme-store';
-import { THEMES, type ThemeTokens } from './themes';
+import type { ThemeTokens } from './themes';
 
 const toCssVars = (t: ThemeTokens) =>
   vars(
@@ -23,7 +24,25 @@ export function useResolvedColorScheme(): ColorScheme {
 }
 
 export function useThemeTokens() {
-  return THEMES[useResolvedColorScheme()];
+  return getThemeTokens(
+    useThemeStore((s) => s.palette),
+    useResolvedColorScheme(),
+  );
+}
+
+export function useSheetTokens() {
+  return getSheetTokens(
+    useThemeStore((s) => s.palette),
+    useResolvedColorScheme(),
+  );
+}
+
+// The balance card and illustrations always use the dark variant.
+export function useCardTokens() {
+  return getThemeTokens(
+    useThemeStore((s) => s.palette),
+    'dark',
+  );
 }
 
 type ScopeProps = { children: ReactNode; className?: string; overrides?: Partial<ThemeTokens> };
