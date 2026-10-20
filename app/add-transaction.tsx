@@ -14,6 +14,7 @@ import {
 import { success } from '@/lib/haptics';
 import { formatNumber } from '@/lib/money';
 import { toast } from '@/lib/toast-store';
+import { SHEET, ThemeScope, useResolvedColorScheme } from '@/theme';
 
 export default function AddTransaction() {
   const router = useRouter();
@@ -22,48 +23,51 @@ export default function AddTransaction() {
   const { accounts } = useAccounts();
   const existing = useTransaction(editId ?? 0);
   const waiting = editId != null && !existing;
+  const surface = SHEET[useResolvedColorScheme()];
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View className="flex-row items-center justify-between px-4 pb-4 pt-5">
-        <IconButton icon={X} label="Fermer" onPress={() => router.back()} />
-        <AppText weight="bold" className="text-base">
-          {editId ? 'Modifier l’opération' : 'Nouvelle opération'}
-        </AppText>
-        <View className="w-11" />
-      </View>
-      {accounts.length === 0 || waiting ? (
-        <AppText className="px-4 text-center text-muted">
-          {waiting ? 'Chargement…' : 'Ajoute d’abord un compte.'}
-        </AppText>
-      ) : (
-        <TransactionForm
-          accounts={accounts.map((a) => ({ id: a.id, name: a.name, balance: a.balance }))}
-          submitLabel={editId ? 'Mettre à jour' : 'Enregistrer'}
-          initialValues={
-            existing
-              ? {
-                  type: existing.type,
-                  amount: formatNumber(existing.amount),
-                  accountId: existing.accountId,
-                  toAccountId: existing.toAccountId,
-                  categoryId: existing.categoryId,
-                  note: existing.note ?? '',
-                  date: existing.date,
-                }
-              : type === 'in' || type === 'out' || type === 'transfer'
-                ? { type }
-                : undefined
-          }
-          onSubmit={(values) => {
-            if (editId) updateTransaction(editId, values);
-            else createTransaction(values);
-            success();
-            toast(editId ? 'Opération mise à jour' : 'Opération enregistrée');
-            router.back();
-          }}
-        />
-      )}
-    </SafeAreaView>
+    <ThemeScope overrides={surface} className="flex-1 bg-bg">
+      <SafeAreaView style={{ flex: 1 }}>
+        <View className="flex-row items-center justify-between px-4 pb-4 pt-5">
+          <IconButton icon={X} label="Fermer" onPress={() => router.back()} />
+          <AppText weight="bold" className="text-base">
+            {editId ? 'Modifier l’opération' : 'Nouvelle opération'}
+          </AppText>
+          <View className="w-11" />
+        </View>
+        {accounts.length === 0 || waiting ? (
+          <AppText className="px-4 text-center text-muted">
+            {waiting ? 'Chargement…' : 'Ajoute d’abord un compte.'}
+          </AppText>
+        ) : (
+          <TransactionForm
+            accounts={accounts.map((a) => ({ id: a.id, name: a.name, balance: a.balance }))}
+            submitLabel={editId ? 'Mettre à jour' : 'Enregistrer'}
+            initialValues={
+              existing
+                ? {
+                    type: existing.type,
+                    amount: formatNumber(existing.amount),
+                    accountId: existing.accountId,
+                    toAccountId: existing.toAccountId,
+                    categoryId: existing.categoryId,
+                    note: existing.note ?? '',
+                    date: existing.date,
+                  }
+                : type === 'in' || type === 'out' || type === 'transfer'
+                  ? { type }
+                  : undefined
+            }
+            onSubmit={(values) => {
+              if (editId) updateTransaction(editId, values);
+              else createTransaction(values);
+              success();
+              toast(editId ? 'Opération mise à jour' : 'Opération enregistrée');
+              router.back();
+            }}
+          />
+        )}
+      </SafeAreaView>
+    </ThemeScope>
   );
 }
