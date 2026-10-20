@@ -10,5 +10,6 @@ export {
 export type { AccountOption, GoalItem } from './types';
 export { DepositSheet } from './components/deposit-sheet';
 export { GoalCard } from './components/goal-card';
+export { GoalHighlight } from './components/goal-highlight';
 export { GoalSheet } from './components/goal-sheet';
 export { GoalSummary } from './components/goal-summary';

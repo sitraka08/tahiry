@@ -3,12 +3,13 @@ import type { ReactElement } from 'react';
 import { View } from 'react-native';
 
 import { AppText } from '@/components';
+import { useAmountMask } from '@/lib/use-amount-mask';
 
 import type { DayGroup, TransactionItem } from '../types';
 import { TransactionRow } from './transaction-row';
 
 type Entry =
-  | { kind: 'header'; key: string; label: string }
+  | { kind: 'header'; key: string; label: string; net: number }
   | { kind: 'row'; key: string; item: TransactionItem };
 
 type Props = {
@@ -19,8 +20,9 @@ type Props = {
 };
 
 export function TransactionList({ groups, onPressItem, header, empty }: Props) {
+  const fmt = useAmountMask();
   const entries: Entry[] = groups.flatMap((g) => [
-    { kind: 'header' as const, key: `h-${g.key}`, label: g.label },
+    { kind: 'header' as const, key: `h-${g.key}`, label: g.label, net: g.net },
     ...g.items.map((item) => ({ kind: 'row' as const, key: `r-${item.id}`, item })),
   ]);
 
@@ -33,21 +35,28 @@ export function TransactionList({ groups, onPressItem, header, empty }: Props) {
       ListEmptyComponent={empty}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 112 }}
       renderItem={({ item: e }) =>
         e.kind === 'header' ? (
-          <View className="mx-5 mt-3.5">
+          <View className="flex-row items-baseline justify-between px-4 pb-1 pt-5">
             <AppText
-              weight="medium"
-              className="text-xs uppercase text-muted"
-              style={{ letterSpacing: 0.6 }}
+              variant="caption"
+              weight="bold"
+              tone="muted"
+              className="uppercase"
+              style={{ letterSpacing: 0.4 }}
             >
               {e.label}
             </AppText>
+            {e.net !== 0 ? (
+              <AppText variant="caption" tone={e.net > 0 ? 'accent' : 'muted'}>
+                {e.net > 0 ? '+' : '−'}
+                {fmt(Math.abs(e.net), false)}
+              </AppText>
+            ) : null}
           </View>
         ) : (
-          <View className="mx-5">
-            <TransactionRow compact item={e.item} onPress={() => onPressItem(e.item)} />
-          </View>
+          <TransactionRow item={e.item} onPress={() => onPressItem(e.item)} />
         )
       }
     />

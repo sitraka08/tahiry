@@ -1,3 +1,4 @@
+export { AccountCard, AddAccountCard } from './components/account-card';
 export { AccountChip } from './components/account-chip';
 export { AccountRow } from './components/account-row';
 export { AccountSheet } from './components/account-sheet';
