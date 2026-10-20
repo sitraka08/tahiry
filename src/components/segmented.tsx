@@ -1,6 +1,8 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { tap } from '@/lib/haptics';
+
+import { AppText } from './app-text';
 
 type Option<T extends string> = { value: T; label: string };
 
@@ -26,11 +28,12 @@ export function Segmented<T extends string>({ options, value, onChange }: Props<
             }}
             className={`h-10 flex-1 items-center justify-center rounded-xl ${active ? 'bg-inverse' : ''}`}
           >
-            <Text
-              className={`text-[13px] ${active ? 'font-gs-bold text-on-inverse' : 'font-gs-medium text-muted'}`}
+            <AppText
+              weight={active ? 'bold' : 'medium'}
+              className={`text-[13px] ${active ? 'text-on-inverse' : 'text-muted'}`}
             >
               {o.label}
-            </Text>
+            </AppText>
           </Pressable>
         );
       })}

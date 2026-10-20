@@ -1,9 +1,11 @@
 import { Link } from 'expo-router';
 import { type TabTriggerSlotProps } from 'expo-router/ui';
 import { Plus, type LucideIcon } from 'lucide-react-native';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { useThemeTokens } from '@/theme';
+
+import { AppText } from './app-text';
 
 type ButtonProps = TabTriggerSlotProps & { icon: LucideIcon; label: string };
 
@@ -18,12 +20,9 @@ export function TabButton({ icon: Icon, label, isFocused, ...rest }: ButtonProps
       className="h-[52px] w-16 items-center justify-center gap-1"
     >
       <Icon size={22} color={color} strokeWidth={isFocused ? 2 : 1.8} />
-      <Text
-        style={{ color }}
-        className={`text-[11px] ${isFocused ? 'font-gs-bold' : 'font-gs-medium'}`}
-      >
+      <AppText weight={isFocused ? 'bold' : 'medium'} style={{ color }} className="text-[11px]">
         {label}
-      </Text>
+      </AppText>
     </Pressable>
   );
 }

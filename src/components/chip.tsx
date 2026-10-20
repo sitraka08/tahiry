@@ -1,6 +1,8 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 
 import { tap } from '@/lib/haptics';
+
+import { AppText } from './app-text';
 
 type Props = {
   label: string;
@@ -17,7 +19,7 @@ export function Chip({ label, selected = false, onPress, dashed = false, large =
     : dashed
       ? 'border-[1.5px] border-dashed border-seg3'
       : 'border border-outline';
-  const textTone = selected ? 'font-gs-bold text-on-inverse' : 'font-gs-medium text-ink';
+  const textTone = selected ? 'text-on-inverse' : 'text-ink';
   return (
     <Pressable
       accessibilityRole="button"
@@ -28,7 +30,12 @@ export function Chip({ label, selected = false, onPress, dashed = false, large =
       }}
       className={`${base} ${tone}`}
     >
-      <Text className={`${large ? 'text-sm' : 'text-[13px]'} ${textTone}`}>{label}</Text>
+      <AppText
+        weight={selected ? 'bold' : 'medium'}
+        className={`${large ? 'text-sm' : 'text-[13px]'} ${textTone}`}
+      >
+        {label}
+      </AppText>
     </Pressable>
   );
 }

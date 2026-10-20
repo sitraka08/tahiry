@@ -1,6 +1,6 @@
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppText } from '@/components';
+import { AppText, AppTextInput } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
 
 type Props = { value: string; onChange: (value: string) => void; error?: string };
@@ -10,7 +10,8 @@ export function AmountInput({ value, onChange, error }: Props) {
     <View className="mt-4 items-center gap-0.5">
       <AppText className="text-[13px] text-muted">Montant</AppText>
       <View className="flex-row items-baseline gap-1.5">
-        <TextInput
+        <AppTextInput
+          weight="bold"
           accessibilityLabel="Montant"
           value={value}
           onChangeText={(text) => {
@@ -19,8 +20,7 @@ export function AmountInput({ value, onChange, error }: Props) {
           }}
           keyboardType="number-pad"
           placeholder="0"
-          placeholderTextColor="#8A8D78"
-          className="w-[220px] p-0 text-right font-gs-bold text-[44px] text-ink"
+          className="w-[220px] p-0 text-right text-[44px]"
         />
         <AppText weight="medium" className="text-[22px]">
           Ar

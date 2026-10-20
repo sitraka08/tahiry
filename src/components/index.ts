@@ -1,5 +1,6 @@
 export { AppSheet, type SheetMethods } from './app-sheet';
 export { AppText } from './app-text';
+export { AppTextInput } from './app-text-input';
 export { Button } from './button';
 export { Card } from './card';
 export { Chip } from './chip';

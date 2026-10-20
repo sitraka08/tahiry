@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { TextInput, View, type TextInputProps } from 'react-native';
+import { View, type TextInputProps } from 'react-native';
 
 import { formatNumber, parseAmount } from '@/lib/money';
-import { useThemeTokens } from '@/theme';
-
 import { AppText } from './app-text';
+import { AppTextInput } from './app-text-input';
 
 type FieldProps = Omit<TextInputProps, 'style'> & {
   label?: string;
@@ -22,7 +21,6 @@ export function TextField({
   onBlur,
   ...rest
 }: FieldProps) {
-  const t = useThemeTokens();
   const [focused, setFocused] = useState(false);
   const border = error ? 'border-danger' : focused ? 'border-ink' : 'border-transparent';
 
@@ -34,10 +32,8 @@ export function TextField({
         </AppText>
       ) : null}
       <View className={`h-12 flex-row items-center rounded-2xl border bg-card px-3.5 ${border}`}>
-        <TextInput
+        <AppTextInput
           accessibilityLabel={label ?? rest.placeholder}
-          placeholderTextColor={t.muted}
-          selectionColor={t.ink}
           {...rest}
           onFocus={(e) => {
             setFocused(true);
@@ -47,7 +43,7 @@ export function TextField({
             setFocused(false);
             onBlur?.(e);
           }}
-          className="flex-1 py-0 font-gs text-[15px] text-ink"
+          className="flex-1 py-0 text-[15px]"
         />
         {suffix ? <AppText className="ml-2 text-sm text-muted">{suffix}</AppText> : null}
       </View>

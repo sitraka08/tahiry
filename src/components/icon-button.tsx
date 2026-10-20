@@ -1,7 +1,9 @@
 import type { LucideIcon } from 'lucide-react-native';
-import { Pressable, Text, View, type PressableProps } from 'react-native';
+import { Pressable, View, type PressableProps } from 'react-native';
 
 import { useThemeTokens } from '@/theme';
+
+import { AppText } from './app-text';
 
 type Props = Omit<PressableProps, 'children'> & {
   icon: LucideIcon;
@@ -30,7 +32,9 @@ export function IconButton({
       <Icon size={20} color={tone === 'accent' ? onAccent : ink} strokeWidth={1.8} />
       {badge > 0 ? (
         <View className="absolute -right-[5px] -top-[5px] h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1">
-          <Text className="font-gs-bold text-[11px] text-on-accent">{badge}</Text>
+          <AppText weight="bold" className="text-[11px] text-on-accent">
+            {badge}
+          </AppText>
         </View>
       ) : null}
     </Pressable>

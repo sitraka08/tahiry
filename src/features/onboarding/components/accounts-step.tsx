@@ -8,10 +8,10 @@ import {
   type LucideIcon,
 } from 'lucide-react-native';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, LinearTransition } from 'react-native-reanimated';
 
-import { AppText, Button, Chip, Headline } from '@/components';
+import { AppText, AppTextInput, Button, Chip, Headline } from '@/components';
 import { formatNumber, parseAmount } from '@/lib/money';
 import { useThemeTokens } from '@/theme';
 
@@ -145,12 +145,13 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
                 control={control}
                 name={`accounts.${index}.name`}
                 render={({ field: f }) => (
-                  <TextInput
+                  <AppTextInput
+                    weight="medium"
                     accessibilityLabel="Nom du compte"
                     value={f.value}
                     onChangeText={f.onChange}
                     numberOfLines={1}
-                    className="h-10 flex-1 border-b border-dashed border-outline p-0 font-gs-medium text-sm text-ink"
+                    className="h-10 flex-1 border-b border-dashed border-outline p-0 text-sm"
                   />
                 )}
               />
@@ -158,17 +159,17 @@ export function AccountsStep({ initial, onSubmit, onSkip, onBack }: Props) {
                 control={control}
                 name={`accounts.${index}.balance`}
                 render={({ field: f }) => (
-                  <TextInput
+                  <AppTextInput
+                    weight="bold"
                     accessibilityLabel={`Solde de ${values[index]?.name ?? 'ce compte'}`}
                     placeholder="0 Ar"
-                    placeholderTextColor={t.muted}
                     keyboardType="number-pad"
                     value={f.value}
                     onChangeText={(text) => {
                       const n = parseAmount(text);
                       f.onChange(n ? formatNumber(n) : '');
                     }}
-                    className="h-10 w-28 rounded-xl border border-outline bg-tile px-3 py-0 text-right font-gs-bold text-sm text-ink"
+                    className="h-10 w-28 rounded-xl border border-outline bg-tile px-3 py-0 text-right text-sm"
                   />
                 )}
               />

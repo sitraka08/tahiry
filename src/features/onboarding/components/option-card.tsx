@@ -1,9 +1,9 @@
 import { Check } from 'lucide-react-native';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { PressableFeedback } from '@/components';
+import { AppText, PressableFeedback } from '@/components';
 import { tap } from '@/lib/haptics';
 import { useThemeTokens } from '@/theme';
 
@@ -47,13 +47,12 @@ export function OptionCard({ label, selected, onPress, variant }: Props) {
       >
         {selected ? <Check size={14} color={t.onAccent} strokeWidth={3} /> : null}
       </View>
-      <Text
-        className={`flex-1 ${selected ? 'font-gs-bold text-on-dark' : 'font-gs-medium text-ink'} ${
-          isType ? 'text-sm' : 'text-[15px]'
-        }`}
+      <AppText
+        weight={selected ? 'bold' : 'medium'}
+        className={`flex-1 ${selected ? 'text-on-dark' : 'text-ink'} ${isType ? 'text-sm' : 'text-[15px]'}`}
       >
         {label}
-      </Text>
+      </AppText>
     </PressableFeedback>
   );
 }

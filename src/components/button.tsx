@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
-import { Text } from 'react-native';
-
 import { press } from '@/lib/haptics';
 
+import { AppText } from './app-text';
 import { PressableFeedback } from './pressable-feedback';
 
 type Variant = 'primary' | 'accent' | 'soft' | 'ghost' | 'danger';
@@ -45,7 +44,7 @@ export function Button({
   disabled,
   className = '',
 }: Props) {
-  const weight = variant === 'soft' || variant === 'ghost' ? 'font-gs-medium' : 'font-gs-bold';
+  const weight = variant === 'soft' || variant === 'ghost' ? 'medium' : 'bold';
   const textSize = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px]' : 'text-sm';
   return (
     <PressableFeedback
@@ -60,7 +59,9 @@ export function Button({
       className={`flex-row items-center justify-center gap-2 rounded-2xl ${heights[size]} ${container[variant]} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon}
-      <Text className={`${weight} ${textSize} ${text[variant]}`}>{label}</Text>
+      <AppText weight={weight} className={`${textSize} ${text[variant]}`}>
+        {label}
+      </AppText>
     </PressableFeedback>
   );
 }

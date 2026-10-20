@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+import { AppText } from './app-text';
 
 type Props = {
   lead: string;
@@ -15,14 +15,14 @@ const sizes = {
 export function Headline({ lead, highlight, tail = '', size = 'md' }: Props) {
   const style = sizes[size];
   return (
-    <Text accessibilityRole="header" style={style} className="font-gs-bold text-ink">
+    <AppText accessibilityRole="header" weight="bold" style={style}>
       {lead}
       {highlight ? (
-        <Text style={style} className="bg-accent font-gs-bold text-on-accent">
+        <AppText weight="bold" style={style} className="bg-accent text-on-accent">
           {`\u00A0${highlight}\u00A0`}
-        </Text>
+        </AppText>
       ) : null}
       {tail}
-    </Text>
+    </AppText>
   );
 }
