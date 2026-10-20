@@ -1,6 +1,6 @@
 import { IN_CATEGORIES, OUT_CATEGORIES } from '@/db/seed';
 
-import { withAlpha } from '../color';
+import { shade, withAlpha } from '../color';
 import { accountVisual, categoryVisual } from '../visuals';
 
 jest.mock('lucide-react-native', () => new Proxy({}, { get: (_, name) => name }));
@@ -39,5 +39,13 @@ describe('withAlpha', () => {
 
   it('clamps out of range values', () => {
     expect(withAlpha('#123456', 2)).toBe('#123456FF');
+  });
+});
+
+describe('shade', () => {
+  it('darkens toward black', () => {
+    expect(shade('#FFFFFF', 0)).toBe('#FFFFFF');
+    expect(shade('#FFFFFF', 1)).toBe('#000000');
+    expect(shade('#D4B872', 0.2)).toBe('#AA935B');
   });
 });
