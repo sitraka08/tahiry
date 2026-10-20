@@ -1,9 +1,8 @@
 import { View } from 'react-native';
 
-import { AppText, IconTile, ListRow } from '@/components';
+import { AccountIllustration, AppText, ListRow } from '@/components';
 import { formatUpdated } from '@/lib/dates';
 import { useAmountMask } from '@/lib/use-amount-mask';
-import { accountVisual } from '@/lib/visuals';
 
 import type { AccountWithBalance } from '../types';
 
@@ -18,7 +17,6 @@ type Props = { account: AccountWithBalance; onPress: () => void };
 
 export function AccountRow({ account, onPress }: Props) {
   const fmt = useAmountMask();
-  const visual = accountVisual(account.type);
   const updated =
     account.type === 'cash'
       ? formatUpdated(account.countedAt, true)
@@ -26,7 +24,7 @@ export function AccountRow({ account, onPress }: Props) {
 
   return (
     <ListRow
-      leading={<IconTile icon={visual.icon} color={visual.color} />}
+      leading={<AccountIllustration type={account.type} />}
       title={account.name}
       subtitle={account.detail || TYPE_LABEL[account.type]}
       trailing={
