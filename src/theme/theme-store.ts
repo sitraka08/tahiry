@@ -8,6 +8,6 @@ type ThemeState = {
 };
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  colorScheme: 'system',
+  colorScheme: 'dark',
   setColorScheme: (colorScheme) => set({ colorScheme }),
 }));
