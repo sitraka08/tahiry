@@ -32,7 +32,7 @@ export function QuickActions({ onPick }: Props) {
               press();
               onPick(a.type);
             }}
-            className={`h-12 flex-1 flex-row items-center justify-center gap-2 rounded-full ${
+            className={`h-8 flex-1 flex-row items-center justify-center gap-2 rounded-full ${
               accent ? 'bg-accent' : 'bg-tile'
             }`}
           >
