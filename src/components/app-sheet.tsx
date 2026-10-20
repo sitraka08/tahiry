@@ -6,19 +6,23 @@ import {
 import type { ReactNode, Ref } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ThemeScope, useThemeTokens } from '@/theme';
+import { SHEET, ThemeScope, useResolvedColorScheme } from '@/theme';
 
 type Props = { sheetRef: Ref<BottomSheetMethods>; children: ReactNode };
 
 export function AppSheet({ sheetRef, children }: Props) {
-  const { bg } = useThemeTokens();
+  const surface = SHEET[useResolvedColorScheme()];
   const insets = useSafeAreaInsets();
   return (
-    <BottomSheetModal ref={sheetRef} enablePanDownToClose backgroundStyle={{ backgroundColor: bg }}>
+    <BottomSheetModal
+      ref={sheetRef}
+      enablePanDownToClose
+      backgroundStyle={{ backgroundColor: surface.bg }}
+    >
       <BottomSheetView
         style={{ paddingHorizontal: 20, paddingBottom: Math.max(insets.bottom, 16) + 8 }}
       >
-        <ThemeScope>{children}</ThemeScope>
+        <ThemeScope overrides={surface}>{children}</ThemeScope>
       </BottomSheetView>
     </BottomSheetModal>
   );

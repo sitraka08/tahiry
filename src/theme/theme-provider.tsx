@@ -26,9 +26,11 @@ export function useThemeTokens() {
   return THEMES[useResolvedColorScheme()];
 }
 
-export function ThemeScope({ children, className }: { children: ReactNode; className?: string }) {
+type ScopeProps = { children: ReactNode; className?: string; overrides?: Partial<ThemeTokens> };
+
+export function ThemeScope({ children, className, overrides }: ScopeProps) {
   const tokens = useThemeTokens();
-  const style = useMemo(() => toCssVars(tokens), [tokens]);
+  const style = useMemo(() => toCssVars({ ...tokens, ...overrides }), [tokens, overrides]);
   return (
     <View style={style} className={className}>
       {children}

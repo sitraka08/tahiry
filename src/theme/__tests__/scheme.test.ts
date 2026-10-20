@@ -1,5 +1,5 @@
 import { isColorSchemePref, resolveColorScheme } from '../scheme';
-import { THEMES } from '../themes';
+import { SHEET, THEMES } from '../themes';
 
 describe('resolveColorScheme', () => {
   it('uses the explicit choice', () => {
@@ -30,5 +30,18 @@ describe('isColorSchemePref', () => {
 describe('THEMES', () => {
   it('defines the same tokens in both schemes', () => {
     expect(Object.keys(THEMES.light).sort()).toEqual(Object.keys(THEMES.dark).sort());
+  });
+});
+
+describe('SHEET', () => {
+  it('lifts sheets above the screen background in both schemes', () => {
+    expect(SHEET.dark.bg).not.toBe(THEMES.dark.bg);
+    expect(SHEET.light.bg).not.toBe(THEMES.light.bg);
+  });
+
+  it('only overrides existing tokens', () => {
+    for (const scheme of ['dark', 'light'] as const) {
+      for (const key of Object.keys(SHEET[scheme])) expect(THEMES[scheme]).toHaveProperty(key);
+    }
   });
 });
