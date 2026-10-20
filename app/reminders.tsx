@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 import { Plus } from 'lucide-react-native';
 import { useRef } from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, IconButton, ScreenHeader, type SheetMethods } from '@/components';
+import { IconButton, ScreenHeader, SectionHeader, type SheetMethods } from '@/components';
 import { useAccounts } from '@/features/accounts';
-import { GoalSummary, useGoals } from '@/features/goals';
+import { GoalHighlight, highlightGoal, useGoals } from '@/features/goals';
 import {
   CashCountRow,
   ReminderRow,
@@ -28,6 +28,7 @@ export default function Reminders() {
   const { accounts } = useAccounts();
   const frequency = useCashCountFrequency();
   const { items: goals } = useGoals();
+  const goal = highlightGoal(goals);
   const sheetRef = useRef<SheetMethods>(null);
 
   const openItem = (item: ReminderItem) => {
@@ -67,22 +68,12 @@ export default function Reminders() {
         showsVerticalScrollIndicator={false}
       >
         <RemindersSummary summary={summary} />
-        <View className="mx-4 mt-5">
-          <AppText weight="bold" className="text-headline">
-            À venir
-          </AppText>
-          <View className="mt-2">
-            {items.map((item) => (
-              <ReminderRow key={item.key} item={item} now={now} onPress={openItem} />
-            ))}
-            <CashCountRow frequency={frequency} onChange={setCashCountFrequency} />
-          </View>
-        </View>
-        {goals[0] ? (
-          <View className="mx-4 mt-3.5">
-            <GoalSummary goal={goals[0]} onPress={() => router.push('/goals')} />
-          </View>
-        ) : null}
+        <SectionHeader title="À venir" />
+        {items.map((item) => (
+          <ReminderRow key={item.key} item={item} now={now} onPress={openItem} />
+        ))}
+        <CashCountRow frequency={frequency} onChange={setCashCountFrequency} />
+        {goal ? <GoalHighlight goal={goal} onPress={() => router.push('/goals')} /> : null}
       </ScrollView>
 
       <ReminderSheet

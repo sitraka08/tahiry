@@ -15,11 +15,11 @@ type Props = {
 export function CountRow({ value, count, onChange }: Props) {
   const t = useThemeTokens();
   return (
-    <View className="flex-row items-center gap-3 rounded-2xl bg-card py-1.5 pl-3.5 pr-1.5">
-      <AppText weight="bold" className="w-[72px] text-body">
+    <View className="flex-row items-center gap-3 rounded-card bg-card py-1.5 pl-4 pr-1.5">
+      <AppText variant="body" weight="bold" className="w-20">
         {formatNumber(value)}
       </AppText>
-      <AppText className="flex-1 text-caption text-muted">
+      <AppText variant="caption" tone="muted" className="flex-1">
         = {formatNumber(value * count)} Ar
       </AppText>
       <Pressable
@@ -29,7 +29,7 @@ export function CountRow({ value, count, onChange }: Props) {
           tap();
           onChange(-1);
         }}
-        className="size-11 items-center justify-center rounded-xl bg-tile active:opacity-70"
+        className="size-11 items-center justify-center rounded-full bg-tile active:opacity-70"
       >
         <Minus size={20} color={t.ink} strokeWidth={2} />
       </Pressable>
@@ -43,9 +43,9 @@ export function CountRow({ value, count, onChange }: Props) {
           tap();
           onChange(1);
         }}
-        className="size-11 items-center justify-center rounded-xl bg-dark active:opacity-70"
+        className="size-11 items-center justify-center rounded-full bg-accent active:opacity-70"
       >
-        <Plus size={20} color={t.accent} strokeWidth={2} />
+        <Plus size={20} color={t.onAccent} strokeWidth={2} />
       </Pressable>
     </View>
   );

@@ -1,7 +1,7 @@
 import { CalendarClock } from 'lucide-react-native';
 import { View } from 'react-native';
 
-import { AppText } from '@/components';
+import { AppText, IconTile, TopoPattern } from '@/components';
 import { useAmountMask } from '@/lib/use-amount-mask';
 import { useThemeTokens } from '@/theme';
 
@@ -18,23 +18,24 @@ export function RemindersSummary({ summary }: { summary: ReminderSummary }) {
     .join(' · ');
 
   return (
-    <View className="mx-4 mt-3.5 flex-row items-center justify-between gap-3 rounded-card bg-dark px-4 py-[18px]">
-      <View className="gap-1">
-        <AppText className="text-caption text-dark-muted">À payer d’ici 30 jours</AppText>
-        <AppText weight="bold" className="text-[30px] text-on-dark" style={{ letterSpacing: -0.5 }}>
-          {fmt(summary.total, false)}{' '}
-          <AppText weight="medium" className="text-base text-on-dark">
-            Ar
-          </AppText>
+    <View className="mx-4 mt-4 flex-row items-center justify-between gap-3 overflow-hidden rounded-card bg-card p-4">
+      <TopoPattern color={t.ink} />
+      <View className="flex-1 gap-0.5">
+        <AppText variant="caption" tone="muted">
+          À payer d’ici 30 jours
         </AppText>
-        <AppText className="text-xs text-dark-muted">{detail}</AppText>
+        <AppText variant="title" numberOfLines={1} adjustsFontSizeToFit>
+          {fmt(summary.total)}
+        </AppText>
+        <AppText
+          variant="caption"
+          tone={summary.lateCount > 0 ? 'danger' : 'muted'}
+          numberOfLines={1}
+        >
+          {detail}
+        </AppText>
       </View>
-      <View
-        style={{ transform: [{ rotate: '-6deg' }] }}
-        className="size-14 items-center justify-center rounded-card bg-accent"
-      >
-        <CalendarClock size={28} color={t.onAccent} strokeWidth={1.8} />
-      </View>
+      <IconTile icon={CalendarClock} color="catTeal" />
     </View>
   );
 }
