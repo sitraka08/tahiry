@@ -14,7 +14,7 @@ import {
 import { success } from '@/lib/haptics';
 import { formatNumber } from '@/lib/money';
 import { toast } from '@/lib/toast-store';
-import { SHEET, ThemeScope, useResolvedColorScheme } from '@/theme';
+import { ThemeScope, useSheetTokens } from '@/theme';
 
 export default function AddTransaction() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function AddTransaction() {
   const { accounts } = useAccounts();
   const existing = useTransaction(editId ?? 0);
   const waiting = editId != null && !existing;
-  const surface = SHEET[useResolvedColorScheme()];
+  const surface = useSheetTokens();
 
   return (
     <ThemeScope overrides={surface} className="flex-1 bg-bg">

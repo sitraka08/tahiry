@@ -1,12 +1,12 @@
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
 
 import { shade } from '@/lib/color';
-import { THEMES, useThemeTokens } from '@/theme';
+import { useCardTokens, useThemeTokens } from '@/theme';
 
-const P = THEMES.dark;
 const ZIGZAG = Array.from({ length: 10 }, (_, i) => `l-7 ${i % 2 === 0 ? 5 : -5}`).join('');
 
 function Coins({ cx, bottom, count }: { cx: number; bottom: number; count: number }) {
+  const P = useCardTokens();
   return (
     <>
       {Array.from({ length: count }, (_, k) => {
@@ -25,6 +25,7 @@ function Coins({ cx, bottom, count }: { cx: number; bottom: number; count: numbe
 
 export function WelcomeIllustration() {
   const t = useThemeTokens();
+  const P = useCardTokens();
   return (
     <Svg width={320} height={230} viewBox="0 0 320 230">
       <Ellipse cx={200} cy={208} rx={46} ry={5} fill={t.shadow} />

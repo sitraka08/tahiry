@@ -1,12 +1,11 @@
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
 
 import { shade } from '@/lib/color';
-import { THEMES, useThemeTokens } from '@/theme';
-
-const P = THEMES.dark;
+import { useCardTokens, useThemeTokens } from '@/theme';
 
 export function WalletIllustration() {
   const t = useThemeTokens();
+  const P = useCardTokens();
   return (
     <Svg width={96} height={72} viewBox="0 0 120 90">
       <Ellipse cx={60} cy={85} rx={46} ry={3.5} fill={t.shadow} />

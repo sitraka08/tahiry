@@ -1,15 +1,14 @@
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
 
 import { shade } from '@/lib/color';
-import { THEMES, useThemeTokens } from '@/theme';
-
-// Fills stay pastel in both schemes; outlines and shadows follow the scheme.
-const P = THEMES.dark;
+import { useCardTokens, useThemeTokens } from '@/theme';
 
 type Props = { type: 'bank' | 'mobile' | 'cash' | 'group' };
 
 export function AccountIllustration({ type }: Props) {
   const t = useThemeTokens();
+  // Fills stay pastel in both schemes; outlines and shadows follow the scheme.
+  const P = useCardTokens();
   return (
     <Svg width={60} height={44} viewBox="0 0 60 44">
       <Ellipse cx={30} cy={41} rx={22} ry={2.5} fill={t.shadow} />

@@ -3,13 +3,10 @@ import { Pressable, View } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 import { withAlpha } from '@/lib/color';
-import { THEMES, useThemeTokens } from '@/theme';
+import { useCardTokens, useThemeTokens } from '@/theme';
 
 import { AppText } from './app-text';
 import { TopoPattern } from './topo-pattern';
-
-// The card is always dark, so its accents come from the dark scheme.
-const DARK = THEMES.dark;
 
 type Change = { label: string; positive: boolean };
 
@@ -23,12 +20,13 @@ type Props = {
 };
 
 function CardChip() {
-  const line = withAlpha(DARK.dark, 0.35);
+  const card = useCardTokens();
+  const line = withAlpha(card.dark, 0.35);
   return (
     <Svg width={34} height={26} viewBox="0 0 42 32">
-      <Rect x={1} y={1} width={40} height={30} rx={6} fill={DARK.catSand} stroke={line} />
+      <Rect x={1} y={1} width={40} height={30} rx={6} fill={card.catSand} stroke={line} />
       <Path d="M1 11h13M1 21h13M28 11h13M28 21h13M14 1v30M28 1v30" stroke={line} />
-      <Rect x={14} y={8} width={14} height={16} rx={2} fill={DARK.catSand} stroke={line} />
+      <Rect x={14} y={8} width={14} height={16} rx={2} fill={card.catSand} stroke={line} />
     </Svg>
   );
 }
@@ -47,20 +45,21 @@ function AccountMark({ colors }: { colors: string[] }) {
 
 export function BalanceCard({ amount, holder, hidden, onToggleHidden, change, colors }: Props) {
   const t = useThemeTokens();
+  const card = useCardTokens();
   const EyeIcon = hidden ? EyeOff : Eye;
   const ChangeIcon = change?.positive ? ArrowUpRight : ArrowDownRight;
-  const changeColor = change?.positive ? DARK.accent : DARK.onDark;
+  const changeColor = change?.positive ? card.accent : card.onDark;
 
   return (
     <View
       style={{
         aspectRatio: 1.9,
         boxShadow: `0 14px 30px ${t.shadow}`,
-        borderColor: withAlpha(DARK.onDark, 0.07),
+        borderColor: withAlpha(card.onDark, 0.07),
       }}
       className="mx-4 overflow-hidden rounded-bank border bg-dark px-5 py-4"
     >
-      <TopoPattern color={DARK.onDark} opacity={0.045} />
+      <TopoPattern color={card.onDark} opacity={0.045} />
       <View className="flex-row items-center justify-between">
         <Pressable
           accessibilityRole="button"
@@ -72,14 +71,14 @@ export function BalanceCard({ amount, holder, hidden, onToggleHidden, change, co
           <AppText variant="caption" className="text-dark-muted">
             Solde total
           </AppText>
-          <EyeIcon size={15} color={DARK.darkMuted} strokeWidth={1.9} />
+          <EyeIcon size={15} color={card.darkMuted} strokeWidth={1.9} />
         </Pressable>
         {colors.length > 0 ? <AccountMark colors={colors} /> : null}
       </View>
 
       <View className="flex-row items-center gap-2">
         <CardChip />
-        <Nfc size={18} color={DARK.darkMuted} strokeWidth={1.8} />
+        <Nfc size={18} color={card.darkMuted} strokeWidth={1.8} />
       </View>
 
       <View className="flex-1" />

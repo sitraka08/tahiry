@@ -6,12 +6,12 @@ import {
 import type { ReactNode, Ref } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SHEET, ThemeScope, useResolvedColorScheme } from '@/theme';
+import { ThemeScope, useSheetTokens } from '@/theme';
 
 type Props = { sheetRef: Ref<BottomSheetMethods>; children: ReactNode };
 
 export function AppSheet({ sheetRef, children }: Props) {
-  const surface = SHEET[useResolvedColorScheme()];
+  const surface = useSheetTokens();
   const insets = useSafeAreaInsets();
   return (
     <BottomSheetModal
