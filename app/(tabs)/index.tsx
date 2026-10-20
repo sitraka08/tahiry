@@ -27,19 +27,6 @@ import { useThemeTokens } from '@/theme';
 const DAY = 86_400_000;
 const enter = (step: number) => FadeInDown.delay(step * 60).duration(320);
 
-function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
-  return (
-    <View className="flex-1">
-      <AppText variant="micro" tone="muted">
-        {label}
-      </AppText>
-      <AppText variant="body" weight="bold" tone={accent ? 'accent' : 'ink'} numberOfLines={1}>
-        {value}
-      </AppText>
-    </View>
-  );
-}
-
 export default function Home() {
   const router = useRouter();
   const t = useThemeTokens();
@@ -60,30 +47,32 @@ export default function Home() {
 
   return (
     <SafeAreaView className="flex-1" edges={['top']}>
-      <ScrollView contentContainerClassName="pb-28" showsVerticalScrollIndicator={false}>
-        <View className="flex-row items-center justify-between px-4 pt-4">
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Profil et réglages"
-            onPress={() => router.push('/settings')}
-            className="min-h-11 flex-row items-center gap-3"
-          >
-            <View className="size-9 items-center justify-center rounded-full bg-accent">
-              <AppText weight="bold" className="text-body text-on-accent">
-                {(name || 'T').slice(0, 1).toUpperCase()}
-              </AppText>
-            </View>
-            <AppText variant="title">{name ? `Bonjour ${name}` : 'Bonjour'}</AppText>
-          </Pressable>
-          <IconButton
-            icon={Bell}
-            label="Rappels"
-            badge={pending}
-            onPress={() => router.push('/reminders')}
-          />
-        </View>
+      <View className="flex-row items-center justify-between px-4 pb-2 pt-4">
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Profil et réglages"
+          onPress={() => router.push('/settings')}
+          className="min-h-11 flex-1 flex-row items-center gap-3"
+        >
+          <View className="size-9 items-center justify-center rounded-full bg-accent">
+            <AppText weight="bold" className="text-body text-on-accent">
+              {(name || 'T').slice(0, 1).toUpperCase()}
+            </AppText>
+          </View>
+          <AppText variant="title" numberOfLines={1} className="flex-1">
+            {name ? `Bonjour ${name}` : 'Bonjour'}
+          </AppText>
+        </Pressable>
+        <IconButton
+          icon={Bell}
+          label="Rappels"
+          badge={pending}
+          onPress={() => router.push('/reminders')}
+        />
+      </View>
 
-        <Animated.View entering={enter(0)} style={{ marginTop: 16 }}>
+      <ScrollView contentContainerClassName="pb-40 pt-2" showsVerticalScrollIndicator={false}>
+        <Animated.View entering={enter(0)}>
           <BalanceCard
             amount={fmt(shownTotal, false)}
             holder={name || 'Tahiry'}
@@ -97,11 +86,6 @@ export default function Home() {
           />
         </Animated.View>
         <Animated.View entering={enter(1)}>
-          <View className="flex-row gap-3 px-5 pt-4">
-            <Stat label="Entrées · 30 j" value={`+${fmt(income, false)}`} accent />
-            <Stat label="Sorties · 30 j" value={`−${fmt(expense, false)}`} />
-            <Stat label="Par jour" value={`−${fmt(Math.round(expense / 30), false)}`} />
-          </View>
           <QuickActions onPick={(type) => router.push(`/add-transaction?type=${type}`)} />
         </Animated.View>
 
